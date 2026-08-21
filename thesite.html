@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Global Script's Hub</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Rob4ik02/Global-Scripts-Development/refs/heads/main/Icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  --bg-color: #030303; --text-primary: #ffffff; --text-secondary: #9ca3af;
+  --card-bg: linear-gradient(145deg, rgba(30, 30, 35, 0.4), rgba(15, 15, 20, 0.4));
+  --card-border: rgba(255, 255, 255, 0.08); --input-bg: rgba(20, 20, 25, 0.6);
+  --input-border: rgba(255, 255, 255, 0.12); --accent: #ffffff; --accent-text: #000000;
+  --error: #ef4444; --success: #10b981; 
+  --shadow-drop: 0 20px 40px rgba(0,0,0,0.6);
+  --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.1); 
+  --blur: blur(24px) saturate(160%);
+  --dot-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] {
+  --bg-color: #f3f4f6; --text-primary: #111827; --text-secondary: #6b7280;
+  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(240, 240, 245, 0.7));
+  --card-border: rgba(0, 0, 0, 0.08); --input-bg: rgba(255, 255, 255, 0.8);
+  --input-border: rgba(0, 0, 0, 0.1); --accent: #111827; --accent-text: #ffffff;
+  --shadow-drop: 0 15px 35px rgba(0, 0, 0, 0.08); --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  --dot-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .header img { filter: invert(1); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html, body { height: 100%; min-height: 100vh; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-primary); transition: background-color 0.6s ease, color 0.6s ease; overflow-x: hidden; overflow-y: auto; background-attachment: fixed; perspective: 1200px; user-select: none; -webkit-user-select: none; }
+input, textarea { user-select: text; -webkit-user-select: text; }
+
+/* TOAST */
+.toast-notification { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--success); border-left: 4px solid var(--success); padding: 16px 24px; border-radius: 16px; box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2); display: flex; align-items: center; gap: 16px; z-index: 99999; transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s; opacity: 0; width: 90%; max-width: 400px; }
+.toast-notification.show { top: 20px; opacity: 1; }
+.toast-icon { color: var(--success); display: flex; align-items: center; justify-content: center; }
+.toast-text h4 { margin: 0 0 4px 0; font-size: 15px; color: var(--text-primary); }
+.toast-text p { margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+/* DRAGON INTRO */
+#introOverlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-color); z-index: 99999; display: flex; justify-content: center; align-items: center; overflow: hidden; transition: opacity 0.8s ease, visibility 0.8s; }
+.dragon-container { display: flex; flex-direction: column; align-items: center; gap: 30px; width: 100%; padding: 0 20px; }
+.dragon-container h2 { color: var(--text-primary); font-weight: 800; letter-spacing: 6px; font-size: 28px; margin: 0; text-shadow: 0 0 20px rgba(255,255,255,0.3); text-align: center; }
+.dragon-track { position: relative; width: 100%; max-width: 400px; height: 2px; background: var(--card-border); border-radius: 2px; overflow: hidden; }
+.white-dragon { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, var(--text-primary), var(--text-primary)); box-shadow: 0 0 15px var(--text-primary); border-radius: 2px; animation: dragonFlight 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes dragonFlight { 0% { left: -100%; } 100% { left: 100%; } }
+
+/* PARTICLES */
+button { position: relative; overflow: hidden; }
+.btn-particle { position: absolute; width: 6px; height: 6px; background: var(--text-primary); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); animation: particleBurst 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; z-index: 10; }
+.login-to-start-btn .btn-particle, .action-btn .btn-particle, .copy-btn:not(:disabled) .btn-particle { background: var(--bg-color); }
+@keyframes particleBurst { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; } }
+
+/* LANDING */
+#landingWrapper { display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; padding: 80px 20px 40px; position: relative; z-index: 10; transition: opacity 0.6s ease; justify-content: center; }
+.landing-hero { text-align: center; max-width: 800px; margin-top: 20px; margin-bottom: 40px; animation: fadeInLanding 1s ease forwards; }
+@keyframes fadeInLanding { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.landing-hero h1 { font-size: 64px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 20px; background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.landing-hero p { font-size: 20px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 40px; }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; width: 100%; max-width: 1100px; margin-bottom: 60px; perspective: 1200px; animation: fadeInLanding 1s ease 0.2s forwards; opacity: 0; }
+
+.feature-box, .script-card, .dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 24px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; display: flex; flex-direction: column; gap: 12px; text-align: left; transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1); transition: transform 0.4s ease-out, box-shadow 0.4s ease; transform-style: preserve-3d; will-change: transform; }
+.feature-box h3, .feature-box p, .script-header { transform: translateZ(20px); }
+.feature-box i { transform: translateZ(30px); }
+
+.login-to-start-btn { padding: 18px 54px; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-text); background: var(--accent); border: none; border-radius: 99px; cursor: pointer; box-shadow: 0 10px 30px rgba(255,255,255,0.2); transition: all 0.3s; transform-style: preserve-3d; }
+.login-to-start-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 40px rgba(255,255,255,0.4); }
+
+/* APP UI */
+.ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; background: radial-gradient(circle at 15% 30%, rgba(40, 40, 45, 0.3) 0%, transparent 60%), radial-gradient(circle at 85% 80%, rgba(30, 30, 35, 0.3) 0%, transparent 60%); filter: blur(40px); opacity: 0; animation: ambientFade 3s ease-in-out 0.5s forwards; pointer-events: none; }
+@keyframes ambientFade { to { opacity: 1; } }
+
+#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0; animation: fadeInCanvas 2s ease-in-out forwards; pointer-events: none; }
+@keyframes fadeInCanvas { to { opacity: 1; } }
+
+.app-content { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 80px 20px 40px 20px; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes slideUpFade { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+.top-bar { position: fixed; top: 0; left: 0; width: 100vw; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; z-index: 100; background: transparent; }
+.top-bar-left, .top-bar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ui-pill { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); box-shadow: var(--shadow-drop), var(--shadow-inner); color: var(--text-primary); padding: 8px 14px; border-radius: 98px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: transform 0.3s, background 0.3s; cursor: pointer; position: relative;}
+.ui-pill:hover { transform: scale(1.05) translateY(-1px); }
+
+.lang-dropdown-wrapper { position: relative; }
+.lang-menu { position: absolute; top: 120%; left: 0; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s ease; box-shadow: var(--shadow-drop); min-width: 120px; z-index: 1000;}
+.lang-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.lang-option { padding: 10px 12px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 10px; transition: background 0.2s; display: flex; align-items: center; gap: 8px;}
+.lang-option:hover { background: var(--input-bg); }
+
+.recording-dot { width: 8px; height: 8px; background-color: var(--success); border-radius: 50%; animation: liquidBlink 2.5s infinite ease-in-out; }
+@keyframes liquidBlink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+
+.header { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; width: 100%; }
+.header img { width: 64px; height: 64px; border-radius: 18px; box-shadow: var(--shadow-drop); border: 1px solid var(--card-border); transition: transform 0.5s; }
+.header img:hover { transform: scale(1.1) rotate(4deg); }
+.header h1 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.04em; text-align: center; }
+
+.dashboard-layout { margin: 0 auto; display: flex; width: 100%; max-width: 1100px; gap: 20px; align-items: flex-start; }
+.sidebar { flex: 0 0 250px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 28px; padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-drop); }
+.sidebar h2 { margin: 0 0 16px 0; font-size: 14px; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 1px; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.sidebar-footer { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--card-border); }
+.sidebar-btn { background: transparent; color: var(--text-primary); border: none; padding: 10px 14px; border-radius: 14px; font-family: inherit; cursor: pointer; text-align: left; transition: all 0.3s; display: flex; gap: 12px; align-items: center; position: relative; overflow: hidden; }
+.sidebar-btn .lucide { width: 20px; height: 20px; color: var(--text-secondary); transition: color 0.3s; }
+.sidebar-btn:hover { background: var(--input-border); transform: translateX(4px); }
+.sidebar-btn.active { background: var(--text-primary); color: var(--bg-color); transform: scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.sidebar-btn.active .lucide { color: var(--bg-color); }
+.sidebar-btn.active .btn-desc { color: var(--bg-color); opacity: 0.8; }
+.btn-text-content { display: flex; flex-direction: column; gap: 2px; }
+.btn-title { font-weight: 600; font-size: 13px; text-transform: uppercase; }
+.btn-desc { font-weight: 400; font-size: 11px; color: var(--text-secondary); line-height: 1.3; }
+
+.main-content { flex: 1; display: flex; flex-direction: column; position: relative; height: 100%; width: 100%; }
+.tab-content { display: none; flex-direction: column; gap: 16px; height: 100%; width: 100%; }
+.tab-content.active { display: flex; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.tab-content h2 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px;}
+
+.profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+.profile-item { background: var(--input-bg); border: 1px solid var(--input-border); padding: 14px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; }
+.profile-label { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 1px; }
+.profile-value { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+
+.action-btn { background: linear-gradient(145deg, var(--input-bg), rgba(255,255,255,0.02)); color: var(--text-primary); border: 1px solid var(--input-border); padding: 12px 18px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; justify-content: center; gap: 8px;}
+.action-btn:hover { background: var(--card-border); transform: translateZ(10px) scale(1.03); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+
+.dev-select { background: var(--bg-color); color: var(--text-primary); border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; outline: none; font-family: inherit; font-size: 13px; width: 100%; transition: border-color 0.3s; }
+.dev-select:focus { border-color: var(--text-primary); }
+
+.scripts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; }
+.script-card { padding: 0; }
+.script-banner { width: 100%; height: 160px; background-size: cover; background-position: center; position: relative; border-top-left-radius: 23px; border-top-right-radius: 23px; }
+.script-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(to bottom, transparent, var(--card-bg)); opacity: 1; border-top-left-radius: 23px; border-top-right-radius: 23px; }
+.script-content { padding: 20px; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.script-header h3 { margin: 0; font-size: 20px; color: var(--text-primary); display: flex; flex-direction: column; gap: 4px; }
+.game-tag { font-size: 11px; font-weight: 700; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+.script-desc { margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.5; flex: 1; }
+.copy-btn { flex: 1; background: var(--text-primary); color: var(--bg-color); border: none; padding: 14px; border-radius: 16px; font-weight: 800; font-family: inherit; cursor: pointer; text-transform: uppercase; font-size: 13px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; justify-content: center; gap: 8px; transform: translateZ(30px); }
+.copy-btn:hover { transform: translateZ(40px) scale(1.03); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+.discord-icon-btn { background: #5865F2; border: none; padding: 14px; border-radius: 16px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; transform: translateZ(30px); }
+.discord-icon-btn:hover { transform: translateZ(40px) scale(1.05); filter: brightness(1.2); box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3); }
+.executor-info { font-size: 11px; color: var(--text-secondary); margin-top: 12px; border-top: 1px solid var(--card-border); padding-top: 12px; white-space: pre-line; line-height: 1.4; transform: translateZ(20px); font-family: monospace; }
+
+.discord-btn { width: 100%; max-width: 250px; padding: 14px; background: #5865F2; color: #fff; border: none; border-radius: 16px; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-block; text-align: center; margin-top: 10px;}
+
+.disabled-box { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 20px; border-radius: 16px; text-align: center; color: var(--error); margin-bottom: 15px; }
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 900px) {
+  .dashboard-layout { flex-direction: column; padding: 0; }
+  .sidebar { width: 100%; flex: none; border-radius: 20px; padding: 16px; } 
+  .sidebar h2 { display: none; }
+  .sidebar-nav { flex-direction: row; overflow-x: auto; padding-bottom: 8px; } 
+  .sidebar-footer { flex-direction: row; justify-content: space-around; padding-top: 12px; }
+  .sidebar-btn { flex: 1; justify-content: center; min-width: max-content; }
+  .btn-desc { display: none; }
+  .main-content { width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .landing-hero h1 { font-size: 40px; margin-bottom: 12px; }
+  .landing-hero p { font-size: 16px; margin-bottom: 24px; padding: 0 10px; }
+  .feature-grid { grid-template-columns: 1fr; gap: 16px; }
+  .dragon-track { width: 90vw; max-width: 400px; }
+  .top-bar { padding: 12px 16px; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .top-bar-left, .top-bar-right { justify-content: center; width: 100%; }
+  .app-content { padding-top: 100px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="toast-notification">
+      <div class="toast-icon"><i data-lucide="check-circle"></i></div>
+      <div class="toast-text">
+          <h4 id="toastTitle">Success</h4>
+          <p id="toastDesc">Operation completed successfully.</p>
+      </div>
+  </div>
+
+  <!-- INTRO TRAILER OVERLAY -->
+  <div id="introOverlay">
+    <div class="dragon-container">
+       <h2>GLOBAL SCRIPT'S</h2>
+       <div class="dragon-track">
+          <div class="white-dragon"></div>
+       </div>
+    </div>
+  </div>
+
+  <!-- LANDING PREVIEW -->
+  <div id="landingWrapper">
+    <div class="landing-hero">
+      <h1 data-i18n="l_title">Dive in, ride with Global Scripts</h1>
+      <p data-i18n="l_sub">Experience the next generation of script execution. Packed with power, built for stability, and designed for you.</p>
+      <button class="login-to-start-btn" onclick="window.enterAppFromLanding()" data-i18n="l_btn">ENTER HUB</button>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-box">
+        <h3><i data-lucide="zap" style="color:var(--success);"></i> <span data-i18n="f_fast">Lightning Fast</span></h3>
+        <p data-i18n="f_fast_d">Blazing fast script execution with virtually zero delay and optimized memory usage.</p>
+      </div>
+      <div class="feature-box">
+        <h3><i data-lucide="shield-check" style="color:#0abfff;"></i> <span data-i18n="f_crash">Crash Resistant</span></h3>
+        <p data-i18n="f_crash_d">Tested interface and advanced stability protocols built by veteran developers.</p>
+      </div>
+      <div class="feature-box">
+        <h3><i data-lucide="cloud" style="color:#ff9f0a;"></i> <span data-i18n="f_cloud">Cloud Hub</span></h3>
+        <p data-i18n="f_cloud_d">Instant access to a massive verified database of scripts for all popular games.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ambient-bg"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="lang-dropdown-wrapper">
+         <div class="ui-pill" id="langBtn" onclick="document.getElementById('langMenu').classList.toggle('show')"><span id="langBtnText">🌎 EN</span></div>
+         <div class="lang-menu" id="langMenu">
+            <div class="lang-option" onclick="window.setLang('en')">🇺🇸 EN (English)</div>
+            <div class="lang-option" onclick="window.setLang('ru')">🇷🇺 RU (Русский)</div>
+            <div class="lang-option" onclick="window.setLang('ja')">🇯🇵 JA (日本語)</div>
+            <div class="lang-option" onclick="window.setLang('pt')">🇧🇷 PT (Português)</div>
+         </div>
+      </div>
+      <button class="ui-pill" id="themeBtn" data-i18n="theme_btn">Light Mode</button>
+    </div>
+    <div class="top-bar-right" id="userWrapper" style="display:none;">
+      <div class="ui-pill" id="userDisplay"><i data-lucide="user" style="width:14px; height:14px;"></i> <span id="userLoginText">Guest</span></div>
+      <div class="ui-pill"><div class="recording-dot"></div><span id="clock">00:00:00</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTENT -->
+  <div class="app-content" id="appMainWrapper">
+    
+    <!-- MAIN DASHBOARD -->
+    <div class="dashboard-layout" id="dashboardLayout">
+      <div class="sidebar">
+        <div class="header" style="margin-bottom: 30px;">
+          <img src="https://raw.githubusercontent.com/Rob4ik02/Global-Scripts-Development/refs/heads/main/Icon.png" alt="" style="width:54px; height:54px; border-radius:14px;" />
+          <h1 style="font-size: 20px;">Global Script's</h1>
+        </div>
+        <h2 data-i18n="menu">MENU</h2>
+        <div class="sidebar-nav">
+          <button class="sidebar-btn active" data-target="tab-main"><i data-lucide="home"></i><div class="btn-text-content"><div class="btn-title" data-i18n="m_main">MAIN</div><div class="btn-desc" data-i18n="m_main_d">Your main profile</div></div></button>
+          <button class="sidebar-btn" data-target="tab-keys"><i data-lucide="key"></i><div class="btn-text-content"><div class="btn-title" data-i18n="m_key">KEY SYSTEM</div><div class="btn-desc" data-i18n="m_key_d">Get a key</div></div></button>
+          <button class="sidebar-btn" data-target="tab-scripts"><i data-lucide="file-code"></i><div class="btn-text-content"><div class="btn-title" data-i18n="m_scr">SCRIPTS</div><div class="btn-desc" data-i18n="m_scr_d">Game scripts</div></div></button>
+          <button class="sidebar-btn" data-target="tab-faq"><i data-lucide="help-circle"></i><div class="btn-text-content"><div class="btn-title" data-i18n="m_faq">FAQ</div><div class="btn-desc" data-i18n="m_faq_d">Got questions?</div></div></button>
+        </div>
+        <div class="sidebar-footer">
+          <button class="sidebar-btn sidebar-btn-footer" data-target="tab-discord" onclick="window.open('https://discord.gg/', '_blank')"><i data-lucide="message-square"></i><div class="btn-text-content"><div class="btn-title" data-i18n="m_disc">DISCORD</div><div class="btn-desc" data-i18n="m_disc_d">Join us</div></div></button>
+        </div>
+      </div>
+      
+      <div class="main-content">
+        <!-- ТАБ: ПРОФИЛЬ -->
+        <div class="tab-content active" id="tab-main">
+          <h2 data-i18n="u_prof"><i data-lucide="user" style="width:28px; height:28px;"></i> User Profile</h2>
+          <div class="dashboard-card">
+            <p style="color: var(--text-primary); font-weight: 600; font-size: 16px; margin-bottom: 4px;" data-i18n="acc_det">Account Details</p>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label" data-i18n="l_login">LOGIN</span><span class="profile-value">Guest User</span></div>
+              <div class="profile-item"><span class="profile-label" data-i18n="l_plan">CURRENT PLAN</span><span class="profile-value">Free Tier</span></div>
+              <div class="profile-item"><span class="profile-label" data-i18n="l_reg">STATUS</span><span class="profile-value" style="color: var(--success);">Active</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ТАБ: КЛЮЧИ -->
+        <div class="tab-content" id="tab-keys">
+          <h2 data-i18n="k_gen"><i data-lucide="key" style="width:28px; height:28px;"></i> Key Generator</h2>
+          <div class="dashboard-card">
+            <div class="disabled-box">
+                <i data-lucide="server-crash" style="width:48px;height:48px; margin-bottom:10px;"></i>
+                <h3 data-i18n="k_unl" style="margin: 0 0 10px 0;">System Disabled</h3>
+                <p data-i18n="k_desc" style="margin:0; font-size: 14px;">The key system is currently unavailable or under maintenance. Please check back later.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ТАБ: СКРИПТЫ -->
+        <div class="tab-content" id="tab-scripts">
+          <h2 data-i18n="s_lib"><i data-lucide="file-code" style="width:28px; height:28px;"></i> Scripts Library</h2>
+          <div class="scripts-grid" id="userScriptsContainer"></div>
+        </div>
+        
+        <!-- ТАБ: FAQ -->
+        <div class="tab-content" id="tab-faq">
+          <h2 data-i18n="f_tit"><i data-lucide="help-circle" style="width:28px; height:28px;"></i> FAQ & Support</h2>
+          <div class="dashboard-card" id="userTicketFormCard">
+              <p data-i18n="f_desc" style="font-size: 16px; font-weight: bold;">Got questions? We answer fast!</p>
+              <hr style="border-top: 1px solid var(--card-border); border-bottom: none; margin: 16px 0;">
+              <input type="text" id="uTicketReason" class="dev-select" data-i18n-ph="t_reason_ph" placeholder="Reason for support..." style="margin-bottom: 12px; width: 100%;">
+              <select id="uTicketPriority" class="dev-select" style="margin-bottom: 12px; width: 100%;">
+                  <option value="Normal" data-i18n="t_norm">Normal Speed</option>
+                  <option value="Fast" data-i18n="t_fast">Fast Response</option>
+              </select>
+              <button class="action-btn" style="width: 100%;" onclick="window.submitFakeTicket()" data-i18n="t_send"><i data-lucide="send" style="width:16px;height:16px;"></i> Send Support Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // 1. ИЗОЛИРОВАННЫЙ JS ДЛЯ VERCEL (PURE STATIC)
+  let currentLang = 'en';
+  let globalWarpSpeedY = 0;
+  let isSystemLoading = false;
+
+  // --- ХАРДКОД БАЗЫ СКРИПТОВ ДЛЯ СТАТИКИ ---
+  const STATIC_SCRIPTS = [
+      {
+          id: 1,
+          title: "Oxygen Hub Script",
+          game: "Muscle Legends",
+          banner_url: "https://static.wikia.nocookie.net/muscle-legends/images/5/50/Wiki-background/revision/latest/scale-to-width-down/670",
+          script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Rob4ik02/Muscle-Legends-Roblox/refs/heads/main/Muscle%20Legends/Sirius%20Library/Loader.lua"))()',
+          description: "Good script, works in beta version. There are some bugs or errors. They say it will be updated.",
+          executors_info: "Delta - Working! | sUNC - 100%\nLast update: 26.07.2026\nWave - Not working.",
+          script_discord: "https://discord.gg/"
+      }
+  ];
+
+  // 2. СЛОВАРИ
+  const i18n = {
+    en: { 
+        theme_btn: "Light Mode", menu: "MENU", m_main: "MAIN", m_main_d: "Your main profile", m_key: "KEY SYSTEM", m_key_d: "Get a key", 
+        m_scr: "SCRIPTS", m_scr_d: "Game scripts", m_faq: "FAQ", m_faq_d: "Got questions?", m_disc: "DISCORD", m_disc_d: "Join us", 
+        u_prof: "User Profile", acc_det: "Account Details", l_login: "LOGIN", l_plan: "CURRENT PLAN", l_reg: "STATUS", 
+        k_gen: "Key Generator", k_unl: "System Disabled", k_desc: "The key system is currently unavailable or under maintenance. Please check back later.", 
+        s_lib: "Scripts Library", s_copy: "COPY LUA SCRIPT", f_tit: "FAQ & Support", f_desc: "Got questions? We answer fast!", 
+        c_tit: "Community", disc_club: "Global Scripts Club", disc_desc: "Join to follow updates and chat!", disc_join: "Join the Club", 
+        t_reason_ph: "Reason for support...", t_norm: "Normal Speed", t_fast: "Fast Response", t_send: "Send Support Request", 
+        l_title: "Dive in, ride with Global Scripts", l_sub: "Experience the next generation of script execution. Packed with power, built for stability, and designed for you.", 
+        l_btn: "ENTER HUB", f_fast: "Lightning Fast", f_fast_d: "Blazing fast script execution with virtually zero delay.", 
+        f_crash: "Crash Resistant", f_crash_d: "Tested interface and advanced stability protocols.", f_cloud: "Cloud Hub", 
+        f_cloud_d: "Instant access to a massive verified database of scripts.", s_no_scripts: "No scripts available at the moment."
+    },
+    ru: { 
+        theme_btn: "Светлая тема", menu: "МЕНЮ", m_main: "ГЛАВНАЯ", m_main_d: "Профиль", m_key: "КЛЮЧИ", m_key_d: "Получить доступ", 
+        m_scr: "СКРИПТЫ", m_scr_d: "Игровые скрипты", m_faq: "FAQ", m_faq_d: "Вопросы?", m_disc: "DISCORD", m_disc_d: "Чат", 
+        u_prof: "Профиль", acc_det: "Детали", l_login: "ЛОГИН", l_plan: "ПЛАН", l_reg: "СТАТУС", 
+        k_gen: "Генератор", k_unl: "Система отключена", k_desc: "Генерация ключей временно недоступна. Зайдите позже.", 
+        s_lib: "Скрипты", s_copy: "КОПИРОВАТЬ LUA", f_tit: "FAQ и Поддержка", f_desc: "Есть вопросы? Ответим быстро!", 
+        c_tit: "Комьюнити", disc_club: "Global Scripts Club", disc_desc: "Заходи, общайся, следи за апдейтами!", disc_join: "Зайти в клуб", 
+        t_reason_ph: "Причина вызова поддержки...", t_norm: "Обычно", t_fast: "Быстро", t_send: "Отправить запрос", 
+        l_title: "Погружайся, лети с Global Scripts", l_sub: "Ощути новое поколение запуска скриптов. Мощно, стабильно и сделано специально для тебя.", 
+        l_btn: "ВОЙТИ В ХАБ", f_fast: "Молниеносная Скорость", f_fast_d: "Сверхбыстрый запуск скриптов.", 
+        f_crash: "Защита от крашей", f_crash_d: "Проверенный интерфейс и передовые протоколы стабильности.", f_cloud: "Облачный Хаб", 
+        f_cloud_d: "Мгновенный доступ к огромной базе скриптов.", s_no_scripts: "На данный момент скриптов нет."
+    },
+    ja: { 
+        theme_btn: "ライト", menu: "メニュー", m_main: "メイン", m_main_d: "プロフィール", m_key: "キー", m_key_d: "アクセス", 
+        m_scr: "スクリプト", m_scr_d: "ゲーム", m_faq: "FAQ", m_faq_d: "質問？", m_disc: "DISCORD", m_disc_d: "参加", 
+        u_prof: "プロフィール", acc_det: "詳細", l_login: "ログイン", l_plan: "プラン", l_reg: "ステータス", 
+        k_gen: "キー生成", k_unl: "システム無効", k_desc: "現在キーシステムは利用できません。", 
+        s_lib: "ライブラリ", s_copy: "コピー", f_tit: "FAQ", f_desc: "質問？", c_tit: "コミュニティ", 
+        disc_club: "クラブ", disc_desc: "チャットに参加！", disc_join: "参加", t_reason_ph: "理由...", 
+        t_norm: "通常", t_fast: "早い", t_send: "送信", l_title: "Global Scriptsで波に乗れ", 
+        l_sub: "次世代のスクリプト実行を体験しよう。", l_btn: "ハブに入る", f_fast: "超高速", 
+        f_fast_d: "超高速なスクリプト実行。", f_crash: "クラッシュ耐性", f_crash_d: "高度な安定性プロトコル。", 
+        f_cloud: "クラウドハブ", f_cloud_d: "スクリプトへの即時アクセス。", s_no_scripts: "現在スクリプトはありません。"
+    },
+    pt: { 
+        theme_btn: "Claro", menu: "MENU", m_main: "PRINCIPAL", m_main_d: "Perfil", m_key: "CHAVES", m_key_d: "Acesso", 
+        m_scr: "SCRIPTS", m_scr_d: "Scripts", m_faq: "FAQ", m_faq_d: "Dúvidas?", m_disc: "DISCORD", m_disc_d: "Junte-se", 
+        u_prof: "Perfil", acc_det: "Detalhes", l_login: "LOGIN", l_plan: "PLANO", l_reg: "STATUS", 
+        k_gen: "Gerador", k_unl: "Sistema Desativado", k_desc: "O sistema de chaves está indisponível no momento.", 
+        s_lib: "Biblioteca", s_copy: "COPIAR LUA", f_tit: "FAQ", f_desc: "Dúvidas?", c_tit: "Comunidade", 
+        disc_club: "Clube", disc_desc: "Junte-se ao chat!", disc_join: "Entrar", t_reason_ph: "Motivo...", 
+        t_norm: "Normal", t_fast: "Rápido", t_send: "Enviar Pedido", l_title: "Mergulhe com a Global Scripts", 
+        l_sub: "Experimente a próxima geração de execução de scripts.", l_btn: "ENTRAR NO HUB", 
+        f_fast: "Super Rápido", f_fast_d: "Execução extremamente rápida.", f_crash: "Resistente a Falhas", 
+        f_crash_d: "Protocolos avançados de estabilidade.", f_cloud: "Hub em Nuvem", f_cloud_d: "Acesso a um enorme banco de dados.", 
+        s_no_scripts: "Nenhum script disponível no momento."
+    }
+  };
+
+  // 3. ГЛОБАЛЬНЫЕ ФУНКЦИИ
+  window.updateIcons = function() { if (typeof lucide !== 'undefined') lucide.createIcons(); }
+  
+  window.setLang = function(lang) {
+    currentLang = lang; localStorage.setItem('lang', lang);
+    const map = { en: "🌎 EN", ru: "🇷🇺 RU", ja: "🇯🇵 JA", pt: "🇧🇷 PT" };
+    document.getElementById('langBtnText').innerText = map[lang];
+    document.getElementById('langMenu').classList.remove('show');
+    document.querySelectorAll('[data-i18n]').forEach(el => { if(i18n[lang][el.getAttribute('data-i18n')]) el.innerText = i18n[lang][el.getAttribute('data-i18n')]; });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => { if(i18n[lang][el.getAttribute('data-i18n-ph')]) el.placeholder = i18n[lang][el.getAttribute('data-i18n-ph')]; });
+  }
+
+  window.showToast = function(title, desc) {
+      document.getElementById('toastTitle').innerText = title;
+      document.getElementById('toastDesc').innerText = desc;
+      const toast = document.getElementById('toastNotification');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  window.switchTab = function(targetId) {
+    const sidebarBtns = document.querySelectorAll('.sidebar-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    sidebarBtns.forEach(b => b.classList.remove('active')); tabContents.forEach(t => t.classList.remove('active'));
+    sidebarBtns.forEach(b => { if(b.getAttribute('data-target') === targetId) b.classList.add('active'); }); document.getElementById(targetId).classList.add('active');
+    if(targetId === 'tab-scripts') { window.loadStaticScripts(); }
+    window.initTiltEffect(); 
+  }
+
+  window.initTiltEffect = function() {
+      const cards = document.querySelectorAll('.feature-box:not(.tilt-applied), .script-card:not(.tilt-applied), .dashboard-card:not(.tilt-applied)');
+      cards.forEach(card => {
+          card.classList.add('tilt-applied');
+          card.addEventListener('mousemove', e => {
+              const rect = card.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              const isDashboard = card.closest('#dashboardLayout') !== null;
+              const maxTilt = isDashboard ? 1.5 : 3; 
+              const rotateX = ((y - centerY) / centerY) * -maxTilt;
+              const rotateY = ((x - centerX) / centerX) * maxTilt;
+              card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+              card.style.transition = 'transform 0.1s ease-out'; 
+              card.style.zIndex = '10';
+          });
+          card.addEventListener('mouseleave', () => {
+              card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+              card.style.transition = 'transform 0.6s ease';
+              card.style.zIndex = '1';
+          });
+      });
+  }
+
+  window.enterAppFromLanding = function() {
+      const landing = document.getElementById('landingWrapper');
+      landing.style.opacity = '0';
+      setTimeout(() => {
+          landing.style.display = 'none';
+          globalWarpSpeedY = 25; 
+          setTimeout(() => {
+              document.getElementById('appMainWrapper').style.display = 'flex';
+              document.getElementById('userWrapper').style.display = 'flex';
+              document.getElementById('clockWrapper').style.display = 'flex';
+              document.getElementById('dashboardLayout').style.display = 'flex';
+              window.loadStaticScripts();
+              window.updateIcons();
+              window.initTiltEffect();
+          }, 600);
+      }, 500);
+  }
+
+  window.loadStaticScripts = function() {
+      const container = document.getElementById('userScriptsContainer');
+      container.innerHTML = '';
+      if(STATIC_SCRIPTS.length === 0) {
+          container.innerHTML = `
+          <div style="text-align:center; padding: 40px; background: var(--input-bg); border-radius: 20px; border: 1px solid var(--input-border); width: 100%;">
+              <i data-lucide="file-x" style="width:48px;height:48px; color:var(--text-secondary); margin-bottom: 16px;"></i>
+              <p data-i18n="s_no_scripts" style="color:var(--text-secondary); margin-bottom: 16px;">No scripts available at the moment.</p>
+          </div>`;
+          window.setLang(currentLang); window.updateIcons(); return;
+      }
+      
+      STATIC_SCRIPTS.forEach(s => {
+          let btnHtml = `<button class="copy-btn" onclick="window.copyScriptCode(this, '${btoa(s.script_code)}')" data-i18n="s_copy"><i data-lucide="copy" style="width:16px;height:16px;"></i> COPY LUA SCRIPT</button>`;
+          let discBtn = s.script_discord ? `<button class="discord-icon-btn" title="Discord" onclick="window.open('${s.script_discord}', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;color:#fff;"></i></button>` : '';
+          let buttonsRow = `<div style="display:flex; gap:10px; margin-top: auto;">${btnHtml}${discBtn}</div>`;
+          let safeExecutors = s.executors_info ? s.executors_info.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
+          let execInfoHtml = safeExecutors ? `<div class="executor-info">${safeExecutors}</div>` : '';
+          container.innerHTML += `
+          <div class="script-card">
+            <div class="script-banner" style="background-image: url('${s.banner_url}');"></div>
+            <div class="script-content">
+              <div class="script-header">
+                  <h3>${s.title}</h3>
+                  <span class="game-tag">for game: ${s.game}</span>
+              </div>
+              <p class="script-desc">${s.description}</p>
+              ${buttonsRow}
+              ${execInfoHtml}
+            </div>
+          </div>`;
+      });
+      window.setLang(currentLang);
+      window.updateIcons(); window.initTiltEffect();
+  }
+
+  window.copyScriptCode = function(btn, base64Code) {
+    const finalCode = atob(base64Code);
+    navigator.clipboard.writeText(finalCode).then(() => {
+      const originalHtml = btn.innerHTML; 
+      btn.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> Copied!'; 
+      btn.style.backgroundColor = 'var(--success)'; btn.style.color = '#fff';
+      window.updateIcons(); setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = ''; btn.style.color = ''; window.updateIcons(); }, 2000);
+    });
+  }
+
+  window.submitFakeTicket = function() {
+      const reason = document.getElementById('uTicketReason').value.trim(); 
+      if(!reason) return;
+      window.showToast("Success", "Your support request has been sent locally!");
+      document.getElementById('uTicketReason').value = '';
+  }
+
+  // 4. ИНИЦИАЛИЗАЦИЯ CANVAS (ЧАСТИЦЫ ФОНА)
+  function initCanvasParticles() {
+      const canvas = document.getElementById('bgCanvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height, particles = [], mouse = { x: -1000, y: -1000 };
+      let currentDotColor = 'rgba(255, 255, 255, 0.3)';
+      function updateCanvasColor() { currentDotColor = getComputedStyle(document.body).getPropertyValue('--dot-color').trim(); }
+      function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; particles = []; let num = (width * height) / 8000; for(let i=0; i<num; i++) particles.push(new Particle()); }
+      class Particle {
+        constructor() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 2 + 1; this.angle = Math.random() * 360; this.speed = Math.random() * 0.3 + 0.1; this.vx = 0; this.vy = 0; this.friction = 0.92; }
+        update() {
+          this.angle += 0.01;
+          if (globalWarpSpeedY > 0) { this.y -= globalWarpSpeedY * (this.speed * 2); } else {
+              this.vy -= this.speed * 0.1; this.vx += Math.sin(this.angle) * 0.05; 
+          }
+          let dx = mouse.x - this.x, dy = mouse.y - this.y, distance = Math.sqrt(dx * dx + dy * dy), maxDistance = 180;
+          if (distance < maxDistance) { let force = (maxDistance - distance) / maxDistance; this.vx -= (dx / distance) * force * 1.5; this.vy -= (dy / distance) * force * 1.5; }
+          this.vx *= this.friction; this.vy *= this.friction; this.x += this.vx; this.y += this.vy;
+          if (this.y < -20) { this.y = height + 20; this.x = Math.random() * width; this.vx = 0; this.vy = 0;}
+          if (this.y > height + 20) { this.y = -20; this.x = Math.random() * width; this.vx = 0; this.vy = 0;}
+          if (this.x < -20) { this.x = width + 20; this.vx = 0; this.vy = 0;}
+          if (this.x > width + 20) { this.x = -20; this.vx = 0; this.vy = 0;}
+        }
+        draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = currentDotColor; ctx.fill(); }
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      window.addEventListener('mouseout', () => { mouse.x = -1000; mouse.y = -1000; });
+      function animate() { 
+          ctx.clearRect(0, 0, width, height); 
+          if (globalWarpSpeedY > 0) { globalWarpSpeedY *= 0.94; if (globalWarpSpeedY < 0.1) globalWarpSpeedY = 0; }
+          for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); } 
+          requestAnimationFrame(animate); 
+      }
+      updateCanvasColor(); resize(); animate();
+      document.getElementById('themeBtn').addEventListener('click', () => { setTimeout(updateCanvasColor, 100); });
+  }
+
+  // 5. ЗАПУСК
+  document.addEventListener('DOMContentLoaded', () => {
+    window.updateIcons();
+    initCanvasParticles();
+
+    const savedLang = localStorage.getItem('lang') || 'en';
+    window.setLang(savedLang);
+
+    const sidebarBtns = document.querySelectorAll('.sidebar-btn');
+    sidebarBtns.forEach(btn => btn.addEventListener('click', () => window.switchTab(btn.getAttribute('data-target'))));
+
+    const themeBtn = document.getElementById('themeBtn');
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+    themeBtn.addEventListener('click', () => {
+      const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); 
+    });
+
+    setInterval(() => {
+        const d = new Date();
+        document.getElementById('clock').innerText = d.toLocaleTimeString('ru-RU');
+    }, 1000);
+
+    // Запуск интро
+    setTimeout(() => {
+        const intro = document.getElementById('introOverlay');
+        if(intro) {
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                document.getElementById('landingWrapper').style.display = 'flex';
+                window.updateIcons();
+                window.initTiltEffect();
+            }, 800);
+        }
+    }, 2000); 
+
+  });
+
+</script>
+</body>
+</html>
