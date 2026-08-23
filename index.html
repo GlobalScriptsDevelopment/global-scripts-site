@@ -12,7 +12,6 @@
 <style>
 /* основные переменные цветов */
 :root {
-  --bg-color: #020202; 
   --text-primary: #ffffff; 
   --text-secondary: #9ca3af;
   --card-bg: linear-gradient(145deg, rgba(25, 25, 30, 0.6), rgba(10, 10, 15, 0.6));
@@ -30,7 +29,7 @@
   --glow-color: rgba(255, 255, 255, 0.05);
 }
 
-/* светлая тема (потом мб доработаю) */
+/* светлая тема */
 [data-theme="light"] {
   --bg-color: #f3f4f6; 
   --text-primary: #111827; 
@@ -49,20 +48,31 @@
 
 * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; min-height: 100vh; margin: 0; padding: 0; }
+
+/* медленный космический градиент на фоне */
 body { 
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    background-color: var(--bg-color); color: var(--text-primary); 
-    transition: background-color 0.4s ease, color 0.4s ease; 
+    color: var(--text-primary); 
     overflow-x: hidden; overflow-y: auto; 
+    background: linear-gradient(135deg, #000000 0%, #111116 50%, #050505 100%);
+    background-size: 400% 400%;
+    animation: ambientGradient 20s ease infinite;
 }
+
+@keyframes ambientGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 input, textarea { user-select: text; -webkit-user-select: text; }
 
-.lang-transition { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.lang-transition { transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .lang-blur { filter: blur(8px) scale(0.98); opacity: 0; pointer-events: none; }
 
 /* кастомный скроллбар */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; transition: background 0.3s; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
@@ -72,58 +82,68 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .toast-icon { color: var(--text-primary); display: flex; align-items: center; justify-content: center; }
 .toast-text p { margin: 0; font-size: 14px; color: var(--text-primary); font-weight: 500; }
 
-#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0; animation: fadeInCanvas 2s ease forwards; }
+/* Канвас */
+#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0; animation: fadeInCanvas 2s ease forwards; will-change: opacity; }
 @keyframes fadeInCanvas { to { opacity: 1; } }
 .central-glow { position: fixed; top: 50%; left: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(circle, var(--glow-color) 0%, transparent 60%); z-index: -3; pointer-events: none; }
 
-/* пасхалка с реальной землей */
-.real-planet-container {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 360px; height: 360px; z-index: -1;
-    opacity: 0; pointer-events: none; 
-    transition: opacity 1.5s ease;
-    transform-style: preserve-3d;
+/* КОНТЕЙНЕР ПАСХАЛКИ */
+.easter-egg-container {
+    position: fixed; top: 50%; left: 50%; 
+    z-index: -1; pointer-events: none; 
 }
-.real-planet-container.show { opacity: 1; }
 
+/* фикс планеты */
 .real-planet-sphere {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%; border-radius: 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 450px; height: 450px; /* Размер ПК */
+    margin-top: -225px; margin-left: -225px;
+    border-radius: 50%;
     background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
     background-size: 200% 100%;
-    filter: grayscale(100%) contrast(1.1) brightness(0.75);
+    filter: grayscale(100%) contrast(1.15) brightness(0.75);
     background-color: #080808; 
     animation: spinRealEarth 30s linear infinite;
     z-index: 2;
     overflow: hidden;
-    image-rendering: high-quality;
+    opacity: 0; 
+    transform: scale(0.3);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    will-change: transform, opacity;
 }
 .real-planet-sphere::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    box-shadow: inset -40px -40px 60px rgba(0,0,0,0.85), inset 10px 10px 40px rgba(200,200,200,0.15), 0 0 60px rgba(255,255,255,0.05);
-    pointer-events: none; 
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%;
+    box-shadow: inset -40px -40px 80px rgba(0,0,0,0.85), inset 10px 10px 40px rgba(200,200,200,0.15), 0 0 60px rgba(255,255,255,0.05);
 }
+.real-planet-sphere.show { 
+    opacity: 1; 
+    transform: scale(1); 
+    pointer-events: auto; 
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.27); 
+}
+
 @keyframes spinRealEarth { 
     0% { background-position: 0% 0; } 
     100% { background-position: -200% 0; } 
 }
 
-/* кольцо lua */
-.ring-container-back, .ring-container-front {
-    position: absolute; top: 50%; left: 50%;
-    width: 600px; height: 600px;
-    transform: translate(-50%, -50%) rotateX(75deg) rotateY(-10deg);
+/* Кольца LUA */
+.lua-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 800px; height: 800px; /* Размер орбиты ПК */
+    margin-top: -400px; margin-left: -400px;
+    transform: rotateX(75deg) rotateY(-10deg) scale(1);
+    will-change: transform;
 }
-.ring-container-back { z-index: 1; clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
-.ring-container-front { z-index: 3; clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
+.ring-back { z-index: 1; clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+.ring-front { z-index: 3; clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
 
-.spinning-ring {
+.spinning-code {
     width: 100%; height: 100%;
-    animation: spinLua 20s linear infinite;
+    animation: spinLua 25s linear infinite;
+    will-change: transform;
 }
 @keyframes spinLua {
     0% { transform: rotate(0deg); }
@@ -131,7 +151,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 }
 
 /* лендинг */
-#landingWrapper { display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; padding: 120px 20px 40px; position: relative; z-index: 10; justify-content: center; animation: fadeUp 0.8s ease forwards; }
+#landingWrapper { display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; padding: 120px 20px 40px; position: relative; z-index: 10; justify-content: center; animation: fadeUp 0.8s ease forwards; transition: opacity 0.4s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 .landing-hero { text-align: center; max-width: 900px; margin-bottom: 60px; z-index: 2; }
@@ -142,17 +162,16 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .login-to-start-btn:hover { background: transparent; color: var(--accent); transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 40px rgba(255,255,255,0.25); }
 
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; width: 100%; max-width: 1100px; margin-bottom: 60px; perspective: 1200px; z-index: 2; }
-.feature-box, .script-card, .dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; display: flex; flex-direction: column; gap: 12px; text-align: left; transition: all 0.3s ease; transform-style: preserve-3d; }
-.feature-box:hover, .script-card:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+.feature-box { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; display: flex; flex-direction: column; gap: 12px; text-align: left; transition: all 0.3s ease; transform-style: preserve-3d; }
+.feature-box:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
 .feature-box h3 { margin: 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
 .feature-box p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-/* основной контент */
+/* основной контент (хаб) */
 .app-content { display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 100px 20px 40px 20px; animation: fadeUp 0.5s ease forwards; pointer-events: none; }
 .app-content * { pointer-events: auto; }
 
 .top-bar { position: fixed; top: 0; left: 0; width: 100vw; display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; z-index: 100; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); border-bottom: 1px solid var(--card-border); transition: background 0.4s; }
-[data-theme="light"] .top-bar { background: rgba(255,255,255,0.7); }
 .top-bar-left, .top-bar-right { display: flex; align-items: center; gap: 16px; }
 
 .header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.3s ease; margin-right: 20px; flex-shrink: 0; }
@@ -160,9 +179,24 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .header-logo img { width: 36px; height: 36px; border-radius: 10px; }
 .header-logo h1 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
 
+/* десктопная навигация */
+.desktop-nav { display: flex; gap: 8px; }
 .nav-link { background: transparent; color: var(--text-secondary); border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; padding: 8px 14px; border-radius: 10px; white-space: nowrap; }
 .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
-.nav-link.active { color: var(--bg-color); background: var(--text-primary); }
+.nav-link.active { color: var(--text-primary) !important; background: rgba(255,255,255,0.1) !important; } 
+
+/* мобильная кнопка меню (бургер) */
+.mobile-menu-btn { display: none; background: transparent; border: none; color: var(--text-primary); cursor: pointer; padding: 8px; transition: transform 0.2s; }
+.mobile-menu-btn:active { transform: scale(0.9); }
+
+/* мобильное оверлей-меню */
+.mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.mobile-menu-overlay.show { opacity: 1; pointer-events: auto; display: flex; }
+.mobile-menu-content { display: flex; flex-direction: column; gap: 20px; align-items: center; transform: scale(0.95); transition: transform 0.4s ease; width: 100%; }
+.mobile-menu-overlay.show .mobile-menu-content { transform: scale(1); }
+.mobile-menu-overlay .nav-link { font-size: 22px; padding: 12px 24px; width: auto; text-align: center; }
+.close-menu-btn { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
+.close-menu-btn:active { background: rgba(255,255,255,0.2); }
 
 /* эффект глитча для вкладки About */
 @keyframes heavyGlitch {
@@ -181,12 +215,13 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     animation: heavyGlitch 0.3s infinite; transition: all 0.3s ease; white-space: nowrap;
 }
 .glitch-text-btn:hover, .glitch-text-btn.active {
-    color: var(--success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); 
-    animation: none; opacity: 1; background: transparent; transform: scale(1.02);
+    color: var(--success) !important; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); 
+    animation: none; opacity: 1; background: transparent !important; transform: scale(1.02);
 }
 .glitch-text-btn .glitch-on { display: none; }
 .glitch-text-btn:hover .glitch-off, .glitch-text-btn.active .glitch-off { display: none; }
 .glitch-text-btn:hover .glitch-on, .glitch-text-btn.active .glitch-on { display: inline; }
+.mobile-menu-overlay .glitch-text-btn { font-size: 22px; }
 
 .ui-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap;}
 .ui-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
@@ -197,7 +232,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 10px; transition: background 0.2s; display: flex; align-items: center; gap: 8px;}
 .lang-option:hover { background: var(--input-bg); }
 
-.dashboard-layout { margin: 0 auto; display: none; width: 100%; max-width: 1100px; flex-direction: column; gap: 30px; align-items: stretch; }
+.dashboard-layout { margin: 0 auto; display: flex; width: 100%; max-width: 1100px; flex-direction: column; gap: 30px; align-items: stretch; }
+.dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; }
 
 .tab-content { display: none; flex-direction: column; gap: 20px; width: 100%; animation: fadeUp 0.4s ease forwards; }
 .tab-content.active { display: flex; }
@@ -205,7 +241,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .tab-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
 .tab-content h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
 
-/* фикс зума для инпутов на iOS (font-size: 16px) */
+/* фикс зума для инпутов на iOS */
 .dev-select { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--card-border); padding: 12px 14px; border-radius: 12px; outline: none; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer; transition: border-color 0.2s; min-width: 160px; }
 .dev-select:focus, .dev-select:hover { border-color: var(--text-primary); }
 .search-input::placeholder { color: var(--text-secondary); opacity: 0.7; font-weight: 500;}
@@ -215,7 +251,9 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
 /* карточки скриптов */
 .scripts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; align-items: start;}
-.script-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+.script-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); transition: all 0.3s ease;}
+.script-card:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+
 .script-banner { width: 100%; height: 180px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); transition: transform 0.4s ease; }
 .script-card:hover .script-banner { transform: scale(1.05); }
 .script-banner-wrapper { overflow: hidden; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; position: relative;}
@@ -223,13 +261,16 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .badge-row { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 5; flex-wrap: wrap; }
 .badge { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
-.script-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; background: var(--card-bg); z-index: 2; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+.script-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; z-index: 2; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
 .script-header h3 { margin: 0; font-size: 20px; font-weight: 700; }
 .game-tag { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 .script-desc { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; } 
 
-.copy-btn { background: var(--text-primary); color: var(--bg-color); border: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+/* КНОПКА СКОПИРОВАТЬ И ЕЕ ЖЕСТКИЙ ЦВЕТ ТЕКСТА */
+.copy-btn { background: var(--accent); color: var(--accent-text); border: none; padding: 12px 16px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.copy-btn * { color: inherit; } /* Жесткое наследование, чтобы текст и иконка не белели */
 .copy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
+
 .discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
 .discord-icon-btn:hover { border-color: #5865F2; color: #5865F2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(88,101,242,0.2); }
 .executor-info { font-size: 12px; color: var(--text-secondary); padding-top: 14px; border-top: 1px solid var(--card-border); white-space: pre-line; line-height: 1.5; font-weight: 500; font-family: monospace; }
@@ -242,23 +283,25 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .disabled-box { border: 1px dashed var(--card-border); background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; text-align: center; color: var(--text-secondary); transition: all 0.3s ease; display:flex; flex-direction: column; align-items:center; justify-content:center;}
 .disabled-box:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
 
-/* стили для секретных скриптов (тизеры) */
+/* тизеры для секреток */
 .blurred-text { filter: blur(4px); opacity: 0.6; user-select: none; pointer-events: none; }
 .blurred-img { filter: blur(15px); opacity: 0.4; }
 .btn-disabled { background: rgba(255,255,255,0.1) !important; color: var(--text-secondary) !important; cursor: not-allowed !important; box-shadow: none !important; transform: none !important; }
+.btn-disabled * { color: inherit !important; }
 
 .story-text { font-size: 16px; line-height: 2; text-align: left; font-weight: 400; max-width: 800px; margin: 0 auto; color: var(--text-secondary); }
 
-/* мобилки */
+/* адаптация под мобилки */
 @media (max-width: 900px) {
-  .top-bar { padding: 12px 16px; flex-direction: column; gap: 12px; }
-  .top-bar-left { width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  .top-bar-left::-webkit-scrollbar { display: none; }
-  .top-bar-right { width: 100%; justify-content: space-between; }
-  .nav-link, .glitch-text-btn { font-size: 14px; padding: 10px 14px; }
-  .app-content { padding-top: 160px; }
-  #langMenu { right: auto; left: 50%; transform: translateX(-50%) translateY(-10px); }
-  #langMenu.show { transform: translateX(-50%) translateY(0); }
+  .desktop-nav { display: none !important; }
+  .top-bar-right.desktop-only { display: none !important; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .top-bar { padding: 12px 20px; flex-direction: row; align-items: center; justify-content: space-between; }
+  .app-content { padding-top: 100px; }
+  
+  /* фикс размера планет для мобилок */
+  .lua-ring { width: 400px !important; height: 400px !important; margin-top: -200px !important; margin-left: -200px !important; }
+  .real-planet-sphere { width: 260px !important; height: 260px !important; margin-top: -130px !important; margin-left: -130px !important; }
 }
 
 @media (max-width: 600px) {
@@ -273,18 +316,17 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 </head>
 <body id="appBody" class="lang-transition">
 
-  <!-- уведомления -->
   <div id="toastNotification" class="toast-notification">
       <div class="toast-icon"><i data-lucide="check-circle"></i></div>
       <div class="toast-text"><p id="toastDesc">Success!</p></div>
   </div>
 
-  <div class="central-glow"></div>
   <canvas id="bgCanvas"></canvas>
   
-  <div id="realPlanetContainer" class="real-planet-container">
-      <div class="ring-container-back">
-          <svg viewBox="0 0 600 600" class="spinning-ring">
+  <!-- пасхалка (контейнер) -->
+  <div class="easter-egg-container">
+      <div class="lua-ring ring-back">
+          <svg viewBox="0 0 600 600" class="spinning-code">
               <defs>
                   <linearGradient id="luaCodeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" style="stop-color:#ffffff; stop-opacity:1" />
@@ -307,10 +349,11 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           </svg>
       </div>
 
-      <div class="real-planet-sphere"></div>
+      <!-- сама планета -->
+      <div id="realEarth" class="real-planet-sphere"></div>
 
-      <div class="ring-container-front">
-          <svg viewBox="0 0 600 600" class="spinning-ring">
+      <div class="lua-ring ring-front">
+          <svg viewBox="0 0 600 600" class="spinning-code">
               <path id="circlePathFront" d="M 300, 300 m -250, 0 a 250,250 0 1,1 500,0 a 250,250 0 1,1 -500,0" fill="none" />
               <text fill="url(#luaCodeGradient)" filter="url(#whiteGlow)" font-family="monospace" font-size="14" font-weight="bold" letter-spacing="2">
                   <textPath href="#circlePathFront" startOffset="0%">
@@ -321,7 +364,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       </div>
   </div>
 
-  <div id="landingWrapper">
+  <!-- лендинг -->
+  <div id="landingWrapper" style="display: flex;">
     <div class="landing-hero">
       <h1 data-i18n="l_title">Dive in, ride with<br>Global Scripts</h1>
       <p data-i18n="l_sub">Experience the next generation of script execution. Packed with power, built for stability, and designed specifically for Roblox.</p>
@@ -343,13 +387,16 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     </div>
   </div>
 
+  <!-- меню навигации -->
   <div class="top-bar" id="appNavbar" style="display:none;">
     <div class="top-bar-left">
       <div class="header-logo" onclick="window.switchTab('tab-main')">
           <img src="https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png" alt="Logo" />
           <h1>Global Script's</h1>
       </div>
-      <div style="display: flex; gap: 8px;">
+      
+      <!-- навигация для пк -->
+      <div class="desktop-nav">
           <button class="nav-link nav-btn active" data-target="tab-main" onclick="window.switchTab('tab-main')" data-i18n="m_main">Profile</button>
           <button class="nav-link nav-btn" data-target="tab-scripts" onclick="window.switchTab('tab-scripts')" data-i18n="m_scr">Scripts</button>
           <button class="nav-link nav-btn" data-target="tab-exploits" onclick="window.switchTab('tab-exploits')" data-i18n="m_exp">Exploits</button>
@@ -363,7 +410,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       </div>
     </div>
     
-    <div class="top-bar-right">
+    <div class="top-bar-right desktop-only">
       <button class="ui-btn" onclick="window.open('https://discord.gg/', '_blank')"><i data-lucide="message-square" style="width:14px;height:14px;"></i> Discord</button>
       <div class="lang-dropdown-wrapper">
          <button class="ui-btn" id="langBtn" onclick="document.getElementById('langMenu').classList.toggle('show')"><i data-lucide="globe" style="width:14px;height:14px;"></i> <span id="langBtnText">EN</span></button>
@@ -372,10 +419,40 @@ input, textarea { user-select: text; -webkit-user-select: text; }
             <div class="lang-option" onclick="window.setLangWithAnim('ru')">🇷🇺 Русский</div>
          </div>
       </div>
-      <button class="ui-btn" id="themeBtn"><i data-lucide="moon" style="width:14px;height:14px;"></i></button>
     </div>
+
+    <!-- бургер-меню для телефонов -->
+    <button class="mobile-menu-btn" onclick="window.toggleMobileMenu()">
+        <i data-lucide="menu" style="width:28px;height:28px;"></i>
+    </button>
   </div>
 
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+      <button class="close-menu-btn" onclick="window.toggleMobileMenu()">
+          <i data-lucide="x" style="width:24px;height:24px;"></i>
+      </button>
+      <div class="mobile-menu-content">
+          <button class="nav-link nav-btn active" data-target="tab-main" onclick="window.switchTab('tab-main'); window.toggleMobileMenu();" data-i18n="m_main">Profile</button>
+          <button class="nav-link nav-btn" data-target="tab-scripts" onclick="window.switchTab('tab-scripts'); window.toggleMobileMenu();" data-i18n="m_scr">Scripts</button>
+          <button class="nav-link nav-btn" data-target="tab-exploits" onclick="window.switchTab('tab-exploits'); window.toggleMobileMenu();" data-i18n="m_exp">Exploits</button>
+          <button class="nav-link nav-btn" data-target="tab-keys" onclick="window.switchTab('tab-keys'); window.toggleMobileMenu();" data-i18n="m_key">Keys</button>
+          <button class="nav-link nav-btn" data-target="tab-faq" onclick="window.switchTab('tab-faq'); window.toggleMobileMenu();" data-i18n="m_faq">FAQ</button>
+          <button class="glitch-text-btn nav-btn" data-target="tab-about" onclick="window.switchTab('tab-about'); window.toggleMobileMenu();">
+              <span class="glitch-off" data-i18n="m_about">Who are we?</span>
+              <span class="glitch-on" data-i18n="m_about_a">We are devs.</span>
+          </button>
+          
+          <div style="height: 1px; width: 50%; background: var(--card-border); margin: 10px 0;"></div>
+          
+          <button class="ui-btn" style="font-size: 16px; padding: 12px 24px;" onclick="window.open('https://discord.gg/', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;"></i> Discord</button>
+          <div style="display:flex; gap:12px; margin-top: 10px;">
+              <button class="ui-btn" onclick="window.setLangWithAnim('en'); window.toggleMobileMenu();">🇺🇸 EN</button>
+              <button class="ui-btn" onclick="window.setLangWithAnim('ru'); window.toggleMobileMenu();">🇷🇺 RU</button>
+          </div>
+      </div>
+  </div>
+
+  <!-- основной контент хаба -->
   <div class="app-content" id="appMainWrapper">
     <div class="dashboard-layout" id="dashboardLayout">
 
@@ -461,10 +538,15 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   let globalWarpSpeedY = 0; 
   let renderScriptsTimeout;
   let renderExploitsTimeout;
+  
+  // переменные для анимации
+  let isTransitioning = false;
   let isRealPlanet = false; 
-  let planetDotsAlpha = 1;
+  let transitionProgress = 0; 
+  let targetTransition = 0;
+  let currentRingZ = 0; // отслеживаем вращение кольца чтобы не сбивалось
 
-  // переводы (языки)
+  // тут словари
   const i18n = {
     en: { 
         theme_btn: "Theme", m_main: "Profile", m_key: "Keys", m_scr: "Scripts", m_exp: "Exploits", m_faq: "FAQ", 
@@ -472,7 +554,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         a_story: "We are scripters. But we are more than just writers of code—we are explorers of the unknown. We discover and analyze every hidden mechanism, pushing the boundaries of what is possible within the engine. We plan our architecture meticulously, ensuring every hub and execution is flawless. We spend countless hours studying materials, reversing updates, and understanding the core of the games. We prepare our tools with precision, crafting beautiful interfaces and unbreakable bypasses. We test relentlessly, ensuring zero crashes and perfect stability across all platforms. And finally, we release our work to the world, giving power back to the players.<br><br><span style='color:var(--success);font-weight:800;'>We are the Global Scripts Team - 2026. We don't build to destroy, we build to empower. We are kind!</span>",
         u_prof: "User Profile", acc_det: "Account Details", l_login: "LOGIN", l_plan: "CURRENT PLAN", l_reg: "STATUS", 
         k_gen: "Key Generator", k_unl: "System Disabled", k_desc: "The key generation system is currently offline in static mode. Please check back later.", 
-        s_lib: "Scripts Library", e_lib: "Exploits Base", s_copy: "Copy Script", e_down: "Download", f_tit: "FAQ & Support", 
+        s_lib: "Scripts Library", e_lib: "Exploits Base", s_copy: "Copy Script", s_copied: "Copied!", e_down: "Download", f_tit: "FAQ & Support", 
         f_dis_tit: "Support Offline", f_dis_desc: "The internal support ticket routing is temporarily disabled. Please use our Discord server.",
         l_title: "Dive in, ride with<br>Global Scripts", l_sub: "Experience the next generation of script execution. Packed with power, built for stability, and designed specifically for Roblox.", 
         l_btn: "ENTER HUB", f_fast: "Lightning Fast", f_fast_d: "Blazing fast script execution with virtually zero delay and optimized memory usage.", 
@@ -487,7 +569,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         a_story: "Мы — скриптеры. Но мы больше, чем просто авторы кода; мы — исследователи неизведанного. Мы узнаём и детально рассматриваем каждую скрытую механику, раздвигая границы возможного в движке. Мы планируем нашу архитектуру до мельчайших деталей, чтобы каждый хаб работал безупречно. Мы непрерывно изучаем материалы, анализируем патчи и разбираем игры на атомы. Мы готовим наши инструменты с ювелирной точностью, создавая красивые интерфейсы и надежные обходы. Мы тестируем всё на пределе возможностей, гарантируя отсутствие крашей и 100% стабильность на любых устройствах. И наконец, мы выпускаем наши творения в мир, возвращая свободу игрокам.<br><br><span style='color:var(--success);font-weight:800;'>Команда Global Scripts - 2026. Мы создаем, а не разрушаем. Мы добрые!</span>",
         u_prof: "Профиль", acc_det: "Детали аккаунта", l_login: "ЛОГИН", l_plan: "ПЛАН", l_reg: "СТАТУС", 
         k_gen: "Генератор ключей", k_unl: "Система отключена", k_desc: "Генерация ключей временно недоступна в статической версии. Зайдите позже.", 
-        s_lib: "База скриптов", e_lib: "База Эксплойтов", s_copy: "Скопировать", e_down: "Скачать", f_tit: "FAQ и Поддержка", 
+        s_lib: "База скриптов", e_lib: "База Эксплойтов", s_copy: "Скопировать скрипт", s_copied: "Скопировано!", e_down: "Скачать", f_tit: "FAQ и Поддержка", 
         f_dis_tit: "Поддержка отключена", f_dis_desc: "Внутренняя система тикетов отключена. Пожалуйста, используйте наш Discord.",
         l_title: "Погружайся, лети с<br>Global Scripts", l_sub: "Ощути новое поколение запуска скриптов. Мощно, стабильно и сделано специально для Roblox.", 
         l_btn: "ВОЙТИ В ХАБ", f_fast: "Молниеносная Скорость", f_fast_d: "Сверхбыстрый запуск скриптов с идеальной оптимизацией памяти.", 
@@ -502,7 +584,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         a_story: "私たちはスクリプターです。しかし、単なるコードの書き手ではありません。私たちは未知の探求者です。ゲームの隠されたメカニズムを発見し分析し、エンジンの限界を押し広げます。完璧なハブを目指して綿密に計画を立てます。数え切れないほどの時間を費やして資料を研究し、システムの核を理解します。美しいUIと強力なバイパスを備えたツールを準備します。すべてのプラットフォームでクラッシュゼロと完璧な安定性を保証するために、徹底的にテストを行います。そして最後に、プレイヤーに力を与えるために私たちの作品をリリースします。<br><br><span style='color:var(--success);font-weight:800;'>Global Scripts Team - 2026。私たちは破壊するためではなく、力を与えるために作ります。私たちは親切です！</span>",
         u_prof: "プロフィール", acc_det: "詳細", l_login: "ログイン", l_plan: "プラン", l_reg: "ステータス", 
         k_gen: "キー生成", k_unl: "システム無効", k_desc: "現在キーシステムは利用できません。", 
-        s_lib: "ライブラリ", e_lib: "エクスプロイト", s_copy: "コピー", e_down: "ダウンロード", f_tit: "FAQ", 
+        s_lib: "ライブラリ", e_lib: "エクスプロイト", s_copy: "スクリプトをコピー", s_copied: "コピー済み！", e_down: "ダウンロード", f_tit: "FAQ", 
         f_dis_tit: "サポートオフライン", f_dis_desc: "サポートシステムは無効です。Discordを使用してください。",
         l_title: "Global Scriptsで波に乗れ", l_sub: "次世代のスクリプト実行を体験しよう。安定性のために構築されています。", l_btn: "ハブに入る", 
         f_fast: "超高速", f_fast_d: "超高速なスクリプト実行。", f_crash: "クラッシュ耐性", 
@@ -516,7 +598,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         a_story: "Somos scripters. Mas somos mais do que apenas escritores de código — somos exploradores do desconhecido. Descobrimos e analisamos cada mecanismo oculto, ultrapassando os limites do motor. Planejamos nossa arquitetura meticulosamente, garantindo que cada hub seja impecável. Estudamos materiais por horas a fio, compreendendo o núcleo dos jogos. Preparamos nossas ferramentas com precisão, criando interfaces belas e bypasses inquebráveis. Testamos implacavelmente, garantindo zero travamentos e estabilidade perfeita em todas as plataformas. E, finalmente, lançamos nosso trabalho para o mundo, devolvendo o poder aos jogadores.<br><br><span style='color:var(--success);font-weight:800;'>Equipe Global Scripts - 2026. Não construímos para destruir, construímos para capacitar. Somos gentis!</span>",
         u_prof: "Perfil do Usuário", acc_det: "Detalhes", l_login: "LOGIN", l_plan: "PLANO", l_reg: "STATUS", 
         k_gen: "Gerador de Chaves", k_unl: "Sistema Desativado", k_desc: "O sistema de chaves está indisponível no modo estático.", 
-        s_lib: "Biblioteca", e_lib: "Exploits", s_copy: "Copiar", e_down: "Baixar", f_tit: "FAQ & Suporte", 
+        s_lib: "Biblioteca", e_lib: "Exploits", s_copy: "Copiar Script", s_copied: "Copiado!", e_down: "Baixar", f_tit: "FAQ & Suporte", 
         f_dis_tit: "Suporte Offline", f_dis_desc: "O sistema de suporte está desativado. Use o Discord.",
         l_title: "Mergulhe com a<br>Global Scripts", l_sub: "Experimente a próxima geração de execução de scripts projetada para Roblox.", l_btn: "ENTRAR NO HUB", 
         f_fast: "Super Rápido", f_fast_d: "Execução extremamente rápida.", f_crash: "Resistente a Falhas", 
@@ -527,13 +609,13 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   };
 
   window.updateIcons = function() { if (typeof lucide !== 'undefined') lucide.createIcons(); }
-  
+
   window.setLangWithAnim = function(lang) {
       if(!i18n[lang]) return;
-      document.getElementById('langMenu').classList.remove('show');
+      document.getElementById('mobileMenuOverlay').classList.remove('show');
       const body = document.getElementById('appBody');
       body.classList.add('lang-blur');
-      
+
       setTimeout(() => {
           currentLang = lang; localStorage.setItem('lang', lang);
           document.getElementById('langBtnText').innerText = lang.toUpperCase();
@@ -556,17 +638,23 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
+  // бургер менюшка с плавным появлением
+  window.toggleMobileMenu = function() {
+      const menu = document.getElementById('mobileMenuOverlay');
+      menu.classList.toggle('show');
+  }
+
   window.switchTab = function(targetId) {
     const navBtns = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     navBtns.forEach(b => b.classList.remove('active')); 
     tabContents.forEach(t => t.classList.remove('active'));
-    
+
     navBtns.forEach(b => { if(b.getAttribute('data-target') === targetId) b.classList.add('active'); }); 
     const tabEl = document.getElementById(targetId);
     if(tabEl) tabEl.classList.add('active');
-    
+
     if(targetId === 'tab-scripts') { window.renderScripts(); }
     if(targetId === 'tab-exploits') { window.renderExploits(); }
   }
@@ -576,7 +664,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       landing.style.opacity = '0';
       setTimeout(() => {
           landing.style.display = 'none';
-          globalWarpSpeedY = 30; // запуск анимации комет
+          globalWarpSpeedY = 30; // рывок комет
           setTimeout(() => {
               document.getElementById('appNavbar').style.display = 'flex';
               document.getElementById('appMainWrapper').style.display = 'flex';
@@ -588,14 +676,14 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }, 400);
   }
 
-  // рендер карточек скриптов
+  // рендер скриптов
   window.renderScripts = function() {
       clearTimeout(renderScriptsTimeout);
       const container = document.getElementById('userScriptsContainer');
       if(!container) return;
-      
+
       container.classList.remove('show');
-      
+
       renderScriptsTimeout = setTimeout(() => {
           container.innerHTML = '';
           let filter = document.getElementById('filterScripts') ? document.getElementById('filterScripts').value : 'all';
@@ -719,36 +807,87 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     if (!finalCode) return;
     navigator.clipboard.writeText(finalCode).then(() => {
       const originalHtml = btn.innerHTML; 
-      btn.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> <span>Copied!</span>'; 
+      btn.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_copied}</span>`; 
       btn.style.backgroundColor = 'var(--success)'; btn.style.color = '#fff';
       window.updateIcons(); 
       setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = ''; btn.style.color = ''; window.updateIcons(); }, 2000);
     });
   }
 
-  // скрытая планета по клику (пасхалка)
+  // --- АНИМАЦИЯ РАЗРЕЗА ПРОСТРАНСТВА ПО КЛИКУ ---
   document.addEventListener('click', (e) => {
+      // Игнорим элементы интерфейса
       if (e.target.closest('.script-card') || 
           e.target.closest('.top-bar') || 
           e.target.closest('.dashboard-card') || 
           e.target.closest('.feature-grid') ||
           e.target.closest('.landing-hero') ||
+          e.target.closest('.mobile-menu-overlay') ||
           e.target.tagName === 'BUTTON' || 
           e.target.tagName === 'INPUT' || 
           e.target.tagName === 'SELECT') {
           return;
       }
       
-      isRealPlanet = !isRealPlanet;
-      const realContainer = document.getElementById('realPlanetContainer');
-      if(isRealPlanet) {
-          realContainer.classList.add('show');
-      } else {
-          realContainer.classList.remove('show');
+      if(isTransitioning) return;
+      isTransitioning = true;
+
+      const rings = document.querySelectorAll('.lua-ring');
+      const codes = document.querySelectorAll('.spinning-code');
+      const earth = document.getElementById('realEarth');
+
+      // 1. Ускоряем вращение и накапливаем энергию (вздутие)
+      codes.forEach(c => c.style.animationDuration = '3s');
+      currentRingZ += 120;
+      rings.forEach(r => {
+          r.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+          r.style.transform = `rotateX(75deg) rotateY(-10deg) rotateZ(${currentRingZ}deg) scale(1.35)`;
+      });
+      
+      // Если уходим с точек на Землю - расщепляем точки сразу
+      if (!isRealPlanet) {
+          targetTransition = 1; 
       }
+
+      // 2. Резкий разрез пространства (кольцо схлопывается)
+      setTimeout(() => {
+          currentRingZ += 240;
+          rings.forEach(r => {
+              r.style.transition = 'transform 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
+              r.style.transform = `rotateX(75deg) rotateY(-10deg) rotateZ(${currentRingZ}deg) scale(0)`;
+          });
+
+          // 3. В самой нижней точке кольца - меняем планету
+          setTimeout(() => {
+              isRealPlanet = !isRealPlanet;
+              
+              if (isRealPlanet) {
+                  earth.classList.add('show');
+              } else {
+                  earth.classList.remove('show');
+                  // Если возвращаемся К ТОЧКАМ - начинаем собирать их только сейчас, из пустоты
+                  targetTransition = 0; 
+              }
+
+              // 4. Импульс (кольцо раскрывается обратно)
+              currentRingZ += 180;
+              rings.forEach(r => {
+                  r.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.27)'; // Bounce эффект
+                  r.style.transform = `rotateX(75deg) rotateY(-10deg) rotateZ(${currentRingZ}deg) scale(1)`;
+              });
+              
+              // возвращаем скорость вращения
+              codes.forEach(c => c.style.animationDuration = '25s');
+
+              setTimeout(() => {
+                  isTransitioning = false;
+              }, 600);
+
+          }, 280); 
+      }, 400); 
   });
 
-  // настройки канваса
+  // настройки канваса с эффектом растворения точек
   function initPlanetAndSpace() {
       const canvas = document.getElementById('bgCanvas');
       if(!canvas) return;
@@ -758,22 +897,28 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       let comets = [];
       let staticStars = [];
       let mouse = { x: 0, y: 0, targetX: 0, targetY: 0, canvasX: -1000, canvasY: -1000 };
-      
-      let planetBloom = -0.2; 
 
       function resize() { 
           w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; 
           generatePlanet(); generateStars();
       }
       
+      // генерация точек с рандомным таймером исчезновения
       function generatePlanet() {
           dots = [];
-          const numDots = window.innerWidth > 600 ? 300 : 150;
-          const radius = window.innerWidth > 600 ? 320 : 180;
+          const isDesktop = window.innerWidth > 900;
+          const numDots = isDesktop ? 350 : 150;
+          const radius = isDesktop ? 220 : 125;
+          
           for(let i = 0; i < numDots; i++) {
               const phi = Math.acos(-1 + (2 * i) / numDots);
               const theta = Math.sqrt(numDots * Math.PI) * phi;
-              dots.push({ baseX: radius * Math.cos(theta) * Math.sin(phi), baseY: radius * Math.sin(theta) * Math.sin(phi), baseZ: radius * Math.cos(phi) });
+              dots.push({ 
+                  baseX: radius * Math.cos(theta) * Math.sin(phi), 
+                  baseY: radius * Math.sin(theta) * Math.sin(phi), 
+                  baseZ: radius * Math.cos(phi),
+                  fadeOffset: Math.random() 
+              });
           }
       }
 
@@ -802,7 +947,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
               if(this.x < -100 || this.y > h + 100) this.reset();
           }
       }
-      for(let i=0; i<15; i++) comets.push(new Comet());
+      
+      for(let i=0; i<40; i++) comets.push(new Comet());
 
       window.addEventListener('resize', resize);
       window.addEventListener('mousemove', (e) => { 
@@ -812,18 +958,17 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       window.addEventListener('mouseout', () => { mouse.canvasX = -1000; mouse.canvasY = -1000; });
 
       let rotationX = 0; let rotationY = 0;
+      let actualBloom = 0; 
 
-      // главный цикл анимации
+      // рендер луп
       function animate() { 
           ctx.clearRect(0, 0, w, h); 
           let isLight = document.documentElement.getAttribute('data-theme') === 'light';
           if (globalWarpSpeedY > 0) { globalWarpSpeedY *= 0.95; if (globalWarpSpeedY < 0.1) globalWarpSpeedY = 0; }
           
-          if (planetBloom < 1) planetBloom += 0.005;
-          let actualBloom = Math.max(0, planetBloom);
+          if (actualBloom < 1) actualBloom += 0.005;
 
-          let targetDotsAlpha = isRealPlanet ? 0 : 1;
-          planetDotsAlpha += (targetDotsAlpha - planetDotsAlpha) * 0.05;
+          transitionProgress += (targetTransition - transitionProgress) * 0.08;
 
           if(!isLight) {
               staticStars.forEach(st => {
@@ -842,16 +987,26 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           rotationX += 0.0005 + (mouse.y * 0.01); rotationY += 0.0010 + (mouse.x * 0.01);
 
           dots.forEach(dot => {
+              let snapAlpha = 1;
+
+              // логика растворения точек (по одной, без взрывов)
+              if (transitionProgress > 0) {
+                  let adjustedProgress = transitionProgress * 1.4 - 0.2; 
+                  let dotFade = (adjustedProgress - dot.fadeOffset) / 0.2; 
+                  snapAlpha = 1 - Math.max(0, Math.min(1, dotFade));
+              }
+
+              let x2 = dot.baseX * Math.cos(rotationY) + (dot.baseY * Math.sin(rotationX) + dot.baseZ * Math.cos(rotationX)) * Math.sin(rotationY);
               let y1 = dot.baseY * Math.cos(rotationX) - dot.baseZ * Math.sin(rotationX);
-              let z1 = dot.baseY * Math.sin(rotationX) + dot.baseZ * Math.cos(rotationX);
-              let x2 = dot.baseX * Math.cos(rotationY) + z1 * Math.sin(rotationY);
-              let z2 = -dot.baseX * Math.sin(rotationY) + z1 * Math.cos(rotationY);
+              let z2 = -dot.baseX * Math.sin(rotationY) + (dot.baseY * Math.sin(rotationX) + dot.baseZ * Math.cos(rotationX)) * Math.cos(rotationY);
 
               let fov = 1000; let scale = fov / (fov + z2);
               let projX = w / 2 + x2 * scale; let projY = h / 2 + y1 * scale;
 
               let baseR = Math.max(0.5, 2.5 * scale);
-              let alpha = Math.max(0.05, Math.min(0.8, (z2 + 300) / 600)) * actualBloom * planetDotsAlpha;
+              let alpha = Math.max(0.05, Math.min(0.8, (z2 + 300) / 600)) * actualBloom * snapAlpha;
+              
+              if (snapAlpha <= 0.01) return; // не рендерим прозрачные точки
 
               let dx = projX - mouse.canvasX; let dy = projY - mouse.canvasY;
               let dist = Math.sqrt(dx*dx + dy*dy);
@@ -861,7 +1016,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                   ctx.save(); ctx.translate(projX, projY); ctx.scale(pulse, pulse);
                   ctx.beginPath(); ctx.moveTo(0, -baseR * 4); ctx.quadraticCurveTo(0, 0, baseR * 4, 0); ctx.quadraticCurveTo(0, 0, 0, baseR * 4); ctx.quadraticCurveTo(0, 0, -baseR * 4, 0); ctx.quadraticCurveTo(0, 0, 0, -baseR * 4);
                   ctx.fillStyle = '#ffffff'; ctx.shadowBlur = 20; ctx.shadowColor = '#ffffff'; 
-                  ctx.globalAlpha = 1 * actualBloom * planetDotsAlpha; ctx.fill(); ctx.restore();
+                  ctx.globalAlpha = 1 * actualBloom * snapAlpha; ctx.fill(); ctx.restore();
               } else {
                   ctx.beginPath(); ctx.arc(projX, projY, baseR, 0, Math.PI * 2); 
                   ctx.fillStyle = isLight ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)';
@@ -873,9 +1028,53 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       resize(); animate();
   }
 
+  // --- эффект принтера для орбиты ---
+  function startRingPrinter() {
+      const textPaths = document.querySelectorAll('.lua-ring textPath');
+      if(textPaths.length < 2) return;
+
+      const baseLength = 131; // строгая длина для плавности
+      const snippets = [
+          `local GlobalScripts = require("Roblox"); while true do loadstring(game:HttpGet("https://globalscripts.xyz"))() end -- [HUB] -- `,
+          `game:GetService("RunService").RenderStepped:Connect(function() pcall(function() FireServer("GlobalScripts") end) end) -- [RUN] -- `,
+          `for _, v in pairs(game.Players:GetPlayers()) do require(v.Character):BreakJoints() print("Global Injected") end -- [SYS] -- `,
+          `getgenv().SecureMode = true; hookfunction(gcinfo, function() return math.random(100, 500) end); warn("Bypassed") -- [BPS] -- `
+      ].map(s => s.padEnd(baseLength, " "));
+
+      let currentIdx = 0;
+
+      function typeNext() {
+          let nextIdx = (currentIdx + 1) % snippets.length;
+          let newText = snippets[nextIdx].repeat(3);
+          let oldText = textPaths[0].textContent.padEnd(newText.length, " ");
+          
+          let charIndex = 0;
+          let typeInterval = setInterval(() => {
+              // печатаем символ за символом
+              let mixedText = newText.substring(0, charIndex) + oldText.substring(charIndex);
+              textPaths[0].textContent = mixedText;
+              textPaths[1].textContent = mixedText;
+              
+              charIndex += 4; // скорость печати принтера
+              
+              if (charIndex >= newText.length) {
+                  clearInterval(typeInterval);
+                  textPaths[0].textContent = newText;
+                  textPaths[1].textContent = newText;
+                  currentIdx = nextIdx;
+                  
+                  // следующий запуск через 3-6 секунд
+                  setTimeout(typeNext, Math.random() * 3000 + 3000);
+              }
+          }, 30);
+      }
+      setTimeout(typeNext, Math.random() * 3000 + 3000);
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     window.updateIcons();
     initPlanetAndSpace(); 
+    startRingPrinter(); // запуск эффекта принтера
 
     const savedLang = localStorage.getItem('lang') || 'en';
     
@@ -895,12 +1094,11 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); 
     });
 
-    document.getElementById('landingWrapper').style.display = 'flex';
   });
 
 </script>
 
-<!-- МОИ СКРИПТЫ И ЭКСПЛОЙТЫ (база) -->
+<!-- база скриптов (добавлять сюда) -->
 <script>
   window.STATIC_SCRIPTS = [
       {
@@ -936,7 +1134,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }
   ];
 
-  // TODO: добавить больше экзекуторов
+  // тут эксплойты
   window.STATIC_EXPLOITS = [
       {
           title: "Delta",
