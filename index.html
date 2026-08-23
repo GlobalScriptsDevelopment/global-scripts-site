@@ -1,3 +1,5 @@
+<!-- Global Scripts Hub | Developed by Rob4ik02 -->
+<!-- 2026 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
-/* PREMIUM ROBLOX HUB THEME (Deep Space & Smooth UI) */
+/* основные переменные цветов */
 :root {
   --bg-color: #020202; 
   --text-primary: #ffffff; 
@@ -28,6 +30,7 @@
   --glow-color: rgba(255, 255, 255, 0.05);
 }
 
+/* светлая тема (потом мб доработаю) */
 [data-theme="light"] {
   --bg-color: #f3f4f6; 
   --text-primary: #111827; 
@@ -54,32 +57,31 @@ body {
 }
 input, textarea { user-select: text; -webkit-user-select: text; }
 
-/* LANG TRANSITION ANIMATION */
 .lang-transition { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .lang-blur { filter: blur(8px) scale(0.98); opacity: 0; pointer-events: none; }
 
+/* кастомный скроллбар */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
 ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; transition: background 0.3s; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
-/* TOAST */
+/* уведы */
 .toast-notification { position: fixed; bottom: -100px; right: 24px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); padding: 16px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; z-index: 99999; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s; opacity: 0; width: 90%; max-width: 350px; }
 .toast-notification.show { bottom: 24px; opacity: 1; }
 .toast-icon { color: var(--text-primary); display: flex; align-items: center; justify-content: center; }
 .toast-text p { margin: 0; font-size: 14px; color: var(--text-primary); font-weight: 500; }
 
-/* 3D PLANET & COMETS CANVAS BACKGROUND */
 #bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0; animation: fadeInCanvas 2s ease forwards; }
 @keyframes fadeInCanvas { to { opacity: 1; } }
 .central-glow { position: fixed; top: 50%; left: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(circle, var(--glow-color) 0%, transparent 60%); z-index: -3; pointer-events: none; }
 
-/* 🌍 РЕАЛИСТИЧНАЯ ПЛАНЕТА И LUA-КОЛЬЦО (ПАСХАЛКА ПРИ КЛИКЕ) */
+/* пасхалка с реальной землей */
 .real-planet-container {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 360px; height: 360px; z-index: -1;
     opacity: 0; pointer-events: none; 
-    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1.5s ease;
     transform-style: preserve-3d;
 }
 .real-planet-container.show { opacity: 1; }
@@ -87,7 +89,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .real-planet-sphere {
     position: absolute; top: 0; left: 0;
     width: 100%; height: 100%; border-radius: 50%;
-    /* Текстура Земли 4K (надежная ссылка) */
     background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
     background-size: 200% 100%;
     filter: grayscale(100%) contrast(1.1) brightness(0.75);
@@ -111,7 +112,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     100% { background-position: -200% 0; } 
 }
 
-/* LUA RING (Кольцо Сатурна) */
+/* кольцо lua */
 .ring-container-back, .ring-container-front {
     position: absolute; top: 50%; left: 50%;
     width: 600px; height: 600px;
@@ -129,42 +130,41 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     100% { transform: rotate(360deg); }
 }
 
-/* LANDING HERO SECTION */
-#landingWrapper { display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; padding: 120px 20px 40px; position: relative; z-index: 10; justify-content: center; animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+/* лендинг */
+#landingWrapper { display: none; flex-direction: column; align-items: center; width: 100%; min-height: 100vh; padding: 120px 20px 40px; position: relative; z-index: 10; justify-content: center; animation: fadeUp 0.8s ease forwards; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 .landing-hero { text-align: center; max-width: 900px; margin-bottom: 60px; z-index: 2; }
 .landing-hero h1 { font-size: 72px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 24px; line-height: 1.1; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
 .landing-hero p { font-size: 20px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 40px; font-weight: 500; text-shadow: 0 2px 10px rgba(0,0,0,0.5); max-width: 700px; margin-left: auto; margin-right: auto; }
 
-.login-to-start-btn { padding: 16px 42px; font-size: 16px; font-weight: 700; color: var(--accent-text); background: var(--accent); border: 2px solid var(--accent); border-radius: 12px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(255,255,255,0.15); text-transform: uppercase; letter-spacing: 1px; }
+.login-to-start-btn { padding: 16px 42px; font-size: 16px; font-weight: 700; color: var(--accent-text); background: var(--accent); border: 2px solid var(--accent); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(255,255,255,0.15); text-transform: uppercase; letter-spacing: 1px; }
 .login-to-start-btn:hover { background: transparent; color: var(--accent); transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 40px rgba(255,255,255,0.25); }
 
-/* FEATURE GRIDS */
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; width: 100%; max-width: 1100px; margin-bottom: 60px; perspective: 1200px; z-index: 2; }
-.feature-box, .script-card, .dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; display: flex; flex-direction: column; gap: 12px; text-align: left; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-style: preserve-3d; }
+.feature-box, .script-card, .dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 26px; display: flex; flex-direction: column; gap: 12px; text-align: left; transition: all 0.3s ease; transform-style: preserve-3d; }
 .feature-box:hover, .script-card:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
 .feature-box h3 { margin: 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
 .feature-box p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-/* APP LAYOUT */
-.app-content { display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 100px 20px 40px 20px; animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: none; }
+/* основной контент */
+.app-content { display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 100px 20px 40px 20px; animation: fadeUp 0.5s ease forwards; pointer-events: none; }
 .app-content * { pointer-events: auto; }
 
 .top-bar { position: fixed; top: 0; left: 0; width: 100vw; display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; z-index: 100; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); border-bottom: 1px solid var(--card-border); transition: background 0.4s; }
 [data-theme="light"] .top-bar { background: rgba(255,255,255,0.7); }
 .top-bar-left, .top-bar-right { display: flex; align-items: center; gap: 16px; }
 
-.header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); margin-right: 20px; flex-shrink: 0; }
+.header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.3s ease; margin-right: 20px; flex-shrink: 0; }
 .header-logo:hover { transform: scale(1.05); }
 .header-logo img { width: 36px; height: 36px; border-radius: 10px; }
 .header-logo h1 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
 
-.nav-link { background: transparent; color: var(--text-secondary); border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); padding: 8px 14px; border-radius: 10px; white-space: nowrap; }
+.nav-link { background: transparent; color: var(--text-secondary); border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; padding: 8px 14px; border-radius: 10px; white-space: nowrap; }
 .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
 .nav-link.active { color: var(--bg-color); background: var(--text-primary); }
 
-/* GLITCH TAB TEXT */
+/* эффект глитча для вкладки About */
 @keyframes heavyGlitch {
     0% { transform: translate(0, 0); opacity: 0.5; }
     20% { transform: translate(-1px, 1px); opacity: 0.3; }
@@ -188,53 +188,49 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .glitch-text-btn:hover .glitch-off, .glitch-text-btn.active .glitch-off { display: none; }
 .glitch-text-btn:hover .glitch-on, .glitch-text-btn.active .glitch-on { display: inline; }
 
-.ui-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 8px; white-space: nowrap;}
+.ui-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap;}
 .ui-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
 .lang-dropdown-wrapper { position: relative; }
-.lang-menu { position: absolute; top: 120%; right: 0; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-drop); min-width: 140px; z-index: 1000;}
+.lang-menu { position: absolute; top: 120%; right: 0; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s ease; box-shadow: var(--shadow-drop); min-width: 140px; z-index: 1000;}
 .lang-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 10px; transition: background 0.2s; display: flex; align-items: center; gap: 8px;}
 .lang-option:hover { background: var(--input-bg); }
 
-/* DASHBOARD */
 .dashboard-layout { margin: 0 auto; display: none; width: 100%; max-width: 1100px; flex-direction: column; gap: 30px; align-items: stretch; }
 
-.tab-content { display: none; flex-direction: column; gap: 20px; width: 100%; animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.tab-content { display: none; flex-direction: column; gap: 20px; width: 100%; animation: fadeUp 0.4s ease forwards; }
 .tab-content.active { display: flex; }
 
 .tab-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
 .tab-content h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
 
-/* FIX ЗУМА НА IOS - font-size 16px */
+/* фикс зума для инпутов на iOS (font-size: 16px) */
 .dev-select { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--card-border); padding: 12px 14px; border-radius: 12px; outline: none; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer; transition: border-color 0.2s; min-width: 160px; }
 .dev-select:focus, .dev-select:hover { border-color: var(--text-primary); }
 .search-input::placeholder { color: var(--text-secondary); opacity: 0.7; font-weight: 500;}
 
-/* FADE CONTAINER FOR SEARCH */
-.fade-container { opacity: 0; transform: translateY(10px); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.fade-container { opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .fade-container.show { opacity: 1; transform: translateY(0); }
 
-/* CARDS */
-/* ИСПОЛЬЗУЕМ AUTO-FILL ДЛЯ АВТОМАТИЧЕСКОГО РАЗМЕРА И УБРАН ALIGN-ITEMS ДЛЯ РОВНЫХ РЯДОВ */
-.scripts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; }
-.script-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; } /* HEIGHT 100% */
-.script-banner { width: 100%; height: 180px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+/* карточки скриптов */
+.scripts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; align-items: start;}
+.script-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+.script-banner { width: 100%; height: 180px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); transition: transform 0.4s ease; }
 .script-card:hover .script-banner { transform: scale(1.05); }
 .script-banner-wrapper { overflow: hidden; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; position: relative;}
 
 .badge-row { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 5; flex-wrap: wrap; }
 .badge { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
-/* FLEX: 1 РАСТЯГИВАЕТ КОНТЕНТ */
 .script-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; background: var(--card-bg); z-index: 2; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
 .script-header h3 { margin: 0; font-size: 20px; font-weight: 700; }
 .game-tag { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-.script-desc { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; } /* УБРАН FLEX 1 */
+.script-desc { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; } 
 
-.copy-btn { background: var(--text-primary); color: var(--bg-color); border: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.copy-btn { background: var(--text-primary); color: var(--bg-color); border: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
 .copy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
-.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 12px; border-radius: 10px; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; justify-content: center; }
+.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
 .discord-icon-btn:hover { border-color: #5865F2; color: #5865F2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(88,101,242,0.2); }
 .executor-info { font-size: 12px; color: var(--text-secondary); padding-top: 14px; border-top: 1px solid var(--card-border); white-space: pre-line; line-height: 1.5; font-weight: 500; font-family: monospace; }
 
@@ -246,13 +242,16 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .disabled-box { border: 1px dashed var(--card-border); background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; text-align: center; color: var(--text-secondary); transition: all 0.3s ease; display:flex; flex-direction: column; align-items:center; justify-content:center;}
 .disabled-box:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
 
-/* STORY TEXT CONTAINER */
+/* стили для секретных скриптов (тизеры) */
+.blurred-text { filter: blur(4px); opacity: 0.6; user-select: none; pointer-events: none; }
+.blurred-img { filter: blur(15px); opacity: 0.4; }
+.btn-disabled { background: rgba(255,255,255,0.1) !important; color: var(--text-secondary) !important; cursor: not-allowed !important; box-shadow: none !important; transform: none !important; }
+
 .story-text { font-size: 16px; line-height: 2; text-align: left; font-weight: 400; max-width: 800px; margin: 0 auto; color: var(--text-secondary); }
 
-/* MOBILE RESPONSIVENESS */
+/* мобилки */
 @media (max-width: 900px) {
   .top-bar { padding: 12px 16px; flex-direction: column; gap: 12px; }
-  /* Плавный скролл на телефонах без уродливой полосы */
   .top-bar-left { width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .top-bar-left::-webkit-scrollbar { display: none; }
   .top-bar-right { width: 100%; justify-content: space-between; }
@@ -268,14 +267,13 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   .feature-grid { grid-template-columns: 1fr; gap: 16px; }
   .tab-header-row { flex-direction: column; align-items: stretch; }
   .dev-select { width: 100%; max-width: 100%; min-width: 100%; }
-  /* На маленьких экранах 1 карточка в ряд смотрится лучше всего */
   .scripts-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body id="appBody" class="lang-transition">
 
-  <!-- TOAST NOTIFICATION -->
+  <!-- уведомления -->
   <div id="toastNotification" class="toast-notification">
       <div class="toast-icon"><i data-lucide="check-circle"></i></div>
       <div class="toast-text"><p id="toastDesc">Success!</p></div>
@@ -284,9 +282,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   <div class="central-glow"></div>
   <canvas id="bgCanvas"></canvas>
   
-  <!-- 🌍 РЕАЛИСТИЧНАЯ ПЛАНЕТА С КОЛЬЦОМ LUA (ПАСХАЛКА) -->
   <div id="realPlanetContainer" class="real-planet-container">
-      <!-- Заднее кольцо (сзади планеты) -->
       <div class="ring-container-back">
           <svg viewBox="0 0 600 600" class="spinning-ring">
               <defs>
@@ -311,10 +307,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           </svg>
       </div>
 
-      <!-- Сама Планета -->
       <div class="real-planet-sphere"></div>
 
-      <!-- Переднее кольцо (перед планетой) -->
       <div class="ring-container-front">
           <svg viewBox="0 0 600 600" class="spinning-ring">
               <path id="circlePathFront" d="M 300, 300 m -250, 0 a 250,250 0 1,1 500,0 a 250,250 0 1,1 -500,0" fill="none" />
@@ -327,7 +321,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       </div>
   </div>
 
-  <!-- LANDING -->
   <div id="landingWrapper">
     <div class="landing-hero">
       <h1 data-i18n="l_title">Dive in, ride with<br>Global Scripts</h1>
@@ -350,7 +343,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     </div>
   </div>
 
-  <!-- NAVBAR -->
   <div class="top-bar" id="appNavbar" style="display:none;">
     <div class="top-bar-left">
       <div class="header-logo" onclick="window.switchTab('tab-main')">
@@ -384,11 +376,9 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     </div>
   </div>
 
-  <!-- MAIN HUB -->
   <div class="app-content" id="appMainWrapper">
     <div class="dashboard-layout" id="dashboardLayout">
 
-      <!-- ПРОФИЛЬ -->
       <div class="tab-content active" id="tab-main">
         <h2 data-i18n="u_prof">User Profile</h2>
         <div class="dashboard-card">
@@ -401,7 +391,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         </div>
       </div>
 
-      <!-- СКРИПТЫ -->
       <div class="tab-content" id="tab-scripts">
         <div class="tab-header-row">
             <h2 data-i18n="s_lib" style="border:none; padding:0; margin:0;">Scripts Library</h2>
@@ -419,7 +408,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         <div class="scripts-grid fade-container" id="userScriptsContainer"></div>
       </div>
 
-      <!-- ЭКСПЛОЙТЫ -->
       <div class="tab-content" id="tab-exploits">
         <div class="tab-header-row">
             <h2 data-i18n="e_lib" style="border:none; padding:0; margin:0;">Exploits Base</h2>
@@ -438,7 +426,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         <div class="scripts-grid fade-container" id="exploitsContainer"></div>
       </div>
 
-      <!-- КЛЮЧИ -->
       <div class="tab-content" id="tab-keys">
         <h2 data-i18n="k_gen">Key Generator</h2>
         <div class="disabled-box">
@@ -448,7 +435,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         </div>
       </div>
       
-      <!-- FAQ -->
       <div class="tab-content" id="tab-faq">
         <h2 data-i18n="f_tit">FAQ & Support</h2>
         <div class="disabled-box">
@@ -458,7 +444,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         </div>
       </div>
 
-      <!-- ИСТОРИЯ (WHO ARE WE) -->
       <div class="tab-content" id="tab-about">
         <h2 data-i18n="a_tit" style="justify-content:center; border:none; margin-bottom:0;">Who are we?</h2>
         <div class="dashboard-card" style="margin-top:20px;">
@@ -472,15 +457,14 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   </div>
 
 <script>
-  // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
   let currentLang = 'en';
   let globalWarpSpeedY = 0; 
   let renderScriptsTimeout;
   let renderExploitsTimeout;
-  let isRealPlanet = false; // Статус пасхалки
+  let isRealPlanet = false; 
   let planetDotsAlpha = 1;
 
-  // --- СЛОВАРИ ПЕРЕВОДА ---
+  // переводы (языки)
   const i18n = {
     en: { 
         theme_btn: "Theme", m_main: "Profile", m_key: "Keys", m_scr: "Scripts", m_exp: "Exploits", m_faq: "FAQ", 
@@ -495,7 +479,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         f_crash: "Crash Resistant", f_crash_d: "Tested interface and advanced stability protocols built by veteran developers.", f_cloud: "Global Hub", 
         f_cloud_d: "Instant access to a massive verified database of scripts for all popular games.", s_no_scripts: "No items found for this filter.",
         f_all: "All", f_pop: "Popular", f_new: "New", f_old: "Old", f_stable: "Stable", f_upd: "Updated", f_keyless: "No Key System", f_mob: "Mobile", f_pc: "PC",
-        s_search: "Search by game or title...", e_search: "Search exploits..."
+        s_search: "Search by game or title...", e_search: "Search exploits...", s_soon: "Coming Soon"
     },
     ru: { 
         theme_btn: "Тема", m_main: "Профиль", m_key: "Ключи", m_scr: "Скрипты", m_exp: "Эксплойты", m_faq: "FAQ", 
@@ -506,11 +490,11 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         s_lib: "База скриптов", e_lib: "База Эксплойтов", s_copy: "Скопировать", e_down: "Скачать", f_tit: "FAQ и Поддержка", 
         f_dis_tit: "Поддержка отключена", f_dis_desc: "Внутренняя система тикетов отключена. Пожалуйста, используйте наш Discord.",
         l_title: "Погружайся, лети с<br>Global Scripts", l_sub: "Ощути новое поколение запуска скриптов. Мощно, стабильно и сделано специально для Roblox.", 
-        l_btn: "ВОЙТИ В ХАБ", f_fast: "Молниенос Скорость", f_fast_d: "Сверхбыстрый запуск скриптов с идеальной оптимизацией памяти.", 
+        l_btn: "ВОЙТИ В ХАБ", f_fast: "Молниеносная Скорость", f_fast_d: "Сверхбыстрый запуск скриптов с идеальной оптимизацией памяти.", 
         f_crash: "Защита от крашей", f_crash_d: "Проверенный интерфейс и передовые протоколы стабильности от разработчиков.", f_cloud: "Глобальный Хаб", 
         f_cloud_d: "Мгновенный доступ к огромной проверенной базе скриптов.", s_no_scripts: "Ничего не найдено по вашему запросу.",
         f_all: "Все", f_pop: "Популярные", f_new: "Новые", f_old: "Старые", f_stable: "Стабильные", f_upd: "Обновлены", f_keyless: "Без ключ системы", f_mob: "На телефон", f_pc: "На компьютер",
-        s_search: "Поиск по игре или названию...", e_search: "Поиск эксплойтов..."
+        s_search: "Поиск по игре или названию...", e_search: "Поиск эксплойтов...", s_soon: "Скоро будет"
     },
     ja: { 
         theme_btn: "テーマ", m_main: "プロフィール", m_key: "キー", m_scr: "スクリプト", m_exp: "エクスプロイト", m_faq: "FAQ", 
@@ -524,7 +508,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         f_fast: "超高速", f_fast_d: "超高速なスクリプト実行。", f_crash: "クラッシュ耐性", 
         f_crash_d: "高度な安定性プロトコル。", f_cloud: "グローバルハブ", f_cloud_d: "スクリプトへの即時アクセス。", s_no_scripts: "何も見つかりませんでした。",
         f_all: "すべて", f_pop: "人気", f_new: "新しい", f_old: "古い", f_stable: "安定", f_upd: "更新済み", f_keyless: "キーなし", f_mob: "モバイル", f_pc: "PC",
-        s_search: "ゲームやタイトルで検索...", e_search: "エクスプロイトを検索..."
+        s_search: "ゲームやタイトルで検索...", e_search: "エクスプロイトを検索...", s_soon: "近日公開"
     },
     pt: { 
         theme_btn: "Tema", m_main: "Perfil", m_key: "Chaves", m_scr: "Scripts", m_exp: "Exploits", m_faq: "FAQ", 
@@ -538,11 +522,10 @@ input, textarea { user-select: text; -webkit-user-select: text; }
         f_fast: "Super Rápido", f_fast_d: "Execução extremamente rápida.", f_crash: "Resistente a Falhas", 
         f_crash_d: "Protocolos avançados de estabilidade.", f_cloud: "Hub Global", f_cloud_d: "Acesso a um enorme banco de dados de scripts.", s_no_scripts: "Nenhum item encontrado.",
         f_all: "Todos", f_pop: "Popular", f_new: "Novo", f_old: "Antigo", f_stable: "Estável", f_upd: "Atualizado", f_keyless: "Sem chave", f_mob: "Celular", f_pc: "PC",
-        s_search: "Pesquisar jogo ou título...", e_search: "Pesquisar exploits..."
+        s_search: "Pesquisar jogo ou título...", e_search: "Pesquisar exploits...", s_soon: "Em breve"
     }
   };
 
-  // --- ЛОГИКА ИНТЕРФЕЙСА ---
   window.updateIcons = function() { if (typeof lucide !== 'undefined') lucide.createIcons(); }
   
   window.setLangWithAnim = function(lang) {
@@ -593,7 +576,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       landing.style.opacity = '0';
       setTimeout(() => {
           landing.style.display = 'none';
-          globalWarpSpeedY = 30; // Эффект гиперпрыжка
+          globalWarpSpeedY = 30; // запуск анимации комет
           setTimeout(() => {
               document.getElementById('appNavbar').style.display = 'flex';
               document.getElementById('appMainWrapper').style.display = 'flex';
@@ -605,7 +588,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }, 400);
   }
 
-  // --- РЕНДЕР СКРИПТОВ ---
+  // рендер карточек скриптов
   window.renderScripts = function() {
       clearTimeout(renderScriptsTimeout);
       const container = document.getElementById('userScriptsContainer');
@@ -618,33 +601,49 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           let filter = document.getElementById('filterScripts') ? document.getElementById('filterScripts').value : 'all';
           let searchQ = document.getElementById('searchScripts') ? document.getElementById('searchScripts').value.toLowerCase() : '';
 
-          let filtered = window.STATIC_SCRIPTS || [];
-          if (filter !== 'all') { filtered = filtered.filter(s => s.tags && s.tags.includes(filter)); }
-          if (searchQ) { filtered = filtered.filter(s => s.title.toLowerCase().includes(searchQ) || s.game.toLowerCase().includes(searchQ)); }
+          let filteredScripts = window.STATIC_SCRIPTS || [];
+          if (filter !== 'all') { filteredScripts = filteredScripts.filter(item => item.tags && item.tags.includes(filter)); }
+          if (searchQ) { filteredScripts = filteredScripts.filter(item => item.title.toLowerCase().includes(searchQ) || item.game.toLowerCase().includes(searchQ)); }
 
-          if(filtered.length === 0) {
+          if(filteredScripts.length === 0) {
               container.innerHTML = `<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">${i18n[currentLang].s_no_scripts}</p></div>`;
           } else {
-              filtered.forEach((s) => {
-                  let badgeHtml = '';
-                  if(s.tags) { s.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_'+t] || t}</span>`; }); }
-                  let origIndex = window.STATIC_SCRIPTS.indexOf(s);
-                  let btnHtml = `<button class="copy-btn" onclick="window.copyScriptCode(${origIndex}, this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_copy}</span></button>`;
-                  let discBtn = s.script_discord ? `<button class="discord-icon-btn" title="Discord" onclick="window.open('${s.script_discord}', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>` : '';
+              filteredScripts.forEach((item) => {
+                  let isPlaceholder = item.is_placeholder === true;
+                  let displayTitle = isPlaceholder ? "???" : item.title;
+                  let displayGame = isPlaceholder ? "???" : item.game;
+                  let displayDesc = isPlaceholder ? `<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>` : item.description;
+                  let displayInfo = '';
+                  if (item.executors_info) {
+                      displayInfo = isPlaceholder ? `<span class="blurred-text">Tested on Unknown Level 8 executors</span>` : item.executors_info.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                  }
                   
+                  let badgeHtml = '';
+                  if(item.tags) { item.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_'+t] || t}</span>`; }); }
+                  
+                  let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
+                  let origIndex = window.STATIC_SCRIPTS.indexOf(item);
+                  let btnHtml = '';
+                  
+                  if (isPlaceholder) {
+                      btnHtml = `<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_soon}</span></button>`;
+                  } else {
+                      btnHtml = `<button class="copy-btn" onclick="window.copyScriptCode(${origIndex}, this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_copy}</span></button>`;
+                  }
+                  
+                  let discBtn = (!isPlaceholder && item.script_discord) ? `<button class="discord-icon-btn" title="Discord" onclick="window.open('${item.script_discord}', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>` : '';
+
                   container.innerHTML += `
                   <div class="script-card">
                     <div class="script-banner-wrapper">
                         <div class="badge-row">${badgeHtml}</div>
-                        <div class="script-banner" style="background-image: url('${s.banner_url}');"></div>
+                        <div class="${bannerClass}" style="background-image: url('${item.banner_url}');"></div>
                     </div>
                     <div class="script-content">
-                      <div class="script-header"><h3>${s.title}</h3><span class="game-tag">${s.game}</span></div>
-                      <p class="script-desc">${s.description}</p>
-                      
-                      <!-- margin-top: auto ПРИЖИМАЕТ КНОПКИ К НИЗУ -->
+                      <div class="script-header"><h3>${displayTitle}</h3><span class="game-tag">${displayGame}</span></div>
+                      <p class="script-desc">${displayDesc}</p>
                       <div style="display:flex; gap:10px; margin-top: auto;">${btnHtml}${discBtn}</div>
-                      ${s.executors_info ? `<div class="executor-info">${s.executors_info.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>` : ''}
+                      ${displayInfo ? `<div class="executor-info">${displayInfo}</div>` : ''}
                     </div>
                   </div>`;
               });
@@ -654,7 +653,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }, 200); 
   }
 
-  // --- РЕНДЕР ЭКСПЛОЙТОВ ---
+  // рендер эксплойтов
   window.renderExploits = function() {
       clearTimeout(renderExploitsTimeout);
       const container = document.getElementById('exploitsContainer');
@@ -667,31 +666,45 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           let filter = document.getElementById('filterExploits') ? document.getElementById('filterExploits').value : 'all';
           let searchQ = document.getElementById('searchExploits') ? document.getElementById('searchExploits').value.toLowerCase() : '';
 
-          let filtered = window.STATIC_EXPLOITS || [];
-          if (filter !== 'all') { filtered = filtered.filter(s => s.tags && s.tags.includes(filter)); }
-          if (searchQ) { filtered = filtered.filter(s => s.title.toLowerCase().includes(searchQ)); }
+          let filteredExps = window.STATIC_EXPLOITS || [];
+          if (filter !== 'all') { filteredExps = filteredExps.filter(item => item.tags && item.tags.includes(filter)); }
+          if (searchQ) { filteredExps = filteredExps.filter(item => item.title.toLowerCase().includes(searchQ)); }
 
-          if(filtered.length === 0) {
+          if(filteredExps.length === 0) {
               container.innerHTML = `<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">${i18n[currentLang].s_no_scripts}</p></div>`;
           } else {
-              filtered.forEach((s) => {
-                  let badgeHtml = '';
-                  if(s.tags) { s.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_'+t] || t}</span>`; }); }
-                  let btnHtml = `<button class="copy-btn" onclick="window.open('${s.link}', '_blank')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].e_down}</span></button>`;
+              filteredExps.forEach((item) => {
+                  let isPlaceholder = item.is_placeholder === true;
+                  let displayTitle = isPlaceholder ? "???" : item.title;
+                  let displayPlatform = isPlaceholder ? "???" : item.platform;
+                  let displayDesc = isPlaceholder ? `<span class="blurred-text">Super secret new executor currently under heavy development.</span>` : item.description;
+                  let displayInfo = '';
+                  if (item.info) {
+                      displayInfo = isPlaceholder ? `<span class="blurred-text">Requires Key: ??? | Version: ???</span>` : item.info.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                  }
                   
+                  let badgeHtml = '';
+                  if(item.tags) { item.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_'+t] || t}</span>`; }); }
+                  
+                  let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
+                  let btnHtml = '';
+                  if (isPlaceholder) {
+                      btnHtml = `<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_soon}</span></button>`;
+                  } else {
+                      btnHtml = `<button class="copy-btn" onclick="window.open('${item.link}', '_blank')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].e_down}</span></button>`;
+                  }
+
                   container.innerHTML += `
                   <div class="script-card">
                     <div class="script-banner-wrapper">
                         <div class="badge-row">${badgeHtml}</div>
-                        <div class="script-banner" style="background-image: url('${s.banner_url}');"></div>
+                        <div class="${bannerClass}" style="background-image: url('${item.banner_url}');"></div>
                     </div>
                     <div class="script-content">
-                      <div class="script-header"><h3>${s.title}</h3><span class="game-tag">${s.platform}</span></div>
-                      <p class="script-desc">${s.description}</p>
-                      
-                      <!-- margin-top: auto ПРИЖИМАЕТ КНОПКИ К НИЗУ -->
+                      <div class="script-header"><h3>${displayTitle}</h3><span class="game-tag">${displayPlatform}</span></div>
+                      <p class="script-desc">${displayDesc}</p>
                       <div style="display:flex; gap:10px; margin-top: auto;">${btnHtml}</div>
-                      ${s.info ? `<div class="executor-info">${s.info}</div>` : ''}
+                      ${displayInfo ? `<div class="executor-info">${displayInfo}</div>` : ''}
                     </div>
                   </div>`;
               });
@@ -713,9 +726,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     });
   }
 
-  // --- ЛОГИКА КЛИКА ПО ФОНУ (ПАСХАЛКА) ---
+  // скрытая планета по клику (пасхалка)
   document.addEventListener('click', (e) => {
-      // Игнорируем клики по карточкам и меню
       if (e.target.closest('.script-card') || 
           e.target.closest('.top-bar') || 
           e.target.closest('.dashboard-card') || 
@@ -736,7 +748,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }
   });
 
-  // --- 3D ПЛАНЕТА С ПУЛЬСАЦИЕЙ ЗВЕЗДЫ ---
+  // настройки канваса
   function initPlanetAndSpace() {
       const canvas = document.getElementById('bgCanvas');
       if(!canvas) return;
@@ -801,6 +813,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
       let rotationX = 0; let rotationY = 0;
 
+      // главный цикл анимации
       function animate() { 
           ctx.clearRect(0, 0, w, h); 
           let isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -809,7 +822,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           if (planetBloom < 1) planetBloom += 0.005;
           let actualBloom = Math.max(0, planetBloom);
 
-          // Плавное исчезновение точек
           let targetDotsAlpha = isRealPlanet ? 0 : 1;
           planetDotsAlpha += (targetDotsAlpha - planetDotsAlpha) * 0.05;
 
@@ -861,7 +873,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       resize(); animate();
   }
 
-  // --- ЗАПУСК ---
   document.addEventListener('DOMContentLoaded', () => {
     window.updateIcons();
     initPlanetAndSpace(); 
@@ -889,10 +900,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
 </script>
 
-<!-- ========================================================= -->
-<!-- 🗄️ БАЗА ДАННЫХ: ТВОИ СКРИПТЫ И ЭКСПЛОЙТЫ                 -->
-<!-- ДОБАВЛЯЙ, УДАЛЯЙ И ИЗМЕНЯЙ ИХ ПРЯМО ЗДЕСЬ (В САМОМ НИЗУ)  -->
-<!-- ========================================================= -->
+<!-- МОИ СКРИПТЫ И ЭКСПЛОЙТЫ (база) -->
 <script>
   window.STATIC_SCRIPTS = [
       {
@@ -914,9 +922,21 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           description: "An excellent and functional script!",
           executors_info: "Working on exploits: Delta, Nexomia",
           script_discord: "https://discord.gg/9eFf93Kg8D"
+      },
+      {
+          title: "???",
+          game: "???",
+          tags: ["new"],
+          banner_url: "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
+          script_code: "",
+          description: "Placeholder description",
+          executors_info: "Placeholder info",
+          script_discord: "",
+          is_placeholder: true 
       }
   ];
 
+  // TODO: добавить больше экзекуторов
   window.STATIC_EXPLOITS = [
       {
           title: "Delta",
@@ -954,6 +974,16 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           description: "A highly powerful and advanced script executor for Roblox. It is known for its strong performance with complex scripts, all while offering a completely keyless experience for maximum convenience.",
           info: "Requires Key: No"
       },
+      {
+          title: "???",
+          platform: "???",
+          tags: ["pc"],
+          banner_url: "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
+          link: "",
+          description: "Placeholder description",
+          info: "Placeholder info",
+          is_placeholder: true 
+      }
   ];
 </script>
 </body>
