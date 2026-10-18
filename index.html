@@ -1,5 +1,5 @@
 <!-- Global Scripts Hub | Developed by Rob4ik02 -->
-<!-- 2026 — MERGED: File1 base + File2 Firebase/Tickets, security-hardened -->
+<!-- 2026 — MERGED, HARDENED, OPTIMIZED, FULL DEV PANEL -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +64,7 @@ body.dragging-planet { cursor: grabbing !important; }
 
 @keyframes ambientGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-input, textarea { user-select: text; -webkit-user-select: text; }
+input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px !important; /* Фикс зума на iOS */ }
 
 .lang-transition { transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .lang-blur { filter: blur(8px) scale(0.98); opacity: 0; pointer-events: none; }
@@ -232,7 +232,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .feature-box p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
 #authWrapper { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 40px 20px; position: relative; z-index: 15; opacity: 0; transform: translateY(15px); transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
-.auth-card { pointer-events: auto; width: 100%; max-width: 420px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 24px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 32px 28px; display: flex; flex-direction: column; gap: 18px; text-align: center; position: relative; }
+.auth-card { pointer-events: auto; width: 100%; max-width: 420px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 24px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 32px 28px; display: flex; flex-direction: column; gap: 18px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; /* Фикс мобильной клавиатуры */ }
 .auth-back-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-secondary); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
 .auth-back-btn:hover { color: var(--text-primary); border-color: var(--card-border-hover); background: rgba(255,255,255,0.1); }
 .auth-logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 4px; }
@@ -298,7 +298,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 99999; display: none; align-items: center; justify-content: center; padding: 20px; }
 .ticket-modal-overlay.show { display: flex; }
 .ticket-modal { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 18px; padding: 24px; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
-@media (max-width: 900px) { .support-tickets-card { flex-direction: column; } .tickets-sidebar { width: 100%; max-height: 200px; } }
 
 .app-content { position: relative; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 92px 20px 40px 20px; transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
 .dashboard-card, .script-card, .dev-select, .disabled-box, .tab-content h2.cursor-gradient-text { pointer-events: auto; }
@@ -441,6 +440,12 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
 .story-text { margin: 0 auto; font-size: 16px; line-height: 1.9; text-align: left; font-weight: 400; max-width: 800px; color: var(--text-secondary); }
 
+/* Оптимизация анимаций для слабых устройств */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    .easter-egg-container, .real-planet-sphere, .lua-ring, .planet-surface-tex { animation: none !important; transition: none !important; }
+}
+
 @media (max-width: 960px) { .cards-masonry { grid-template-columns: repeat(2, 1fr); } }
 
 @media (max-width: 900px) {
@@ -458,6 +463,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   .real-planet-sphere.sliced .planet-half.half-right { transform: translate(50px, 0px) rotate(3.5deg); }
   .real-planet-sphere.ink-gripping .planet-half.half-left { transform: translate(-36px, 0px) rotate(-2deg) !important; }
   .real-planet-sphere.ink-gripping .planet-half.half-right { transform: translate(36px, 0px) rotate(2deg) !important; }
+  .support-tickets-card { flex-direction: column; }
+  .tickets-sidebar { width: 100%; max-height: 200px; }
 }
 
 @media (max-width: 640px) {
@@ -863,17 +870,21 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
                 <div class="dev-subtabs">
                     <button class="dev-subtab-btn active" onclick="window.switchDevSubtab('dev-tab-scripts', this)">
-                        <i data-lucide="code" style="width:14px;height:14px;"></i> + Add Script
+                        <i data-lucide="code" style="width:14px;height:14px;"></i> Manage Scripts
                     </button>
                     <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-exploits', this)">
-                        <i data-lucide="cpu" style="width:14px;height:14px;"></i> + Add Exploit
+                        <i data-lucide="cpu" style="width:14px;height:14px;"></i> Manage Exploits
                     </button>
                     <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-accounts', this)">
-                        <i data-lucide="award" style="width:14px;height:14px;"></i> Accounts & Badges
+                        <i data-lucide="award" style="width:14px;height:14px;"></i> Manage Accounts
                     </button>
                 </div>
 
+                <!-- Управление скриптами -->
                 <div id="dev-tab-scripts" class="dev-form-section active">
+                    <select id="devEditScriptSelect" class="dev-select" style="width: 100%; margin-bottom: 10px;" onchange="window.loadScriptToEdit(this.value)">
+                        <option value="">-- Создать новый скрипт --</option>
+                    </select>
                     <div class="dev-form-grid">
                         <input type="text" id="devScrTitle" class="auth-input" placeholder="Script Title (e.g. Global Hub)" />
                         <input type="text" id="devScrGame" class="auth-input" placeholder="Game Name (e.g. Blox Fruits)" />
@@ -885,11 +896,15 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                     <input type="text" id="devScrDesc" class="auth-input" placeholder="Short Description of the script..." />
                     <textarea id="devScrCode" class="dev-textarea" placeholder='loadstring(game:HttpGet("https://..."))()'></textarea>
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewScript()">
-                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> Publish Script to Hub
+                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devScrBtnText">Publish Script to Hub</span>
                     </button>
                 </div>
 
+                <!-- Управление эксплойтами -->
                 <div id="dev-tab-exploits" class="dev-form-section">
+                    <select id="devEditExploitSelect" class="dev-select" style="width: 100%; margin-bottom: 10px;" onchange="window.loadExploitToEdit(this.value)">
+                        <option value="">-- Создать новый эксплойт --</option>
+                    </select>
                     <div class="dev-form-grid">
                         <input type="text" id="devExpTitle" class="auth-input" placeholder="Exploit Title (e.g. Wave)" />
                         <input type="text" id="devExpPlatform" class="auth-input" placeholder="Platform (Windows / Mobile)" />
@@ -900,13 +915,14 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                     </div>
                     <input type="text" id="devExpDesc" class="auth-input" placeholder="Description of the exploit..." />
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewExploit()">
-                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> Publish Exploit to Hub
+                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devExpBtnText">Publish Exploit to Hub</span>
                     </button>
                 </div>
 
+                <!-- Управление аккаунтами -->
                 <div id="dev-tab-accounts" class="dev-form-section">
                     <div class="dev-form-grid">
-                        <input type="text" id="devAccLogin" class="auth-input" placeholder="Username (existing or new)" />
+                        <input type="text" id="devAccLogin" class="auth-input" placeholder="Username (existing or new)" disabled style="opacity: 0.7;" />
                         <input type="text" id="devAccPlan" class="auth-input" placeholder="Plan (e.g. Free Access / VIP / Developer)" />
                     </div>
                     <span class="profile-label">SELECT ACHIEVEMENT ICONS FOR THIS ACCOUNT:</span>
@@ -921,7 +937,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                         <i data-lucide="save" style="width:16px;height:16px;"></i> Save Account & Update Badges
                     </button>
 
-                    <span class="profile-label" style="margin-top:8px;">EXISTING ACCOUNTS (CLICK TO EDIT):</span>
+                    <span class="profile-label" style="margin-top:8px;">EXISTING ACCOUNTS (LOADED FROM FIREBASE):</span>
                     <div id="devAccountsListContainer" class="dev-accounts-table"></div>
                 </div>
             </div>
@@ -1051,11 +1067,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       tester: { icon: "flask-conical", cssClass: "badge-tester", title_en: "Beta Tester", title_ru: "Бета-тестер", desc_en: "Tests upcoming scripts before public release.", desc_ru: "Тестирует закрытые скрипты до релиза." }
   };
 
-  window.INITIAL_ACCOUNTS = [
-      { username: "Rob4ik02", role: "developer", plan: "Developer / Owner", badges: ["developer", "verified", "popular"] },
-      { username: "Test User Account", role: "user", plan: "Verified Member", badges: ["verified", "popular"] }
-  ];
-
   let currentLang = 'en';
   let globalWarpSpeedY = 0;
   let renderScriptsTimeout;
@@ -1064,22 +1075,15 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   let isInHub = false;
   let isAuthModeRegister = false;
   let currentUser = null;
+  
+  // Флаги для редактирования в Dev-панели
+  let editingScriptId = null;
+  let editingExploitId = null;
+  let editingAccountUid = null;
 
-  function getAccountsList() {
-      try {
-          const saved = JSON.parse(localStorage.getItem('gs_accounts_v1') || 'null');
-          if (Array.isArray(saved) && saved.length > 0) {
-              window.INITIAL_ACCOUNTS.forEach(initAcc => {
-                  if (!saved.some(a => a.username.toLowerCase() === initAcc.username.toLowerCase())) saved.push(initAcc);
-              });
-              return saved;
-          }
-      } catch (e) {}
-      localStorage.setItem('gs_accounts_v1', JSON.stringify(window.INITIAL_ACCOUNTS));
-      return window.INITIAL_ACCOUNTS.slice();
-  }
-
-  function saveAccountsList(list) { localStorage.setItem('gs_accounts_v1', JSON.stringify(list)); }
+  // Оптимизация для слабых устройств
+  const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isLowEnd = isMobileDevice || window.innerWidth <= 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
   function renderUserBadgesInlineHtml(badgesArray) {
       if (!Array.isArray(badgesArray) || badgesArray.length === 0) return '';
@@ -1092,6 +1096,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   }
 
   function initCursorGradientText() {
+      if (isLowEnd) return; // Отключаем на слабых устройствах
       const updateTextGradients = (clientX, clientY) => {
           const textElements = document.querySelectorAll('.cursor-gradient-text');
           for (let i = 0; i < textElements.length; i++) {
@@ -1112,9 +1117,9 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       init() { this.canvas = document.getElementById('planetInkCanvas'); if (this.canvas) this.ctx = this.canvas.getContext('2d'); },
       spawnTendrils() {
           this.strands = []; this.blobs = []; this.droplets = [];
-          const count = 38;
+          const count = isLowEnd ? 12 : 38; // Меньше нитей на слабых устройствах
           for (let i = 0; i < count; i++) {
-              const isMain = i < 16;
+              const isMain = i < (isLowEnd ? 5 : 16);
               const t = isMain ? (i / 15) : Math.random();
               const yBase = 70 + t * 400;
               const dyFromCenter = (yBase - 270) / 225;
@@ -1137,7 +1142,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       startContracting() { this.mode = 'contracting'; this.progress = 0; },
       triggerSplash() {
           this.mode = 'splashing'; this.progress = 0; this.droplets = [];
-          for (let i = 0; i < 46; i++) {
+          const dropCount = isLowEnd ? 15 : 46;
+          for (let i = 0; i < dropCount; i++) {
               const angle = (Math.random() - 0.5) * Math.PI * 1.9;
               const speed = Math.random() * 7.5 + 2.5;
               this.droplets.push({
@@ -1235,6 +1241,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   let inkStageTimer = null, inkPullTimer = null, sliceResetTimer = null;
 
   function initInteractivePlanetPhysics() {
+      if (isMobileDevice) return; // Отключаем тяжелую физику на мобилках
+      
       const planetContainer = document.getElementById('planetContainer');
       const shakeWrapper = document.getElementById('planetShakeWrapper');
       const realEarth = document.getElementById('realEarth');
@@ -1397,7 +1405,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const authWrap = document.getElementById('authWrapper');
       const planetContainer = document.getElementById('planetContainer');
       landing.style.opacity = '0'; landing.style.transform = 'translateY(-15px)';
-      if (planetContainer) planetContainer.classList.add('hub-active');
+      if (planetContainer && !isMobileDevice) planetContainer.classList.add('hub-active');
       if (pushHistory) window.setRouteUrl('login', false);
       setTimeout(() => {
           landing.style.display = 'none';
@@ -1417,7 +1425,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const authWrap = document.getElementById('authWrapper');
       const planetContainer = document.getElementById('planetContainer');
       authWrap.style.opacity = '0'; authWrap.style.transform = 'translateY(15px)';
-      if (planetContainer) planetContainer.classList.remove('hub-active');
+      if (planetContainer && !isMobileDevice) planetContainer.classList.remove('hub-active');
       window.setRouteUrl('start', false);
       setTimeout(() => {
           authWrap.style.display = 'none';
@@ -1471,7 +1479,12 @@ input, textarea { user-select: text; -webkit-user-select: text; }
               window.showToast(`Welcome back, ${loginInput}!`);
           }
       } catch (error) {
-          window.showToast(error.message || 'Auth error');
+          let errorMsg = error.message || 'Auth error';
+          if (errorMsg.includes('email-already-in-use')) errorMsg = 'Этот логин уже занят.';
+          if (errorMsg.includes('weak-password')) errorMsg = 'Пароль слишком слабый (минимум 6 символов).';
+          if (errorMsg.includes('invalid-email')) errorMsg = 'Некорректный логин.';
+          if (errorMsg.includes('user-not-found') || errorMsg.includes('wrong-password') || errorMsg.includes('invalid-credential')) errorMsg = 'Неверный логин или пароль.';
+          window.showToast(errorMsg);
           btn.disabled = false;
           return;
       }
@@ -1494,11 +1507,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   };
 
   window.refreshUserProfileUI = function() {
-      const accounts = getAccountsList();
-      if (currentUser) {
-          const fresh = accounts.find(a => a.username.toLowerCase() === currentUser.username.toLowerCase());
-          if (fresh) currentUser = Object.assign({}, fresh, currentUser);
-      }
       const nameEl = document.getElementById('profileUsernameText');
       const badgesInlineEl = document.getElementById('profileInlineBadges');
       const planEl = document.getElementById('profilePlanText');
@@ -1534,7 +1542,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }
 
       if (devPanel) {
-          if (userObj.role === 'developer') { devPanel.classList.add('show'); window.renderDevAccountsTable(); }
+          if (userObj.role === 'developer') { devPanel.classList.add('show'); window.populateDevDropdowns(); window.renderDevAccountsTable(); }
           else devPanel.classList.remove('show');
       }
       window.updateIcons();
@@ -1548,128 +1556,228 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       if (sec) sec.classList.add('active');
   };
 
+  // ==================== УПРАВЛЕНИЕ СКРИПТАМИ ====================
+  window.populateDevDropdowns = function() {
+      const scrSelect = document.getElementById('devEditScriptSelect');
+      if (scrSelect) {
+          scrSelect.innerHTML = '<option value="">-- Создать новый скрипт --</option>';
+          window.STATIC_SCRIPTS.forEach(s => {
+              if (s.is_placeholder) return;
+              const opt = document.createElement('option');
+              opt.value = s.id || s.title; // Используем ID из Firebase, если есть
+              opt.textContent = s.title + (s._fromFirestore ? " (Cloud)" : " (Local)");
+              scrSelect.appendChild(opt);
+          });
+      }
+      const expSelect = document.getElementById('devEditExploitSelect');
+      if (expSelect) {
+          expSelect.innerHTML = '<option value="">-- Создать новый эксплойт --</option>';
+          window.STATIC_EXPLOITS.forEach(e => {
+              if (e.is_placeholder) return;
+              const opt = document.createElement('option');
+              opt.value = e.id || e.title;
+              opt.textContent = e.title + (e._fromFirestore ? " (Cloud)" : " (Local)");
+              expSelect.appendChild(opt);
+          });
+      }
+  };
+
+  window.loadScriptToEdit = function(val) {
+      const btnText = document.getElementById('devScrBtnText');
+      if (!val) {
+          editingScriptId = null;
+          btnText.textContent = "Publish Script to Hub";
+          document.getElementById('devScrTitle').value = '';
+          document.getElementById('devScrGame').value = '';
+          document.getElementById('devScrBanner').value = '';
+          document.getElementById('devScrTags').value = '';
+          document.getElementById('devScrExecs').value = '';
+          document.getElementById('devScrDiscord').value = '';
+          document.getElementById('devScrDesc').value = '';
+          document.getElementById('devScrCode').value = '';
+          return;
+      }
+      const script = window.STATIC_SCRIPTS.find(s => (s.id || s.title) === val);
+      if (!script) return;
+      
+      editingScriptId = script._fromFirestore ? script.id : null;
+      btnText.textContent = editingScriptId ? "Update Script in Hub" : "Publish (создаст копию в Cloud)";
+      
+      document.getElementById('devScrTitle').value = script.title || '';
+      document.getElementById('devScrGame').value = script.game || '';
+      document.getElementById('devScrBanner').value = script.banner_url || '';
+      document.getElementById('devScrTags').value = (script.tags || []).join(', ');
+      document.getElementById('devScrExecs').value = script.executors_info || '';
+      document.getElementById('devScrDiscord').value = script.script_discord || '';
+      document.getElementById('devScrDesc').value = script.description || '';
+      document.getElementById('devScrCode').value = script.script_code || '';
+  };
+
   window.devAddNewScript = async function() {
+      if (!window.FB) return;
       const title = document.getElementById('devScrTitle').value.trim();
       const game = document.getElementById('devScrGame').value.trim() || 'Universal';
       const banner = document.getElementById('devScrBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
       const tagsRaw = document.getElementById('devScrTags').value.trim() || 'new, stable';
-      const execs = document.getElementById('devScrExecs').value.trim() || 'Working on exploits: Delta, Solara, Nexomia';
+      const execs = document.getElementById('devScrExecs').value.trim() || '';
       const discord = document.getElementById('devScrDiscord').value.trim();
-      const desc = document.getElementById('devScrDesc').value.trim() || 'Added by Developer.';
+      const desc = document.getElementById('devScrDesc').value.trim() || '';
       const code = document.getElementById('devScrCode').value.trim();
       if (!title || !code) { window.showToast('Enter Script Title and Lua Code!'); return; }
 
-      const newScript = {
+      const scriptData = {
           title, game,
           tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
           banner_url: banner, script_code: code, description: desc,
-          executors_info: execs, script_discord: discord
+          executors_info: execs, script_discord: discord,
+          updatedAt: window.FB.serverTimestamp()
       };
 
-      window.STATIC_SCRIPTS.unshift(newScript);
-      const customScripts = JSON.parse(localStorage.getItem('gs_custom_scripts') || '[]');
-      customScripts.unshift(newScript);
-      localStorage.setItem('gs_custom_scripts', JSON.stringify(customScripts));
+      try {
+          if (editingScriptId) {
+              await window.FB.updateDoc(window.FB.doc(window.FB.db, "scripts", editingScriptId), scriptData);
+              window.showToast(`Script "${title}" updated in Cloud!`);
+          } else {
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), { ...scriptData, createdAt: window.FB.serverTimestamp() });
+              window.showToast(`Script "${title}" published to Cloud!`);
+          }
+          document.getElementById('devEditScriptSelect').value = '';
+          window.loadScriptToEdit('');
+          // Данные перезагрузятся через onSnapshot в идеале, но здесь вручную:
+          window.loadFirestoreData(); 
+      } catch (e) { window.showToast('Error: ' + e.message); }
+  };
 
-      if (window.FB && currentUser) {
-          try {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), {
-                  title, game, tags: newScript.tags, banner_url: banner, script_code: code,
-                  description: desc, executors_info: execs, script_discord: discord,
-                  createdAt: window.FB.serverTimestamp()
-              });
-          } catch (e) { console.warn('Firestore script write failed:', e); }
+  // ==================== УПРАВЛЕНИЕ ЭКСПЛОЙТАМИ ====================
+  window.loadExploitToEdit = function(val) {
+      const btnText = document.getElementById('devExpBtnText');
+      if (!val) {
+          editingExploitId = null;
+          btnText.textContent = "Publish Exploit to Hub";
+          document.getElementById('devExpTitle').value = '';
+          document.getElementById('devExpPlatform').value = '';
+          document.getElementById('devExpBanner').value = '';
+          document.getElementById('devExpLink').value = '';
+          document.getElementById('devExpTags').value = '';
+          document.getElementById('devExpInfo').value = '';
+          document.getElementById('devExpDesc').value = '';
+          return;
       }
-
-      window.renderScripts();
-      window.showToast(`Script "${title}" added to Hub!`);
+      const exp = window.STATIC_EXPLOITS.find(e => (e.id || e.title) === val);
+      if (!exp) return;
+      
+      editingExploitId = exp._fromFirestore ? exp.id : null;
+      btnText.textContent = editingExploitId ? "Update Exploit in Hub" : "Publish (создаст копию в Cloud)";
+      
+      document.getElementById('devExpTitle').value = exp.title || '';
+      document.getElementById('devExpPlatform').value = exp.platform || '';
+      document.getElementById('devExpBanner').value = exp.banner_url || '';
+      document.getElementById('devExpLink').value = exp.link || '';
+      document.getElementById('devExpTags').value = (exp.tags || []).join(', ');
+      document.getElementById('devExpInfo').value = exp.info || '';
+      document.getElementById('devExpDesc').value = exp.description || '';
   };
 
   window.devAddNewExploit = async function() {
+      if (!window.FB) return;
       const title = document.getElementById('devExpTitle').value.trim();
       const platform = document.getElementById('devExpPlatform').value.trim() || 'Windows';
       const banner = document.getElementById('devExpBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
       const link = document.getElementById('devExpLink').value.trim();
-      const tagsRaw = document.getElementById('devExpTags').value.trim() || 'pc, updated';
-      const info = document.getElementById('devExpInfo').value.trim() || 'Requires Key: No';
-      const desc = document.getElementById('devExpDesc').value.trim() || 'Verified executor added by Developer.';
+      const tagsRaw = document.getElementById('devExpTags').value.trim() || 'pc';
+      const info = document.getElementById('devExpInfo').value.trim() || '';
+      const desc = document.getElementById('devExpDesc').value.trim() || '';
       if (!title || !link) { window.showToast('Enter Exploit Title and Download URL!'); return; }
 
-      const newExp = {
+      const expData = {
           title, platform,
           tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
-          banner_url: banner, link, description: desc, info
+          banner_url: banner, link, description: desc, info,
+          updatedAt: window.FB.serverTimestamp()
       };
 
-      window.STATIC_EXPLOITS.unshift(newExp);
-      const customExps = JSON.parse(localStorage.getItem('gs_custom_exploits') || '[]');
-      customExps.unshift(newExp);
-      localStorage.setItem('gs_custom_exploits', JSON.stringify(customExps));
-
-      if (window.FB && currentUser) {
-          try {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), {
-                  title, platform, tags: newExp.tags, banner_url: banner, link,
-                  description: desc, info, createdAt: window.FB.serverTimestamp()
-              });
-          } catch (e) { console.warn('Firestore exploit write failed:', e); }
-      }
-
-      window.renderExploits();
-      window.showToast(`Exploit "${title}" added to Hub!`);
+      try {
+          if (editingExploitId) {
+              await window.FB.updateDoc(window.FB.doc(window.FB.db, "exploits", editingExploitId), expData);
+              window.showToast(`Exploit "${title}" updated in Cloud!`);
+          } else {
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), { ...expData, createdAt: window.FB.serverTimestamp() });
+              window.showToast(`Exploit "${title}" published to Cloud!`);
+          }
+          document.getElementById('devEditExploitSelect').value = '';
+          window.loadExploitToEdit('');
+          window.loadFirestoreData();
+      } catch (e) { window.showToast('Error: ' + e.message); }
   };
 
-  window.devSaveAccountAndBadges = function() {
-      const username = document.getElementById('devAccLogin').value.trim();
+  // ==================== УПРАВЛЕНИЕ АККАУНТАМИ ====================
+  window.devSaveAccountAndBadges = async function() {
+      if (!window.FB) return;
       const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
-      if (!username) { window.showToast('Enter Username to update or create!'); return; }
+      if (!editingAccountUid) { window.showToast('Сначала выбери пользователя из списка!'); return; }
+      
       const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
-      const accounts = getAccountsList();
-      const existingIdx = accounts.findIndex(a => a.username.toLowerCase() === username.toLowerCase());
-      if (existingIdx >= 0) {
-          accounts[existingIdx].plan = plan;
-          accounts[existingIdx].badges = selectedBadges;
-          if (selectedBadges.includes('developer')) accounts[existingIdx].role = 'developer';
-      } else {
-          accounts.push({ username, role: selectedBadges.includes('developer') ? 'developer' : 'user', plan, badges: selectedBadges });
+      const role = selectedBadges.includes('developer') ? 'developer' : 'user';
+
+      try {
+          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", editingAccountUid), {
+              plan: plan,
+              badges: selectedBadges,
+              role: role
+          });
+          window.showToast(`Аккаунт обновлён в Firebase!`);
+          window.renderDevAccountsTable();
+      } catch (e) {
+          window.showToast('Ошибка сохранения: ' + e.message);
       }
-      saveAccountsList(accounts);
-      window.refreshUserProfileUI();
-      window.renderSupportChat();
-      window.showToast(`Account "${username}" badges updated!`);
   };
 
-  window.selectDevAccountForEdit = function(username) {
-      const accounts = getAccountsList();
-      const acc = accounts.find(a => a.username === username);
-      if (!acc) return;
-      document.getElementById('devAccLogin').value = acc.username;
-      document.getElementById('devAccPlan').value = acc.plan || 'Free Access';
-      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(acc.badges) && acc.badges.includes(cb.value); });
+  window.selectDevAccountForEdit = async function(uid, username, plan, badges) {
+      editingAccountUid = uid;
+      document.getElementById('devAccLogin').value = username;
+      document.getElementById('devAccPlan').value = plan || 'Free Access';
+      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(badges) && badges.includes(cb.value); });
   };
 
-  window.renderDevAccountsTable = function() {
+  window.renderDevAccountsTable = async function() {
       const container = document.getElementById('devAccountsListContainer');
-      if (!container) return;
-      const accounts = getAccountsList();
-      container.innerHTML = accounts.map(acc => `
-          <div class="dev-acc-row">
-              <div style="display:flex; align-items:center; gap:8px;">
-                  <strong style="font-size:14px;">${acc.username}</strong>
-                  <span class="user-badges-inline">${renderUserBadgesInlineHtml(acc.badges)}</span>
-                  <span style="font-size:11px; color:var(--text-secondary);">(${acc.plan || 'Free'})</span>
+      if (!container || !window.FB) return;
+      container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка пользователей из Firebase...</div>';
+      
+      try {
+          const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
+          const accounts = [];
+          snap.forEach(d => { const data = d.data(); data.uid = d.id; accounts.push(data); });
+          
+          if (accounts.length === 0) {
+              container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary);">Пользователи не найдены.</div>';
+              return;
+          }
+
+          container.innerHTML = accounts.map(acc => `
+              <div class="dev-acc-row">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                      <strong style="font-size:14px;">${acc.username || 'Unknown'}</strong>
+                      <span class="user-badges-inline">${renderUserBadgesInlineHtml(acc.badges)}</span>
+                      <span style="font-size:11px; color:var(--text-secondary);">(${acc.plan || 'Free'})</span>
+                  </div>
+                  <button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit('${acc.uid}', '${(acc.username || '').replace(/'/g, "\\'")}', '${(acc.plan || '').replace(/'/g, "\\'")}', ${JSON.stringify(acc.badges || []).replace(/"/g, '&quot;')})">
+                      Редактировать
+                  </button>
               </div>
-              <button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit('${acc.username.replace(/'/g, "\\'")}')">Edit Badges</button>
-          </div>
-      `).join('');
-      window.updateIcons();
+          `).join('');
+          window.updateIcons();
+      } catch (e) {
+          container.innerHTML = '<div style="font-size:12px; color:var(--red);">Ошибка загрузки.</div>';
+          console.error(e);
+      }
   };
 
+  // ==================== ОСТАЛЬНОЕ ====================
   function getSupportMessages() {
       try { const saved = JSON.parse(localStorage.getItem('gs_support_chat_v1') || 'null'); if (Array.isArray(saved) && saved.length > 0) return saved; } catch (e) {}
       const initialMsgs = [
-          { sender: "Rob4ik02", text: "Welcome to Global Scripts Support! Ask any questions about scripts, keys, or executors here.", time: "12:00" },
-          { sender: "Test User Account", text: "Hello! Everything works super fast, thank you for the hub!", time: "12:04" }
+          { sender: "System", text: "Welcome to Global Scripts Support! Ask any questions here.", time: "12:00" }
       ];
       localStorage.setItem('gs_support_chat_v1', JSON.stringify(initialMsgs));
       return initialMsgs;
@@ -1679,16 +1787,12 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const box = document.getElementById('supportChatMessages');
       if (!box) return;
       const msgs = getSupportMessages();
-      const accounts = getAccountsList();
       box.innerHTML = msgs.map(m => {
-          const acc = accounts.find(a => a.username.toLowerCase() === m.sender.toLowerCase());
-          const badgesHtml = acc ? renderUserBadgesInlineHtml(acc.badges) : '';
-          const isOwn = currentUser && currentUser.username.toLowerCase() === m.sender.toLowerCase();
+          const isOwn = currentUser && currentUser.username && currentUser.username.toLowerCase() === m.sender.toLowerCase();
           const safeText = m.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
           return `<div class="chat-msg-item ${isOwn ? 'own-msg' : ''}">
               <div class="chat-msg-header">
                   <span>${m.sender}</span>
-                  <span class="user-badges-inline">${badgesHtml}</span>
                   <span class="chat-msg-time">${m.time}</span>
               </div>
               <div class="chat-msg-text">${safeText}</div>
@@ -2048,7 +2152,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const planetContainer = document.getElementById('planetContainer');
       landing.style.opacity = '0'; landing.style.transform = 'translateY(-15px)';
       authWrap.style.opacity = '0';
-      if (planetContainer) planetContainer.classList.add('hub-active');
+      if (planetContainer && !isMobileDevice) planetContainer.classList.add('hub-active');
       globalWarpSpeedY = 25;
       if (pushHistory) window.setRouteUrl(initialTab, false);
       setTimeout(() => {
@@ -2086,7 +2190,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       if (mobileMenu) mobileMenu.classList.remove('show');
       navbar.style.opacity = '0'; mainWrapper.style.opacity = '0';
       mainWrapper.style.transform = 'translateY(15px)'; authWrap.style.opacity = '0';
-      if (planetContainer) planetContainer.classList.remove('hub-active');
+      if (planetContainer && !isMobileDevice) planetContainer.classList.remove('hub-active');
       globalWarpSpeedY = 22;
       if (pushHistory) window.setRouteUrl('start', false);
       setTimeout(() => {
@@ -2179,7 +2283,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                   let displayTitle = isPlaceholder ? "???" : item.title;
                   let displayGame = isPlaceholder ? "???" : item.game;
                   const { gamesList, cleanDesc, extraLink } = extractScriptGamesData(item);
-                  let displayDesc = isPlaceholder ? `<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>` : cleanDesc;
+                  let displayDesc = isPlaceholder ? `<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>` : (cleanDesc || "").replace(/</g, "&lt;");
                   let origIndex = window.STATIC_SCRIPTS.indexOf(item);
                   let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, false);
                   let supportedGamesHtml = '';
@@ -2254,7 +2358,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                   let isPlaceholder = item.is_placeholder === true;
                   let displayTitle = isPlaceholder ? "???" : item.title;
                   let displayPlatform = isPlaceholder ? "???" : item.platform;
-                  let displayDesc = isPlaceholder ? `<span class="blurred-text">Super secret new executor currently under heavy development.</span>` : item.description;
+                  let displayDesc = isPlaceholder ? `<span class="blurred-text">Super secret new executor currently under heavy development.</span>` : (item.description || "").replace(/</g, "&lt;");
                   let origIndex = window.STATIC_EXPLOITS.indexOf(item);
                   let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, true);
                   let displayInfo = '';
@@ -2318,6 +2422,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   };
 
   function initSpaceBackground() {
+      if (isLowEnd) return; // Отключаем тяжелые частицы на мобилках
       const canvas = document.getElementById('bgCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -2325,7 +2430,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; generateStars(); }
       function generateStars() {
           movingStars = [];
-          const starCount = window.innerWidth > 900 ? 150 : 85;
+          const starCount = 150;
           for (let i = 0; i < starCount; i++) {
               const angle = Math.random() * Math.PI * 2;
               const moveSpeed = Math.random() * 0.35 + 0.08;
@@ -2350,7 +2455,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
               if (this.x < -100 || this.y > h + 100) this.reset();
           }
       }
-      const cometCount = window.innerWidth > 900 ? 35 : 18;
+      const cometCount = 35;
       for (let i = 0; i < cometCount; i++) comets.push(new Comet());
       window.addEventListener('resize', resize, { passive: true });
       let actualBloom = 0;
@@ -2460,30 +2565,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           ],
           executors_info: "Working on exploits: Delta, Real, Nexomia, Arceus X neo, Madium, Velocity",
           script_discord: "https://discord.gg/9eFf93Kg8D"
-      },
-      {
-          title: "Example Script Tab (All Details)",
-          game: "Blox Fruits / Universal",
-          version: "v2.5.0", author: "Rob4ik02", status: "Working / Undetected",
-          tags: ["template", "new", "popular", "stable"],
-          banner_url: "https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png",
-          script_code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Games/Uploaded/Muscle%20Legends.lua"))()`,
-          description: "Full template card showing all possible script details: version, author, status, features list, supported games, Discord, website link, and executor info.",
-          features: ["Auto Farm", "ESP", "Aimbot", "Auto Raid", "Teleport", "Anti-Ban"],
-          games_link: "https://discord.gg/9eFf93Kg8D",
-          supported_games: ["Blox Fruits", "Muscle Legends", "Blade Ball", "Fisch", "The Strongest Battlegrounds", "RIVALS"],
-          executors_info: "Working on exploits: Delta, Solara, Nexomia, Real | Requires Key: No | UNC: 98%",
-          script_discord: "https://discord.gg/9eFf93Kg8D",
-          website_link: "https://github.com/GlobalScriptsDevelopment/Scripts",
-          is_placeholder: false
-      },
-      {
-          title: "???", game: "???",
-          tags: ["new"],
-          banner_url: "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
-          script_code: "", description: "Placeholder description",
-          executors_info: "Placeholder info", script_discord: "",
-          is_placeholder: true
       }
   ];
 
@@ -2505,49 +2586,12 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           info: "Requires Key: No | Version: V3"
       },
       {
-          title: "Xeno", platform: "Windows",
-          tags: ["pc", "keyless", "updated"],
-          banner_url: "https://wearedevs.net/images/thumbnails/xeno-112025.webp",
-          link: "https://wrdcdn.net/r/2/1786012151914/Xeno-v1.3.60.zip",
-          description: "A modern, keyless PC script executor for Roblox designed to bypass modern anti-cheats using an auto-inject feature and a clean interface. ⚠️ Important Security Warning: As of August 2026, cybersecurity researchers have identified a massive malware campaign disguised as an 'undetected' version of Xeno Executor. Fake downloads spreading on Discord and gaming forums contain a powerful Java-based virus that can record your screen, steal Roblox and Discord accounts, and empty crypto wallets.",
-          info: "Requires Key: No"
-      },
-      {
           title: "Nexomia", platform: "Windows",
           tags: ["popular", "pc", "updated", "stable", "keyless"],
           banner_url: "https://nexomia.win/logo.png",
           link: "https://github.com/fundamentalear333-coder/fghfgh/raw/refs/heads/main/Nexomia.exe",
           description: "A highly powerful and advanced script executor for Roblox. It is known for its strong performance with complex scripts, all while offering a completely keyless experience for maximum convenience.",
           info: "Requires Key: No"
-      },
-      {
-          title: "Real", platform: "Windows",
-          tags: ["pc", "stable", "key system", "paid", "popular"],
-          banner_url: "https://projectreal.gg/assets/executors/real.webp",
-          link: "https://projectreal.gg/download/",
-          description: "An excellent and stable exploit! Of course, it comes with a key system, but it's worth it. There are a lot of features, and it's almost invisible to Hyperion.",
-          info: "Requires Key: Yes | Paid"
-      },
-      {
-          title: "Example Exploit Tab (All Details)",
-          platform: "Windows / Android / iOS",
-          version: "v4.2.1", author: "Global Team", status: "Updated / Working",
-          tags: ["template", "pc", "mobile", "updated", "stable", "keyless"],
-          banner_url: "https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png",
-          link: "https://github.com/fundamentalear333-coder/fghfgh/raw/refs/heads/main/Nexomia.exe",
-          description: "Full template card showing all possible exploit details: platform, version, developer, auto-detected file size in MB, status, features list, multi-download support, Discord button, website button, and technical info.",
-          features: ["Level 8", "100% sUNC", "Auto-Inject", "Decompiler", "Multi-Instance"],
-          info: "Requires Key: No | Level: 8 | sUNC: 100% | Hyperion Bypass: Active",
-          discord_link: "https://discord.gg/9eFf93Kg8D",
-          website_link: "https://github.com/GlobalScriptsDevelopment/Scripts",
-          is_placeholder: false
-      },
-      {
-          title: "???", platform: "???",
-          tags: ["pc"],
-          banner_url: "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?w=800&q=80",
-          link: "", description: "Placeholder description",
-          info: "Placeholder info", is_placeholder: true
       }
   ];
 </script>
@@ -2558,31 +2602,31 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
   async function loadFirestoreData() {
       if (!window.FB) return;
+      
       try {
           const scrSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "scripts"));
           const firestoreScripts = [];
-          scrSnap.forEach(d => { const data = d.data(); data._fromFirestore = true; firestoreScripts.push(data); });
-          if (firestoreScripts.length) {
-              const existingTitles = new Set(window.STATIC_SCRIPTS.map(s => s.title));
-              const merged = firestoreScripts.filter(s => !existingTitles.has(s.title)).concat(window.STATIC_SCRIPTS);
-              window.STATIC_SCRIPTS.length = 0;
-              window.STATIC_SCRIPTS.push(...merged);
-              window.renderScripts();
-          }
+          scrSnap.forEach(d => { const data = d.data(); data.id = d.id; data._fromFirestore = true; firestoreScripts.push(data); });
+          
+          // Удаляем старые облачные и добавляем новые
+          window.STATIC_SCRIPTS = window.STATIC_SCRIPTS.filter(s => !s._fromFirestore);
+          window.STATIC_SCRIPTS = firestoreScripts.concat(window.STATIC_SCRIPTS);
+          window.renderScripts();
       } catch (e) { console.warn('Firestore scripts load failed:', e); }
 
       try {
           const expSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "exploits"));
           const firestoreExps = [];
-          expSnap.forEach(d => { const data = d.data(); data._fromFirestore = true; firestoreExps.push(data); });
-          if (firestoreExps.length) {
-              const existingTitles = new Set(window.STATIC_EXPLOITS.map(s => s.title));
-              const merged = firestoreExps.filter(s => !existingTitles.has(s.title)).concat(window.STATIC_EXPLOITS);
-              window.STATIC_EXPLOITS.length = 0;
-              window.STATIC_EXPLOITS.push(...merged);
-              window.renderExploits();
-          }
+          expSnap.forEach(d => { const data = d.data(); data.id = d.id; data._fromFirestore = true; firestoreExps.push(data); });
+          
+          window.STATIC_EXPLOITS = window.STATIC_EXPLOITS.filter(s => !s._fromFirestore);
+          window.STATIC_EXPLOITS = firestoreExps.concat(window.STATIC_EXPLOITS);
+          window.renderExploits();
       } catch (e) { console.warn('Firestore exploits load failed:', e); }
+      
+      if (currentUser && currentUser.role === 'developer') {
+          window.populateDevDropdowns();
+      }
   }
 
   async function syncAuthState() {
