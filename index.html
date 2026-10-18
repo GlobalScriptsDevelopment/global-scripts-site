@@ -1,5 +1,5 @@
 <!-- Global Scripts Hub | Developed by Rob4ik02 -->
-<!-- 2026 — MERGED: File1 base + File2 Firebase/Tickets -->
+<!-- 2026 — MERGED: File1 base + File2 Firebase/Tickets, security-hardened -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
-/* основные переменные цветов + принудительная темная схема для скроллбаров */
 :root {
   color-scheme: dark;
   --text-primary: #ffffff;
@@ -248,10 +247,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
 .auth-switch-hint { margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--text-primary); opacity: 0.5; cursor: pointer; transition: opacity 0.25s ease; }
 .auth-switch-hint:hover { opacity: 0.9; text-decoration: underline; }
-.auth-quick-accounts { border-top: 1px solid var(--card-border); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px; color: var(--text-secondary); }
-.auth-preset-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.auth-preset-chip { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-.auth-preset-chip:hover { color: var(--text-primary); border-color: var(--card-border-hover); background: rgba(255,255,255,0.1); }
 
 .user-badges-inline { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
 .acc-badge-icon { width: 24px; height: 24px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; position: relative; cursor: help; transition: transform 0.2s ease; }
@@ -292,7 +287,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .chat-msg-text { font-size: 13.5px; color: var(--text-secondary); line-height: 1.45; word-break: break-word; }
 .chat-input-row { display: flex; gap: 10px; }
 
-/* ================ ADDED: TICKETS STYLES (from File2, adapted) ================ */
 .support-tickets-card { display: flex; flex-direction: row; gap: 16px; min-height: 520px; padding: 18px; }
 .tickets-sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
 .tickets-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -305,7 +299,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .ticket-modal-overlay.show { display: flex; }
 .ticket-modal { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 18px; padding: 24px; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
 @media (max-width: 900px) { .support-tickets-card { flex-direction: column; } .tickets-sidebar { width: 100%; max-height: 200px; } }
-/* ============================================================================ */
 
 .app-content { position: relative; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 92px 20px 40px 20px; transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
 .dashboard-card, .script-card, .dev-select, .disabled-box, .tab-content h2.cursor-gradient-text { pointer-events: auto; }
@@ -479,7 +472,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 </head>
 <body id="appBody" class="lang-transition">
 
-  <!-- ================= FIREBASE SDK (from File2) ================= -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -506,7 +498,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     };
     window.dispatchEvent(new Event('fb-ready'));
   </script>
-  <!-- ============================================================= -->
 
   <svg width="0" height="0" style="position:absolute; pointer-events:none;">
     <defs>
@@ -726,14 +717,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       <div class="auth-switch-hint" id="authSwitchModeText" onclick="window.toggleAuthMode()" data-i18n="auth_no_acc">
         Don't have an account? Create one!
       </div>
-
-      <div class="auth-quick-accounts">
-        <span>Quick Fill Presets:</span>
-        <div class="auth-preset-row">
-          <button type="button" class="auth-preset-chip" onclick="window.fillPresetAccount('Rob4ik02', 'dev2026')">👑 Dev (Rob4ik02)</button>
-          <button type="button" class="auth-preset-chip" onclick="window.fillPresetAccount('Test User Account', '12345')">⭐ Test User Account</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -875,7 +858,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
             <div class="dashboard-card">
                 <p class="card-section-title cursor-gradient-text" style="display:flex; align-items:center; gap:8px;">
                     <i data-lucide="terminal" style="width:18px;height:18px;color:var(--success);"></i>
-                    <span>Developer Control Center (Rob4ik02)</span>
+                    <span>Developer Control Center</span>
                 </p>
 
                 <div class="dev-subtabs">
@@ -924,7 +907,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                 <div id="dev-tab-accounts" class="dev-form-section">
                     <div class="dev-form-grid">
                         <input type="text" id="devAccLogin" class="auth-input" placeholder="Username (existing or new)" />
-                        <input type="text" id="devAccPass" class="auth-input" placeholder="Password (for new or update)" />
                         <input type="text" id="devAccPlan" class="auth-input" placeholder="Plan (e.g. Free Access / VIP / Developer)" />
                     </div>
                     <span class="profile-label">SELECT ACHIEVEMENT ICONS FOR THIS ACCOUNT:</span>
@@ -1004,7 +986,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
             </div>
         </div>
 
-        <!-- ============ ADDED: TICKETS CARD (from File2) ============ -->
         <div class="dashboard-card support-tickets-card">
             <div class="tickets-sidebar">
                 <button class="copy-btn" onclick="window.openTicketCreator()">
@@ -1028,7 +1009,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
                 </div>
             </div>
         </div>
-        <!-- =========================================================== -->
       </div>
 
       <div class="tab-content" id="tab-about">
@@ -1043,7 +1023,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
     </div>
   </div>
 
-  <!-- ============ ADDED: TICKET MODAL (from File2) ============ -->
   <div class="ticket-modal-overlay" id="ticketModal">
       <div class="ticket-modal">
           <h3 style="margin:0;">Create New Ticket</h3>
@@ -1055,7 +1034,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           </div>
       </div>
   </div>
-  <!-- ======================================================= -->
 
 <script>
   window.SOCIAL_LINKS = {
@@ -1074,8 +1052,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   };
 
   window.INITIAL_ACCOUNTS = [
-      { username: "Rob4ik02", password: "dev2026", role: "developer", plan: "Developer / Owner", badges: ["developer", "verified", "popular"] },
-      { username: "Test User Account", password: "12345", role: "user", plan: "Verified Member", badges: ["verified", "popular"] }
+      { username: "Rob4ik02", role: "developer", plan: "Developer / Owner", badges: ["developer", "verified", "popular"] },
+      { username: "Test User Account", role: "user", plan: "Verified Member", badges: ["verified", "popular"] }
   ];
 
   let currentLang = 'en';
@@ -1467,17 +1445,10 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       }
   };
 
-  window.fillPresetAccount = function(user, pass) {
-      if (isAuthModeRegister) window.toggleAuthMode();
-      document.getElementById('authLoginInput').value = user;
-      document.getElementById('authPassInput').value = pass;
-  };
-
   function usernameToEmail(username) {
       return username.toLowerCase().trim().replace(/[^a-z0-9._-]/g, '_') + "@gs-hub.local";
   }
 
-  // ========== Firebase-backed auth (merged from File2) ==========
   window.submitAuthForm = async function() {
       const loginInput = document.getElementById('authLoginInput').value.trim();
       const passInput = document.getElementById('authPassInput').value.trim();
@@ -1526,9 +1497,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const accounts = getAccountsList();
       if (currentUser) {
           const fresh = accounts.find(a => a.username.toLowerCase() === currentUser.username.toLowerCase());
-          if (fresh) {
-              currentUser = Object.assign({}, fresh, currentUser);
-          }
+          if (fresh) currentUser = Object.assign({}, fresh, currentUser);
       }
       const nameEl = document.getElementById('profileUsernameText');
       const badgesInlineEl = document.getElementById('profileInlineBadges');
@@ -1579,7 +1548,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       if (sec) sec.classList.add('active');
   };
 
-  // ========== Dev panel: writes local + Firestore ==========
   window.devAddNewScript = async function() {
       const title = document.getElementById('devScrTitle').value.trim();
       const game = document.getElementById('devScrGame').value.trim() || 'Universal';
@@ -1587,7 +1555,7 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const tagsRaw = document.getElementById('devScrTags').value.trim() || 'new, stable';
       const execs = document.getElementById('devScrExecs').value.trim() || 'Working on exploits: Delta, Solara, Nexomia';
       const discord = document.getElementById('devScrDiscord').value.trim();
-      const desc = document.getElementById('devScrDesc').value.trim() || 'Added by Developer Rob4ik02.';
+      const desc = document.getElementById('devScrDesc').value.trim() || 'Added by Developer.';
       const code = document.getElementById('devScrCode').value.trim();
       if (!title || !code) { window.showToast('Enter Script Title and Lua Code!'); return; }
 
@@ -1653,19 +1621,17 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 
   window.devSaveAccountAndBadges = function() {
       const username = document.getElementById('devAccLogin').value.trim();
-      const password = document.getElementById('devAccPass').value.trim();
       const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
       if (!username) { window.showToast('Enter Username to update or create!'); return; }
       const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
       const accounts = getAccountsList();
       const existingIdx = accounts.findIndex(a => a.username.toLowerCase() === username.toLowerCase());
       if (existingIdx >= 0) {
-          if (password) accounts[existingIdx].password = password;
           accounts[existingIdx].plan = plan;
           accounts[existingIdx].badges = selectedBadges;
           if (selectedBadges.includes('developer')) accounts[existingIdx].role = 'developer';
       } else {
-          accounts.push({ username, password: password || '12345', role: selectedBadges.includes('developer') ? 'developer' : 'user', plan, badges: selectedBadges });
+          accounts.push({ username, role: selectedBadges.includes('developer') ? 'developer' : 'user', plan, badges: selectedBadges });
       }
       saveAccountsList(accounts);
       window.refreshUserProfileUI();
@@ -1678,7 +1644,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       const acc = accounts.find(a => a.username === username);
       if (!acc) return;
       document.getElementById('devAccLogin').value = acc.username;
-      document.getElementById('devAccPass').value = acc.password;
       document.getElementById('devAccPlan').value = acc.plan || 'Free Access';
       document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(acc.badges) && acc.badges.includes(cb.value); });
   };
@@ -2587,7 +2552,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
   ];
 </script>
 
-<!-- ============ ADDED: Firebase auth-state + Firestore data + Tickets ============ -->
 <script>
   let activeTicketId = null;
   let fbUserDocLoaded = false;
@@ -2654,7 +2618,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
       });
   }
 
-  // ==================== TICKETS (merged from File2) ====================
   window.loadTicketsFromFirestore = async function() {
       if (!currentUser || !window.FB) {
           const list = document.getElementById('ticketsList');
@@ -2775,7 +2738,6 @@ input, textarea { user-select: text; -webkit-user-select: text; }
           window.selectTicket(id);
       } catch (e) { window.showToast('Close failed: ' + (e.message || 'error')); }
   };
-  // ====================================================================
 
   if (window.FB) syncAuthState();
   else window.addEventListener('fb-ready', syncAuthState, { once: true });
