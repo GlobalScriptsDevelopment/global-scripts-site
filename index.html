@@ -1,5 +1,3 @@
-<!-- Global Scripts Hub | Developed by Rob4ik02 -->
-<!-- 2026 — MERGED, HARDENED, OPTIMIZED, FULL DEV PANEL -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +23,7 @@
   --success: #10b981;
   --shadow-drop: 0 20px 40px rgba(0,0,0,0.8);
   --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  --blur: blur(24px) saturate(160%);
+  --blur: blur(12px) saturate(140%);
   --glow-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -34,16 +32,15 @@
   --bg-color: #f3f4f6;
   --text-primary: #111827;
   --text-secondary: #6b7280;
-  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 245, 0.8));
+  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 245, 0.9));
   --card-border: rgba(0, 0, 0, 0.08);
   --card-border-hover: rgba(0, 0, 0, 0.2);
-  --input-bg: rgba(255, 255, 255, 0.8);
+  --input-bg: rgba(255, 255, 255, 0.9);
   --input-border: rgba(0, 0, 0, 0.1);
   --accent: #111827;
   --accent-text: #ffffff;
   --shadow-drop: 0 15px 35px rgba(0, 0, 0, 0.08);
   --shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --glow-color: rgba(0, 0, 0, 0.02);
 }
 
 * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
@@ -55,34 +52,30 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: var(--text-primary); overflow-x: hidden; overflow-y: auto;
     background: linear-gradient(135deg, #000000 0%, #111116 50%, #050505 100%);
-    background-attachment: fixed; background-size: 400% 400%;
-    animation: ambientGradient 20s ease infinite;
+    background-attachment: fixed;
     position: relative; user-select: none;
 }
 
 body.dragging-planet { cursor: grabbing !important; }
 
-@keyframes ambientGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px !important; }
 
-input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px !important; /* Фикс зума на iOS */ }
+.lang-transition { transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.lang-blur { filter: blur(6px) scale(0.99); opacity: 0; pointer-events: none; }
 
-.lang-transition { transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.lang-blur { filter: blur(8px) scale(0.98); opacity: 0; pointer-events: none; }
+*::-webkit-scrollbar { width: 6px; height: 6px; background-color: #09090d; }
+*::-webkit-scrollbar-track { background: rgba(12, 12, 18, 0.95); border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.04); }
+*::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.42)); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.7); }
+*::-webkit-scrollbar-button { display: none !important; }
+*::-webkit-scrollbar-corner { background: transparent !important; }
 
-*::-webkit-scrollbar, ::-webkit-scrollbar { width: 6px; height: 6px; background-color: #09090d; }
-*::-webkit-scrollbar-track, ::-webkit-scrollbar-track { background: rgba(12, 12, 18, 0.95); border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.04); }
-*::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.42)); border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.12); }
-*::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.7); }
-*::-webkit-scrollbar-button, ::-webkit-scrollbar-button { display: none !important; width: 0 !important; height: 0 !important; }
-*::-webkit-scrollbar-corner, ::-webkit-scrollbar-corner { background: transparent !important; }
-
-.toast-notification { position: fixed; bottom: -100px; left: 24px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); padding: 16px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; z-index: 99999; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s; opacity: 0; width: 90%; max-width: 350px; }
+.toast-notification { position: fixed; bottom: -100px; left: 24px; background: rgba(20,20,26,0.96); border: 1px solid var(--card-border); padding: 14px 18px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; z-index: 99999; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s; opacity: 0; width: 90%; max-width: 350px; }
 .toast-notification.show { bottom: 24px; opacity: 1; }
-.toast-icon { color: var(--text-primary); display: flex; align-items: center; justify-content: center; }
 .toast-text p { margin: 0; font-size: 14px; color: var(--text-primary); font-weight: 500; }
 
 .download-stack-container { position: fixed; bottom: 20px; right: 24px; width: 92%; max-width: 390px; display: flex; flex-direction: column; gap: 12px; z-index: 100000; pointer-events: none; max-height: 82vh; overflow-y: auto; padding: 4px; }
-.download-item-card { background: linear-gradient(145deg, rgba(20, 20, 26, 0.94), rgba(10, 10, 14, 0.97)); backdrop-filter: blur(28px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.15); display: flex; flex-direction: column; gap: 10px; pointer-events: auto; transform: translateY(25px) scale(0.96); opacity: 0; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, border-color 0.3s ease; }
+.download-item-card { background: linear-gradient(145deg, rgba(20, 20, 26, 0.96), rgba(10, 10, 14, 0.98)); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 18px; padding: 16px 18px; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85); display: flex; flex-direction: column; gap: 10px; pointer-events: auto; transform: translateY(25px) scale(0.96); opacity: 0; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
 .download-item-card.show { transform: translateY(0) scale(1); opacity: 1; }
 .download-item-card.removing { transform: translateX(40px) scale(0.92); opacity: 0; }
 .dl-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
@@ -91,15 +84,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .dl-file-info { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
 .dl-filename { font-size: 13.5px; font-weight: 800; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dl-status-text { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
-.dl-close-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-secondary); width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
-.dl-close-btn:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.15); }
-.dl-progress-track { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.07); border-radius: 999px; overflow: hidden; position: relative; }
-.dl-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 999px; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); transition: width 0.12s linear; }
+.dl-close-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-secondary); width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.dl-progress-track { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.07); border-radius: 999px; overflow: hidden; }
+.dl-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 999px; transition: width 0.12s linear; }
 .dl-stats-row { display: flex; align-items: center; justify-content: space-between; font-family: monospace; font-size: 11.5px; font-weight: 700; color: var(--text-secondary); }
 .dl-bytes-text { color: var(--text-primary); }
 .dl-speed-badge { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); padding: 2px 8px; border-radius: 6px; color: var(--success); }
 
-#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; opacity: 0; animation: fadeInCanvas 2s ease forwards; will-change: opacity; pointer-events: none; }
+#bgCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; opacity: 0; animation: fadeInCanvas 1.4s ease forwards; will-change: opacity; pointer-events: none; }
 @keyframes fadeInCanvas { to { opacity: 1; } }
 
 .easter-egg-container { position: fixed; top: 50%; left: 50%; z-index: 1; pointer-events: none; transform: scale(1); filter: brightness(1) blur(0px); transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 1.1s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, filter; }
@@ -107,7 +99,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .easter-egg-container.hub-active.planet-sliced-active, .easter-egg-container.hub-active.planet-dragging-active { filter: brightness(0.96) blur(0px); }
 
 .planet-shake-wrapper { position: absolute; top: 0; left: 0; width: 0; height: 0; will-change: transform; }
-
 .planet-shake-wrapper.splitting-shake { animation: earthSplittingTremor 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards; }
 @keyframes earthSplittingTremor {
     0%   { transform: translate(0, 0) rotate(0deg); }
@@ -121,7 +112,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     90%  { transform: translate(1px, -1px) rotate(0.1deg); }
     100% { transform: translate(0, 0) rotate(0deg); }
 }
-
 .planet-shake-wrapper.ink-pulling-shake { animation: inkTensionShake 0.08s linear infinite; }
 @keyframes inkTensionShake {
     0%   { transform: translate(0, 0); }
@@ -130,7 +120,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     75%  { transform: translate(-1.5px, -2px); }
     100% { transform: translate(1.5px, 2px); }
 }
-
 .planet-shake-wrapper.hammer-impact { animation: heavyHammerSlam 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 @keyframes heavyHammerSlam {
     0%   { transform: scale(0.91) translate(0, 0); }
@@ -145,28 +134,21 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .real-planet-sphere { position: absolute; top: 50%; left: 50%; width: 450px; height: 450px; margin-top: -225px; margin-left: -225px; border-radius: 50%; z-index: 2; pointer-events: none; will-change: transform; }
 
 .planet-half { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; z-index: 4; transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s ease; will-change: transform, filter; }
-
 .real-planet-sphere.ink-gripping .planet-half.half-left { transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translate(-58px, 0px) rotate(-2deg) !important; }
 .real-planet-sphere.ink-gripping .planet-half.half-right { transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translate(58px, 0px) rotate(2deg) !important; }
-
 .real-planet-sphere.slamming-shut .planet-half { transition: transform 0.2s cubic-bezier(0.6, 0.04, 0.98, 0.335), filter 0.2s ease !important; }
 
 .planet-surface-tex { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg'); background-size: 900px 450px; background-repeat: repeat; filter: grayscale(100%) contrast(1.18) brightness(0.78); background-color: #080808; will-change: background-position; }
-
 .planet-half::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; box-shadow: inset 0 0 65px rgba(0, 0, 0, 0.92), inset 0 0 22px rgba(255, 255, 255, 0.14); pointer-events: none; }
-
 .planet-half.half-left { clip-path: polygon(0 0, 50.3% 0, 50.3% 100%, 0 100%); }
 .planet-half.half-right { clip-path: polygon(49.7% 0, 100% 0, 100% 100%, 49.7% 100%); }
-
 .real-planet-sphere.sliced .planet-half.half-left { transform: translate(-86px, 0px) rotate(-3.5deg); filter: drop-shadow(14px 0px 20px rgba(0, 0, 0, 0.95)); }
 .real-planet-sphere.sliced .planet-half.half-right { transform: translate(86px, 0px) rotate(3.5deg); filter: drop-shadow(-14px 0px 20px rgba(0, 0, 0, 0.95)); }
 
 .planet-interior-core { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; z-index: 3; opacity: 0; transform: scale(0.9); transition: opacity 0.35s ease, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); pointer-events: none; display: flex; align-items: center; justify-content: center; }
 .real-planet-sphere.sliced .planet-interior-core { opacity: 1; transform: scale(1); }
 .real-planet-sphere.slamming-shut .planet-interior-core { transition: opacity 0.18s ease, transform 0.2s ease !important; opacity: 0; transform: scale(0.88); }
-
 .interior-svg { width: 100%; height: 100%; overflow: visible; }
-
 .core-glow-pulse { transform-origin: 225px 225px; animation: coreRadiancePulse 1.3s ease-in-out infinite alternate; }
 .core-halo-wave { transform-origin: 225px 225px; animation: coreHaloExpand 2.2s ease-out infinite; }
 .core-rays-spin { transform-origin: 225px 225px; animation: coreRaysRotate 16s linear infinite; }
@@ -178,7 +160,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 @keyframes coreRaysRotateRev { 0% { transform: rotate(360deg) scale(1.04); opacity: 0.85; } 50% { transform: rotate(180deg) scale(0.92); opacity: 0.55; } 100% { transform: rotate(0deg) scale(1.04); opacity: 0.85; } }
 @keyframes coreGlintShimmer { 0% { opacity: 0.55; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.18); } }
 
-#planetInkCanvas { position: absolute; top: -45px; left: -45px; width: 540px; height: 540px; z-index: 6; pointer-events: none; filter: url(#ultraInkGoo) drop-shadow(0 0 10px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.16)); }
+#planetInkCanvas { position: absolute; top: -45px; left: -45px; width: 540px; height: 540px; z-index: 6; pointer-events: none; filter: url(#ultraInkGoo) drop-shadow(0 0 10px rgba(0, 0, 0, 0.98)); }
 
 .planet-slash-beam { position: absolute; top: 50%; left: 50%; width: 5px; height: 560px; margin-top: -280px; margin-left: -2.5px; background: linear-gradient(180deg, transparent 0%, #ffffff 20%, #fb923c 50%, #ffffff 80%, transparent 100%); box-shadow: 0 0 22px #ffffff, 0 0 45px #ea580c; transform: rotate(0deg) scaleY(0); opacity: 0; z-index: 7; pointer-events: none; border-radius: 999px; }
 .planet-slash-beam.slash-anim { animation: slashStrike 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -198,21 +180,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 .landing-hero { text-align: center; max-width: 900px; margin-bottom: 60px; z-index: 2; }
-
 .landing-hero h1.cursor-gradient-text {
     font-size: 72px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 24px; line-height: 1.1;
     background-image: radial-gradient(220px circle at var(--cursor-x, -500px) var(--cursor-y, -500px), #374151 0%, #6b7280 30%, #9ca3af 58%, #ffffff 85%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.55)); cursor: default;
+    cursor: default;
 }
-
 .landing-hero p.cursor-gradient-text {
     font-size: 20px; line-height: 1.6; margin-bottom: 40px; font-weight: 500; max-width: 700px; margin-left: auto; margin-right: auto;
     background-image: radial-gradient(180px circle at var(--cursor-x, -500px) var(--cursor-y, -500px), #ffffff 0%, #d1d5db 32%, #6b7280 65%, #9ca3af 90%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-    filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5)); cursor: default;
+    cursor: default;
 }
-
 .feature-box h3 span.cursor-gradient-text, .tab-content h2.cursor-gradient-text, .header-logo h1.cursor-gradient-text, .card-section-title.cursor-gradient-text {
     background-image: radial-gradient(150px circle at var(--cursor-x, -500px) var(--cursor-y, -500px), #4b5563 0%, #9ca3af 42%, #d1d5db 70%, #ffffff 92%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
@@ -222,44 +201,44 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
 }
 
-.login-to-start-btn { padding: 16px 42px; font-size: 16px; font-weight: 700; color: var(--accent-text); background: var(--accent); border: 2px solid var(--accent); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(255,255,255,0.15); text-transform: uppercase; letter-spacing: 1px; }
-.login-to-start-btn:hover { background: transparent; color: var(--accent); transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 40px rgba(255,255,255,0.25); }
+.login-to-start-btn { padding: 16px 42px; font-size: 16px; font-weight: 700; color: var(--accent-text); background: var(--accent); border: 2px solid var(--accent); border-radius: 12px; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(255,255,255,0.15); text-transform: uppercase; letter-spacing: 1px; }
+.login-to-start-btn:hover { background: transparent; color: var(--accent); transform: translateY(-4px) scale(1.02); }
 
-.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; width: 100%; max-width: 1100px; margin-bottom: 60px; perspective: 1200px; z-index: 2; }
-.feature-box { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; text-align: left; transition: all 0.3s ease; transform-style: preserve-3d; }
-.feature-box:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; width: 100%; max-width: 1100px; margin-bottom: 60px; z-index: 2; }
+.feature-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; text-align: left; transition: border-color 0.25s ease, transform 0.25s ease; contain: layout style paint; }
+.feature-box:hover { border-color: var(--card-border-hover); transform: translateY(-5px); }
 .feature-box h3 { margin: 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
 .feature-box p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-#authWrapper { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 40px 20px; position: relative; z-index: 15; opacity: 0; transform: translateY(15px); transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
-.auth-card { pointer-events: auto; width: 100%; max-width: 420px; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 24px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 32px 28px; display: flex; flex-direction: column; gap: 18px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; /* Фикс мобильной клавиатуры */ }
-.auth-back-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-secondary); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+#authWrapper { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 40px 20px; position: relative; z-index: 15; opacity: 0; transform: translateY(15px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none; }
+.auth-card { pointer-events: auto; width: 100%; max-width: 420px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; box-shadow: var(--shadow-drop); padding: 32px 28px; display: flex; flex-direction: column; gap: 18px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; }
+.auth-back-btn { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-secondary); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .auth-back-btn:hover { color: var(--text-primary); border-color: var(--card-border-hover); background: rgba(255,255,255,0.1); }
 .auth-logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 4px; }
 .auth-logo-wrap img { width: 52px; height: 52px; border-radius: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
 .auth-logo-wrap h2 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 .auth-logo-wrap p { margin: 0; font-size: 13px; color: var(--text-secondary); }
 .auth-field-group { display: flex; flex-direction: column; gap: 12px; text-align: left; }
-.auth-input { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-primary); padding: 13px 16px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-.auth-input:focus { border-color: var(--text-primary); box-shadow: 0 0 0 3px rgba(255,255,255,0.08); }
-.auth-submit-btn { width: 100%; background: var(--accent); color: var(--accent-text); border: none; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
+.auth-input { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-primary); padding: 13px 16px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 600; outline: none; transition: border-color 0.2s; }
+.auth-input:focus { border-color: var(--text-primary); }
+.auth-submit-btn { width: 100%; background: var(--accent); color: var(--accent-text); border: none; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
 .auth-submit-btn * { color: inherit; }
-.auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,255,255,0.2); }
-.auth-switch-hint { margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--text-primary); opacity: 0.5; cursor: pointer; transition: opacity 0.25s ease; }
+.auth-submit-btn:hover { transform: translateY(-2px); }
+.auth-switch-hint { margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--text-primary); opacity: 0.5; cursor: pointer; }
 .auth-switch-hint:hover { opacity: 0.9; text-decoration: underline; }
 
 .user-badges-inline { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; }
 .acc-badge-icon { width: 24px; height: 24px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; position: relative; cursor: help; transition: transform 0.2s ease; }
 .acc-badge-icon:hover { transform: scale(1.15) translateY(-1px); }
-.acc-badge-icon.badge-verified { background: rgba(56, 189, 248, 0.16); border: 1px solid rgba(56, 189, 248, 0.45); color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
-.acc-badge-icon.badge-popular { background: rgba(245, 158, 11, 0.16); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; box-shadow: 0 0 12px rgba(245, 158, 11, 0.25); }
-.acc-badge-icon.badge-developer { background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.45); color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.25); }
-.acc-badge-icon.badge-vip { background: rgba(168, 85, 247, 0.16); border: 1px solid rgba(168, 85, 247, 0.45); color: #c084fc; box-shadow: 0 0 12px rgba(168, 85, 247, 0.25); }
-.acc-badge-icon.badge-tester { background: rgba(236, 72, 153, 0.16); border: 1px solid rgba(236, 72, 153, 0.45); color: #f472b6; box-shadow: 0 0 12px rgba(236, 72, 153, 0.25); }
+.acc-badge-icon.badge-verified { background: rgba(56, 189, 248, 0.16); border: 1px solid rgba(56, 189, 248, 0.45); color: #38bdf8; }
+.acc-badge-icon.badge-popular { background: rgba(245, 158, 11, 0.16); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; }
+.acc-badge-icon.badge-developer { background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.45); color: #10b981; }
+.acc-badge-icon.badge-vip { background: rgba(168, 85, 247, 0.16); border: 1px solid rgba(168, 85, 247, 0.45); color: #c084fc; }
+.acc-badge-icon.badge-tester { background: rgba(236, 72, 153, 0.16); border: 1px solid rgba(236, 72, 153, 0.45); color: #f472b6; }
 
 .achievements-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 6px; }
-.achievement-pill-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s, transform 0.2s; }
-.achievement-pill-card:hover { border-color: var(--card-border-hover); transform: translateY(-2px); }
+.achievement-pill-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s; }
+.achievement-pill-card:hover { border-color: var(--card-border-hover); }
 .ach-info { display: flex; flex-direction: column; gap: 2px; }
 .ach-title { font-size: 13.5px; font-weight: 800; color: var(--text-primary); }
 .ach-desc { font-size: 11.5px; color: var(--text-secondary); }
@@ -267,7 +246,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .dev-panel-wrapper { display: none; flex-direction: column; gap: 16px; }
 .dev-panel-wrapper.show { display: flex; }
 .dev-subtabs { display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
-.dev-subtab-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+.dev-subtab-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .dev-subtab-btn.active, .dev-subtab-btn:hover { color: var(--text-primary); border-color: var(--success); background: rgba(16, 185, 129, 0.12); }
 .dev-form-section { display: none; flex-direction: column; gap: 12px; }
 .dev-form-section.active { display: flex; }
@@ -277,6 +256,13 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .dev-badge-check-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; cursor: pointer; padding: 4px 8px; border-radius: 8px; background: rgba(255,255,255,0.04); }
 .dev-accounts-table { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
 .dev-acc-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 12px; }
+
+.dev-delete-bar { display: none; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.35); border-radius: 12px; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.dev-delete-bar.show { display: flex; }
+.dev-delete-bar span { font-size: 12.5px; color: var(--text-secondary); font-weight: 600; }
+
+.btn-danger { background: var(--error); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.btn-danger:hover { filter: brightness(1.1); }
 
 .support-chat-card { display: flex; flex-direction: column; gap: 14px; height: 460px; }
 .chat-messages-box { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 12px; background: rgba(0, 0, 0, 0.28); border: 1px solid var(--card-border); border-radius: 14px; }
@@ -295,80 +281,84 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .ticket-view { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .ticket-view-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); text-align: center; }
 .ticket-view-active { display: none; flex-direction: column; flex: 1; gap: 12px; }
-.ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 99999; display: none; align-items: center; justify-content: center; padding: 20px; }
+.ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 99999; display: none; align-items: center; justify-content: center; padding: 20px; }
 .ticket-modal-overlay.show { display: flex; }
-.ticket-modal { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 18px; padding: 24px; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.ticket-modal { background: #0e0e12; border: 1px solid var(--card-border); border-radius: 18px; padding: 24px; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 12px; }
 
-.app-content { position: relative; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 92px 20px 40px 20px; transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
+.app-content { position: relative; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; min-height: 100vh; padding: 92px 20px 40px 20px; transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none; }
 .dashboard-card, .script-card, .dev-select, .disabled-box, .tab-content h2.cursor-gradient-text { pointer-events: auto; }
 
-.top-bar { position: fixed; top: 0; left: 0; width: 100vw; display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; z-index: 100; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); border-bottom: 1px solid var(--card-border); transition: background 0.4s, opacity 0.45s ease; }
+.top-bar { position: fixed; top: 0; left: 0; width: 100vw; display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; z-index: 100; background: rgba(8,8,12,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); transition: opacity 0.4s ease; }
 .top-bar-left, .top-bar-right { display: flex; align-items: center; gap: 16px; }
 
-.header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.3s ease, opacity 0.2s ease; margin-right: 20px; flex-shrink: 0; }
-.header-logo:hover { transform: scale(1.04); opacity: 0.9; }
-.header-logo:active { transform: scale(0.97); }
+.header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.2s ease, opacity 0.2s ease; margin-right: 20px; flex-shrink: 0; }
+.header-logo:hover { transform: scale(1.04); }
 .header-logo img { width: 36px; height: 36px; border-radius: 10px; }
 .header-logo h1 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
 
 .desktop-nav { display: flex; gap: 8px; }
-.nav-link { background: transparent; color: var(--text-secondary); border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; padding: 8px 14px; border-radius: 10px; white-space: nowrap; }
+.nav-link { background: transparent; color: var(--text-secondary); border: none; font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 14px; border-radius: 10px; white-space: nowrap; }
 .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
 .nav-link.active { color: var(--text-primary) !important; background: rgba(255,255,255,0.1) !important; }
 
-.mobile-menu-btn { display: none; background: transparent; border: none; color: var(--text-primary); cursor: pointer; padding: 8px; transition: transform 0.2s; }
-.mobile-menu-btn:active { transform: scale(0.9); }
+.mobile-menu-btn { display: none; background: transparent; border: none; color: var(--text-primary); cursor: pointer; padding: 8px; }
 
-.mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+.mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
 .mobile-menu-overlay.show { opacity: 1; pointer-events: auto; display: flex; }
-.mobile-menu-content { display: flex; flex-direction: column; gap: 20px; align-items: center; transform: scale(0.95); transition: transform 0.4s ease; width: 100%; }
+.mobile-menu-content { display: flex; flex-direction: column; gap: 20px; align-items: center; transform: scale(0.95); transition: transform 0.35s ease; width: 100%; }
 .mobile-menu-overlay.show .mobile-menu-content { transform: scale(1); }
-.mobile-menu-overlay .nav-link { font-size: 22px; padding: 12px 24px; width: auto; text-align: center; }
-.close-menu-btn { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
-.close-menu-btn:active { background: rgba(255,255,255,0.2); }
+.mobile-menu-overlay .nav-link { font-size: 22px; padding: 12px 24px; }
+.close-menu-btn { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-@keyframes heavyGlitch { 0% { transform: translate(0, 0); opacity: 0.5; } 20% { transform: translate(-1px, 1px); opacity: 0.3; } 40% { transform: translate(1px, -1px); opacity: 0.7; } 60% { transform: translate(-1px, -1px); opacity: 0.4; } 80% { transform: translate(1px, 1px); opacity: 0.6; } 100% { transform: translate(0, 0); opacity: 0.5; } }
-
-.glitch-text-btn { background: transparent; border: none; color: rgba(255,255,255,0.5); font-family: monospace; font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 14px; letter-spacing: 1px; text-transform: uppercase; outline: none; animation: heavyGlitch 0.3s infinite; transition: all 0.3s ease; white-space: nowrap; }
-.glitch-text-btn:hover, .glitch-text-btn.active { color: var(--success) !important; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); animation: none; opacity: 1; background: transparent !important; transform: scale(1.02); }
+.glitch-text-btn { background: transparent; border: none; color: rgba(255,255,255,0.5); font-family: monospace; font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 14px; letter-spacing: 1px; text-transform: uppercase; outline: none; transition: color 0.2s ease, transform 0.2s ease; white-space: nowrap; }
+.glitch-text-btn:hover, .glitch-text-btn.active { color: var(--success) !important; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); transform: scale(1.02); }
 .glitch-text-btn .glitch-on { display: none; }
 .glitch-text-btn:hover .glitch-off, .glitch-text-btn.active .glitch-off { display: none; }
 .glitch-text-btn:hover .glitch-on, .glitch-text-btn.active .glitch-on { display: inline; }
 .mobile-menu-overlay .glitch-text-btn { font-size: 22px; }
 
-.ui-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-.ui-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.ui-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.ui-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); }
 
 .lang-dropdown-wrapper { position: relative; }
-.lang-menu { position: absolute; top: 120%; right: 0; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s ease; box-shadow: var(--shadow-drop); min-width: 140px; z-index: 1000; }
+.lang-menu { position: absolute; top: 120%; right: 0; background: #0e0e12; border: 1px solid var(--card-border); border-radius: 16px; padding: 8px; display: flex; flex-direction: column; gap: 4px; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: opacity 0.25s ease, transform 0.25s ease; box-shadow: var(--shadow-drop); min-width: 140px; z-index: 1000; }
 .lang-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 10px; transition: background 0.2s; display: flex; align-items: center; gap: 8px; }
+.lang-option { padding: 10px 14px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 10px; display: flex; align-items: center; gap: 8px; }
 .lang-option:hover { background: var(--input-bg); }
 
 .dashboard-layout { margin: 0 auto; display: flex; width: 100%; max-width: 1100px; flex-direction: column; gap: 20px; align-items: stretch; }
-.dashboard-card { background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); padding: 18px 24px 22px 24px; }
+.dashboard-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop); padding: 18px 24px 22px 24px; contain: layout style paint; }
 .card-section-title { margin: 0 0 12px 0; padding-bottom: 10px; border-bottom: 1px solid var(--card-border); font-weight: 700; font-size: 16px; color: var(--text-primary); }
 
-.tab-content { display: none; flex-direction: column; gap: 14px; width: 100%; animation: fadeUp 0.4s ease forwards; }
+.tab-content { display: none; flex-direction: column; gap: 14px; width: 100%; animation: fadeUp 0.35s ease forwards; }
 .tab-content.active { display: flex; }
 
 .tab-header-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 4px; flex-wrap: wrap; gap: 10px; }
 .tab-content h2 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; line-height: 1.2; width: fit-content; }
 
 .section-separator { padding: 12px 0; display: flex; align-items: center; justify-content: center; width: 100%; }
-.section-divider-line { width: 65%; height: 3px; background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.08) 100%); border-radius: 999px; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3); }
+.section-divider-line { width: 65%; height: 3px; background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.08) 100%); border-radius: 999px; }
 
-.dev-select { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--card-border); padding: 10px 14px; border-radius: 12px; outline: none; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: border-color 0.2s; min-width: 160px; }
-.dev-select:focus, .dev-select:hover { border-color: var(--text-primary); }
-.search-input::placeholder { color: var(--text-secondary); opacity: 0.7; font-weight: 500; }
+.dev-select { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--card-border); padding: 10px 14px; border-radius: 12px; outline: none; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; min-width: 160px; }
+.dev-select:hover, .dev-select:focus { border-color: var(--text-primary); }
 
-.fade-container { opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.fade-container { opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .fade-container.show { opacity: 1; transform: translateY(0); }
 
 .cards-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; align-items: start; }
 .cards-column { display: flex; flex-direction: column; width: 100%; }
-.script-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; height: auto; background: var(--card-bg); backdrop-filter: var(--blur); border: 1px solid var(--card-border); border-radius: 20px; box-shadow: var(--shadow-drop), var(--shadow-inner); transition: all 0.3s ease; }
-.script-card:hover { border-color: var(--card-border-hover); transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+
+.script-card {
+    padding: 0; overflow: hidden; display: flex; flex-direction: column; height: auto;
+    background: rgba(14, 14, 19, 0.94);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    contain: layout style paint;
+}
+[data-theme="light"] .script-card { background: #ffffff; }
+.script-card:hover { border-color: var(--card-border-hover); transform: translateY(-3px); }
 
 .supported-games-box { background: rgba(8, 8, 12, 0.65); border: 1px solid var(--card-border); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
 [data-theme="light"] .supported-games-box { background: rgba(0, 0, 0, 0.04); }
@@ -376,20 +366,13 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .sg-title-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.7px; }
 .sg-count-badge { background: rgba(16, 185, 129, 0.16); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.35); padding: 2px 7px; border-radius: 999px; font-size: 10px; font-weight: 800; }
 .sg-actions { display: flex; align-items: center; gap: 6px; }
-.sg-link-chip { background: rgba(88, 101, 242, 0.15); color: #8b9dff; border: 1px solid rgba(88, 101, 242, 0.35); padding: 3px 8px; border-radius: 7px; font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease; }
+.sg-link-chip { background: rgba(88, 101, 242, 0.15); color: #8b9dff; border: 1px solid rgba(88, 101, 242, 0.35); padding: 3px 8px; border-radius: 7px; font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
 .sg-link-chip:hover { background: rgba(88, 101, 242, 0.3); color: #ffffff; }
-.sg-toggle-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 3px 8px; border-radius: 7px; font-size: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 0.5px; }
-.sg-toggle-btn:hover { color: var(--text-primary); border-color: var(--card-border-hover); background: rgba(255, 255, 255, 0.12); }
+.sg-toggle-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 3px 8px; border-radius: 7px; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
 .sg-pills-container { display: flex; flex-wrap: wrap; gap: 5px; max-height: 114px; overflow-y: auto; padding: 2px 6px 2px 0; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 .sg-pills-container.expanded { max-height: 360px; }
-.sg-pills-container::-webkit-scrollbar { width: 5px; background-color: rgba(10, 10, 15, 0.9); }
-.sg-pills-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.04); border-radius: 999px; }
-.sg-pills-container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.28); border-radius: 999px; }
-.sg-pills-container::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.55); }
-.sg-pills-container::-webkit-scrollbar-button { display: none !important; width: 0 !important; height: 0 !important; }
-.sg-pill { font-size: 11px; font-weight: 600; color: var(--text-secondary); background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 3px 8px; border-radius: 7px; line-height: 1.3; white-space: nowrap; transition: all 0.15s ease; }
+.sg-pill { font-size: 11px; font-weight: 600; color: var(--text-secondary); background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 3px 8px; border-radius: 7px; line-height: 1.3; white-space: nowrap; }
 [data-theme="light"] .sg-pill { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.1); }
-.sg-pill:hover { color: var(--text-primary); border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.09); }
 .sg-pill.match { color: var(--success); border-color: var(--success); background: rgba(16, 185, 129, 0.14); font-weight: 700; }
 
 .card-meta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
@@ -398,25 +381,29 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .features-list-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .feature-tag { font-size: 11px; font-weight: 600; color: var(--text-primary); background: rgba(255, 255, 255, 0.06); padding: 3px 8px; border-radius: 6px; }
 
-.script-banner { width: 100%; height: 175px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); transition: transform 0.4s ease; }
-.script-card:hover .script-banner { transform: scale(1.05); }
+.script-banner { width: 100%; height: 175px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
 .script-banner-wrapper { overflow: hidden; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; position: relative; }
 
 .badge-row { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 5; flex-wrap: wrap; }
-.badge { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.badge { background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
-.script-content { padding: 16px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 0 1 auto; z-index: 2; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+.dev-card-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 6; }
+.dev-icon-btn { background: rgba(0,0,0,0.75); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.dev-icon-btn:hover { background: rgba(255,255,255,0.15); }
+.dev-icon-btn.danger:hover { background: rgba(239, 68, 68, 0.7); border-color: var(--error); }
+
+.script-content { padding: 16px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 0 1 auto; z-index: 2; }
 .script-header { display: flex; flex-direction: column; gap: 2px; margin: 0; }
 .script-header h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 1.25; }
 .game-tag { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 .script-desc { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
 
-.copy-btn { background: var(--accent); color: var(--accent-text); border: none; padding: 11px 16px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.copy-btn { background: var(--accent); color: var(--accent-text); border: none; padding: 11px 16px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
 .copy-btn * { color: inherit; }
-.copy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
+.copy-btn:hover { transform: translateY(-2px); }
 
-.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 11px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.discord-icon-btn:hover { border-color: #5865F2; color: #5865F2; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(88,101,242,0.2); }
+.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 11px; border-radius: 10px; cursor: pointer; transition: transform 0.15s, border-color 0.15s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.discord-icon-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); }
 .executor-info { font-size: 12px; color: var(--text-secondary); padding-top: 10px; border-top: 1px solid var(--card-border); white-space: pre-line; line-height: 1.45; font-weight: 500; font-family: monospace; }
 
 .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 4px; }
@@ -425,24 +412,22 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .profile-value { font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .social-apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 4px; }
-.social-app-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-primary); padding: 14px 18px; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease, opacity 0.4s ease; will-change: transform, opacity; }
-.social-app-btn:hover { border-color: var(--card-border-hover); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+.social-app-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-primary); padding: 14px 18px; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: transform 0.2s, border-color 0.2s; }
+.social-app-btn:hover { border-color: var(--card-border-hover); transform: translateY(-3px); }
 .social-app-btn.clicking { transform: scale(0.75) rotate(-14deg) !important; opacity: 0.65; pointer-events: none; }
 .social-icon-wrap { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-.disabled-box { border: 1px dashed var(--card-border); background: rgba(255,255,255,0.02); padding: 32px; border-radius: 16px; text-align: center; color: var(--text-secondary); transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.disabled-box:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+.disabled-box { border: 1px dashed var(--card-border); background: rgba(255,255,255,0.02); padding: 32px; border-radius: 16px; text-align: center; color: var(--text-secondary); display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
 .blurred-text { filter: blur(4px); opacity: 0.6; user-select: none; pointer-events: none; }
 .blurred-img { filter: blur(15px); opacity: 0.4; }
-.btn-disabled { background: rgba(255,255,255,0.1) !important; color: var(--text-secondary) !important; cursor: not-allowed !important; box-shadow: none !important; transform: none !important; }
+.btn-disabled { background: rgba(255,255,255,0.1) !important; color: var(--text-secondary) !important; cursor: not-allowed !important; transform: none !important; }
 .btn-disabled * { color: inherit !important; }
 
 .story-text { margin: 0 auto; font-size: 16px; line-height: 1.9; text-align: left; font-weight: 400; max-width: 800px; color: var(--text-secondary); }
 
-/* Оптимизация анимаций для слабых устройств */
 @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
     .easter-egg-container, .real-planet-sphere, .lua-ring, .planet-surface-tex { animation: none !important; transition: none !important; }
 }
 
@@ -510,12 +495,12 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     <defs>
       <filter id="ultraInkGoo">
         <feGaussianBlur in="SourceGraphic" stdDeviation="4.2" result="blur" />
-        <feColorMatrix in="blur" mode="matrix" values="
-            1 0 0 0 0
-            0 1 0 0 0
-            0 0 1 0 0
-            0 0 0 26 -10" result="goo" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -10" result="goo" />
         <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+      <filter id="ringSoftGlow">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
   </svg>
@@ -540,13 +525,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                           <stop offset="70%" stop-color="#1f2937" stop-opacity="0.7" />
                           <stop offset="100%" stop-color="#ffffff" stop-opacity="0.85" />
                       </linearGradient>
-                      <filter id="ringSoftGlow">
-                          <feGaussianBlur stdDeviation="2" result="blur"/>
-                          <feMerge>
-                              <feMergeNode in="blur"/>
-                              <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                      </filter>
                   </defs>
                   <circle cx="300" cy="300" r="262" fill="none" stroke="url(#bwRingGradient)" stroke-width="4" filter="url(#ringSoftGlow)" opacity="0.85" />
                   <circle cx="300" cy="300" r="248" fill="none" stroke="url(#bwRingGradient)" stroke-width="14" opacity="0.5" />
@@ -563,53 +541,25 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               <div class="planet-interior-core">
                   <svg viewBox="0 0 450 450" class="interior-svg">
                       <defs>
-                          <filter id="rockGrainFilter" x="-10%" y="-10%" width="120%" height="120%">
-                              <feTurbulence type="fractalNoise" baseFrequency="0.065" numOctaves="4" seed="7" result="noise" />
-                              <feColorMatrix type="matrix" values="
-                                  0.35 0 0 0 0
-                                  0 0.25 0 0 0
-                                  0 0 0.20 0 0
-                                  0 0 0 0.38 0" in="noise" result="coloredNoise" />
-                              <feComposite operator="atop" in="coloredNoise" in2="SourceGraphic" />
-                          </filter>
-                          <filter id="intenseCoreBloom" x="-60%" y="-60%" width="220%" height="220%">
-                              <feGaussianBlur stdDeviation="16" result="blur1" />
-                              <feGaussianBlur stdDeviation="6" result="blur2" />
-                              <feMerge>
-                                  <feMergeNode in="blur1" />
-                                  <feMergeNode in="blur2" />
-                                  <feMergeNode in="SourceGraphic" />
-                              </feMerge>
-                          </filter>
                           <radialGradient id="crust3DGrad" cx="50%" cy="50%" r="50%">
-                              <stop offset="82%" stop-color="#6b4c35" />
-                              <stop offset="92%" stop-color="#3d291a" />
-                              <stop offset="97%" stop-color="#24170e" />
-                              <stop offset="100%" stop-color="#120b07" />
+                              <stop offset="82%" stop-color="#6b4c35" /><stop offset="92%" stop-color="#3d291a" />
+                              <stop offset="97%" stop-color="#24170e" /><stop offset="100%" stop-color="#120b07" />
                           </radialGradient>
                           <radialGradient id="coal3DGrad" cx="50%" cy="50%" r="50%">
-                              <stop offset="70%" stop-color="#2d2d35" />
-                              <stop offset="86%" stop-color="#141418" />
-                              <stop offset="95%" stop-color="#08080a" />
-                              <stop offset="100%" stop-color="#000000" />
+                              <stop offset="70%" stop-color="#2d2d35" /><stop offset="86%" stop-color="#141418" />
+                              <stop offset="95%" stop-color="#08080a" /><stop offset="100%" stop-color="#000000" />
                           </radialGradient>
                           <radialGradient id="mantle3DGrad" cx="50%" cy="50%" r="50%">
-                              <stop offset="55%" stop-color="#dc2626" />
-                              <stop offset="78%" stop-color="#991b1b" />
-                              <stop offset="92%" stop-color="#5c1111" />
-                              <stop offset="100%" stop-color="#2b0707" />
+                              <stop offset="55%" stop-color="#dc2626" /><stop offset="78%" stop-color="#991b1b" />
+                              <stop offset="92%" stop-color="#5c1111" /><stop offset="100%" stop-color="#2b0707" />
                           </radialGradient>
                           <radialGradient id="outerCore3DGrad" cx="50%" cy="50%" r="50%">
-                              <stop offset="35%" stop-color="#fde047" />
-                              <stop offset="68%" stop-color="#f97316" />
-                              <stop offset="90%" stop-color="#c2410c" />
-                              <stop offset="100%" stop-color="#7c2d12" />
+                              <stop offset="35%" stop-color="#fde047" /><stop offset="68%" stop-color="#f97316" />
+                              <stop offset="90%" stop-color="#c2410c" /><stop offset="100%" stop-color="#7c2d12" />
                           </radialGradient>
                           <radialGradient id="innerSphereCoreGrad" cx="50%" cy="50%" fx="36%" fy="34%" r="50%">
-                              <stop offset="0%" stop-color="#ffffff" />
-                              <stop offset="35%" stop-color="#fef08a" />
-                              <stop offset="70%" stop-color="#facc15" />
-                              <stop offset="92%" stop-color="#ea580c" />
+                              <stop offset="0%" stop-color="#ffffff" /><stop offset="35%" stop-color="#fef08a" />
+                              <stop offset="70%" stop-color="#facc15" /><stop offset="92%" stop-color="#ea580c" />
                               <stop offset="100%" stop-color="#9a3412" />
                           </radialGradient>
                           <radialGradient id="coreRaysGrad" cx="50%" cy="50%" r="50%">
@@ -619,23 +569,12 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                           </radialGradient>
                       </defs>
                       <circle cx="225" cy="225" r="220" fill="#070504" />
-                      <g filter="url(#rockGrainFilter)">
-                          <circle cx="225" cy="225" r="215" fill="url(#crust3DGrad)" stroke="#5c4028" stroke-width="2.5" />
-                          <circle cx="225" cy="225" r="198" fill="none" stroke="#1a110a" stroke-width="5" opacity="0.85" />
-                      </g>
-                      <g filter="url(#rockGrainFilter)">
-                          <circle cx="225" cy="225" r="194" fill="url(#coal3DGrad)" stroke="#27272a" stroke-width="2.5" />
-                          <circle cx="225" cy="225" r="178" fill="none" stroke="#060608" stroke-width="9" stroke-dasharray="20 7 11 9 26 8" />
-                          <circle cx="225" cy="225" r="164" fill="none" stroke="#18181c" stroke-width="5" stroke-dasharray="12 14 8 10" />
-                      </g>
-                      <g filter="url(#rockGrainFilter)">
-                          <circle cx="225" cy="225" r="154" fill="url(#mantle3DGrad)" stroke="#7f1d1d" stroke-width="3.5" />
-                          <circle cx="225" cy="225" r="128" fill="#450a0a" stroke="#dc2626" stroke-width="2.5" />
-                      </g>
-                      <g>
-                          <circle cx="225" cy="225" r="110" fill="url(#outerCore3DGrad)" filter="url(#rockGrainFilter)" stroke="#fb923c" stroke-width="3" />
-                          <circle cx="225" cy="225" r="78" fill="#7c2d12" stroke="#fde047" stroke-width="2" opacity="0.92" />
-                      </g>
+                      <circle cx="225" cy="225" r="215" fill="url(#crust3DGrad)" stroke="#5c4028" stroke-width="2.5" />
+                      <circle cx="225" cy="225" r="194" fill="url(#coal3DGrad)" stroke="#27272a" stroke-width="2.5" />
+                      <circle cx="225" cy="225" r="154" fill="url(#mantle3DGrad)" stroke="#7f1d1d" stroke-width="3.5" />
+                      <circle cx="225" cy="225" r="128" fill="#450a0a" stroke="#dc2626" stroke-width="2.5" />
+                      <circle cx="225" cy="225" r="110" fill="url(#outerCore3DGrad)" stroke="#fb923c" stroke-width="3" />
+                      <circle cx="225" cy="225" r="78" fill="#7c2d12" stroke="#fde047" stroke-width="2" opacity="0.92" />
                       <circle cx="225" cy="225" r="64" fill="none" stroke="#fef08a" stroke-width="3" class="core-halo-wave" />
                       <g class="core-rays-spin">
                           <polygon points="225,132 233,215 225,318 217,215" fill="url(#coreRaysGrad)" />
@@ -647,23 +586,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                           <polygon points="190,140 228,220 260,310 222,220" fill="url(#coreRaysGrad)" />
                           <polygon points="140,260 220,222 310,190 220,228" fill="url(#coreRaysGrad)" />
                       </g>
-                      <g class="core-glow-pulse" filter="url(#intenseCoreBloom)">
+                      <g class="core-glow-pulse">
                           <circle cx="225" cy="225" r="60" fill="rgba(234, 88, 12, 0.85)" />
                           <circle cx="225" cy="225" r="55" fill="url(#innerSphereCoreGrad)" />
                       </g>
-                      <circle cx="225" cy="225" r="55" fill="url(#innerSphereCoreGrad)" filter="url(#rockGrainFilter)" opacity="0.28" />
                       <ellipse cx="206" cy="204" rx="18" ry="11" transform="rotate(-28 206 204)" fill="#ffffff" opacity="0.85" filter="url(#ringSoftGlow)" class="core-specular-glint" />
                   </svg>
               </div>
 
               <canvas id="planetInkCanvas" width="540" height="540"></canvas>
 
-              <div class="planet-half half-left">
-                  <div class="planet-surface-tex" id="planetTexLeft"></div>
-              </div>
-              <div class="planet-half half-right">
-                  <div class="planet-surface-tex" id="planetTexRight"></div>
-              </div>
+              <div class="planet-half half-left"><div class="planet-surface-tex" id="planetTexLeft"></div></div>
+              <div class="planet-half half-right"><div class="planet-surface-tex" id="planetTexRight"></div></div>
           </div>
 
           <div class="lua-ring ring-front" id="ringFront">
@@ -704,26 +638,20 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       <button class="auth-back-btn" onclick="window.returnToLandingFromAuth()" title="Back to Start">
         <i data-lucide="arrow-left" style="width:16px;height:16px;"></i>
       </button>
-
       <div class="auth-logo-wrap">
         <img src="https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png" alt="Logo" />
         <h2 class="cursor-gradient-text" id="authHeaderTitle" data-i18n="auth_title">Account Login</h2>
         <p id="authSubTitle" data-i18n="auth_sub">Enter your credentials to access Global Scripts Hub</p>
       </div>
-
       <div class="auth-field-group">
         <input type="text" id="authLoginInput" class="auth-input" data-i18n-ph="auth_user_ph" placeholder="Login / Username" autocomplete="off" />
         <input type="password" id="authPassInput" class="auth-input" data-i18n-ph="auth_pass_ph" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter') window.submitAuthForm()" />
       </div>
-
       <button class="auth-submit-btn" id="authSubmitBtn" onclick="window.submitAuthForm()">
         <i data-lucide="log-in" style="width:16px;height:16px;"></i>
         <span id="authSubmitBtnText" data-i18n="auth_btn">SIGN IN</span>
       </button>
-
-      <div class="auth-switch-hint" id="authSwitchModeText" onclick="window.toggleAuthMode()" data-i18n="auth_no_acc">
-        Don't have an account? Create one!
-      </div>
+      <div class="auth-switch-hint" id="authSwitchModeText" onclick="window.toggleAuthMode()" data-i18n="auth_no_acc">Don't have an account? Create one!</div>
     </div>
   </div>
 
@@ -733,21 +661,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           <img src="https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png" alt="Logo" />
           <h1 class="cursor-gradient-text">Global Script's</h1>
       </div>
-
       <div class="desktop-nav">
           <button class="nav-link nav-btn active" data-target="tab-main" onclick="window.switchTab('tab-main', true)" data-i18n="m_main">Profile</button>
           <button class="nav-link nav-btn" data-target="tab-scripts" onclick="window.switchTab('tab-scripts', true)" data-i18n="m_scr">Scripts</button>
           <button class="nav-link nav-btn" data-target="tab-exploits" onclick="window.switchTab('tab-exploits', true)" data-i18n="m_exp">Exploits</button>
           <button class="nav-link nav-btn" data-target="tab-keys" onclick="window.switchTab('tab-keys', true)" data-i18n="m_key">Keys</button>
           <button class="nav-link nav-btn" data-target="tab-faq" onclick="window.switchTab('tab-faq', true)" data-i18n="m_faq">FAQ</button>
-
           <button class="glitch-text-btn nav-btn" data-target="tab-about" onclick="window.switchTab('tab-about', true)">
               <span class="glitch-off" data-i18n="m_about">Who are we?</span>
               <span class="glitch-on" data-i18n="m_about_a">We are devs.</span>
           </button>
       </div>
     </div>
-
     <div class="top-bar-right desktop-only">
       <div class="lang-dropdown-wrapper">
          <button class="ui-btn" id="langBtn" onclick="document.getElementById('langMenu').classList.toggle('show')"><i data-lucide="globe" style="width:14px;height:14px;"></i> <span id="langBtnText">EN</span></button>
@@ -761,7 +686,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           <span data-i18n="btn_logout">Sign Out</span>
       </button>
     </div>
-
     <button class="mobile-menu-btn" onclick="window.toggleMobileMenu()">
         <i data-lucide="menu" style="width:28px;height:28px;"></i>
     </button>
@@ -781,9 +705,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               <span class="glitch-off" data-i18n="m_about">Who are we?</span>
               <span class="glitch-on" data-i18n="m_about_a">We are devs.</span>
           </button>
-
           <div style="height: 1px; width: 50%; background: var(--card-border); margin: 10px 0;"></div>
-
           <div style="display:flex; gap:12px; margin-top: 6px;">
               <button class="ui-btn" onclick="window.setLangWithAnim('en'); window.toggleMobileMenu();">🇺🇸 EN</button>
               <button class="ui-btn" onclick="window.setLangWithAnim('ru'); window.toggleMobileMenu();">🇷🇺 RU</button>
@@ -797,7 +719,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
       <div class="tab-content active" id="tab-main" style="gap: 6px;">
         <h2 class="cursor-gradient-text" data-i18n="u_prof" style="margin-bottom: 8px;">User Profile</h2>
-
         <div class="dashboard-card">
           <p class="card-section-title cursor-gradient-text" data-i18n="acc_det">Account Details</p>
           <div class="profile-grid">
@@ -815,20 +736,17 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
             <div class="profile-item">
                 <span class="profile-label" data-i18n="l_reg">STATUS</span>
                 <span class="profile-value" style="color: var(--success); display:flex; align-items:center; gap:6px;">
-                    <div style="width:8px;height:8px;background:var(--success);border-radius:50%;box-shadow: 0 0 10px var(--success);"></div> Online
+                    <div style="width:8px;height:8px;background:var(--success);border-radius:50%;"></div> Online
                 </span>
             </div>
           </div>
-
           <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--card-border);">
               <span class="profile-label" data-i18n="l_ach_title">ACCOUNT ACHIEVEMENTS & BADGES</span>
               <div class="achievements-showcase-grid" id="profileAchievementsGrid"></div>
           </div>
         </div>
 
-        <div class="section-separator">
-            <div class="section-divider-line"></div>
-        </div>
+        <div class="section-separator"><div class="section-divider-line"></div></div>
 
         <div class="dashboard-card">
           <p class="card-section-title cursor-gradient-text" data-i18n="soc_apps">Social Apps</p>
@@ -858,72 +776,67 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
         </div>
 
         <div id="devControlPanelWrapper" class="dev-panel-wrapper">
-            <div class="section-separator">
-                <div class="section-divider-line"></div>
-            </div>
-
+            <div class="section-separator"><div class="section-divider-line"></div></div>
             <div class="dashboard-card">
                 <p class="card-section-title cursor-gradient-text" style="display:flex; align-items:center; gap:8px;">
                     <i data-lucide="terminal" style="width:18px;height:18px;color:var(--success);"></i>
                     <span>Developer Control Center</span>
                 </p>
-
                 <div class="dev-subtabs">
-                    <button class="dev-subtab-btn active" onclick="window.switchDevSubtab('dev-tab-scripts', this)">
-                        <i data-lucide="code" style="width:14px;height:14px;"></i> Manage Scripts
-                    </button>
-                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-exploits', this)">
-                        <i data-lucide="cpu" style="width:14px;height:14px;"></i> Manage Exploits
-                    </button>
-                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-accounts', this)">
-                        <i data-lucide="award" style="width:14px;height:14px;"></i> Manage Accounts
-                    </button>
+                    <button class="dev-subtab-btn active" onclick="window.switchDevSubtab('dev-tab-scripts', this)"><i data-lucide="code" style="width:14px;height:14px;"></i> Manage Scripts</button>
+                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-exploits', this)"><i data-lucide="cpu" style="width:14px;height:14px;"></i> Manage Exploits</button>
+                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-accounts', this)"><i data-lucide="award" style="width:14px;height:14px;"></i> Manage Accounts</button>
                 </div>
 
-                <!-- Управление скриптами -->
                 <div id="dev-tab-scripts" class="dev-form-section active">
                     <select id="devEditScriptSelect" class="dev-select" style="width: 100%; margin-bottom: 10px;" onchange="window.loadScriptToEdit(this.value)">
                         <option value="">-- Создать новый скрипт --</option>
                     </select>
-                    <div class="dev-form-grid">
-                        <input type="text" id="devScrTitle" class="auth-input" placeholder="Script Title (e.g. Global Hub)" />
-                        <input type="text" id="devScrGame" class="auth-input" placeholder="Game Name (e.g. Blox Fruits)" />
-                        <input type="text" id="devScrBanner" class="auth-input" placeholder="Banner Image URL" />
-                        <input type="text" id="devScrTags" class="auth-input" placeholder="Tags comma-separated (new, popular, stable)" />
-                        <input type="text" id="devScrExecs" class="auth-input" placeholder="Working Executors (e.g. Delta, Solara)" />
-                        <input type="text" id="devScrDiscord" class="auth-input" placeholder="Discord Invite Link (optional)" />
+                    <div class="dev-delete-bar" id="devScriptDeleteBar">
+                        <span>Редактируется существующий скрипт. Можно удалить из облака.</span>
+                        <button class="btn-danger" onclick="window.devDeleteCurrentScript()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить скрипт</button>
                     </div>
-                    <input type="text" id="devScrDesc" class="auth-input" placeholder="Short Description of the script..." />
+                    <div class="dev-form-grid">
+                        <input type="text" id="devScrTitle" class="auth-input" placeholder="Script Title" />
+                        <input type="text" id="devScrGame" class="auth-input" placeholder="Game Name" />
+                        <input type="text" id="devScrBanner" class="auth-input" placeholder="Banner Image URL" />
+                        <input type="text" id="devScrTags" class="auth-input" placeholder="Tags comma-separated" />
+                        <input type="text" id="devScrExecs" class="auth-input" placeholder="Working Executors" />
+                        <input type="text" id="devScrDiscord" class="auth-input" placeholder="Discord Invite Link" />
+                    </div>
+                    <input type="text" id="devScrDesc" class="auth-input" placeholder="Short Description..." />
                     <textarea id="devScrCode" class="dev-textarea" placeholder='loadstring(game:HttpGet("https://..."))()'></textarea>
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewScript()">
                         <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devScrBtnText">Publish Script to Hub</span>
                     </button>
                 </div>
 
-                <!-- Управление эксплойтами -->
                 <div id="dev-tab-exploits" class="dev-form-section">
                     <select id="devEditExploitSelect" class="dev-select" style="width: 100%; margin-bottom: 10px;" onchange="window.loadExploitToEdit(this.value)">
                         <option value="">-- Создать новый эксплойт --</option>
                     </select>
+                    <div class="dev-delete-bar" id="devExploitDeleteBar">
+                        <span>Редактируется существующий эксплойт. Можно удалить из облака.</span>
+                        <button class="btn-danger" onclick="window.devDeleteCurrentExploit()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить эксплойт</button>
+                    </div>
                     <div class="dev-form-grid">
-                        <input type="text" id="devExpTitle" class="auth-input" placeholder="Exploit Title (e.g. Wave)" />
+                        <input type="text" id="devExpTitle" class="auth-input" placeholder="Exploit Title" />
                         <input type="text" id="devExpPlatform" class="auth-input" placeholder="Platform (Windows / Mobile)" />
                         <input type="text" id="devExpBanner" class="auth-input" placeholder="Banner Image URL" />
-                        <input type="text" id="devExpLink" class="auth-input" placeholder="Direct Download URL (.exe / .zip / .apk)" />
-                        <input type="text" id="devExpTags" class="auth-input" placeholder="Tags (pc, mobile, keyless, popular)" />
-                        <input type="text" id="devExpInfo" class="auth-input" placeholder="Info (e.g. Requires Key: No | Level 8)" />
+                        <input type="text" id="devExpLink" class="auth-input" placeholder="Direct Download URL" />
+                        <input type="text" id="devExpTags" class="auth-input" placeholder="Tags (pc, mobile, keyless)" />
+                        <input type="text" id="devExpInfo" class="auth-input" placeholder="Info (Requires Key: No)" />
                     </div>
-                    <input type="text" id="devExpDesc" class="auth-input" placeholder="Description of the exploit..." />
+                    <input type="text" id="devExpDesc" class="auth-input" placeholder="Description..." />
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewExploit()">
                         <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devExpBtnText">Publish Exploit to Hub</span>
                     </button>
                 </div>
 
-                <!-- Управление аккаунтами -->
                 <div id="dev-tab-accounts" class="dev-form-section">
                     <div class="dev-form-grid">
-                        <input type="text" id="devAccLogin" class="auth-input" placeholder="Username (existing or new)" disabled style="opacity: 0.7;" />
-                        <input type="text" id="devAccPlan" class="auth-input" placeholder="Plan (e.g. Free Access / VIP / Developer)" />
+                        <input type="text" id="devAccLogin" class="auth-input" placeholder="Username" disabled style="opacity: 0.7;" />
+                        <input type="text" id="devAccPlan" class="auth-input" placeholder="Plan (e.g. Free / VIP / Developer)" />
                     </div>
                     <span class="profile-label">SELECT ACHIEVEMENT ICONS FOR THIS ACCOUNT:</span>
                     <div class="dev-badge-checkboxes">
@@ -936,7 +849,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devSaveAccountAndBadges()">
                         <i data-lucide="save" style="width:16px;height:16px;"></i> Save Account & Update Badges
                     </button>
-
                     <span class="profile-label" style="margin-top:8px;">EXISTING ACCOUNTS (LOADED FROM FIREBASE):</span>
                     <div id="devAccountsListContainer" class="dev-accounts-table"></div>
                 </div>
@@ -990,23 +902,17 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
       <div class="tab-content" id="tab-faq">
         <h2 class="cursor-gradient-text" data-i18n="f_tit">FAQ & Support</h2>
-
         <div class="dashboard-card support-chat-card">
             <p class="card-section-title cursor-gradient-text" style="margin-bottom:0;" data-i18n="chat_header">Live Support & Developer Chat</p>
             <div class="chat-messages-box" id="supportChatMessages"></div>
             <div class="chat-input-row">
                 <input type="text" id="supportChatInput" class="auth-input" placeholder="Write a message to support..." onkeydown="if(event.key==='Enter') window.sendSupportChatMessage()" />
-                <button class="copy-btn" style="width:auto; padding:0 22px;" onclick="window.sendSupportChatMessage()">
-                    <i data-lucide="send" style="width:16px;height:16px;"></i>
-                </button>
+                <button class="copy-btn" style="width:auto; padding:0 22px;" onclick="window.sendSupportChatMessage()"><i data-lucide="send" style="width:16px;height:16px;"></i></button>
             </div>
         </div>
-
         <div class="dashboard-card support-tickets-card">
             <div class="tickets-sidebar">
-                <button class="copy-btn" onclick="window.openTicketCreator()">
-                    <i data-lucide="plus" style="width:16px;height:16px;"></i> Create Ticket
-                </button>
+                <button class="copy-btn" onclick="window.openTicketCreator()"><i data-lucide="plus" style="width:16px;height:16px;"></i> Create Ticket</button>
                 <div class="tickets-list" id="ticketsList"></div>
             </div>
             <div class="ticket-view">
@@ -1018,9 +924,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                     <div class="chat-messages-box" id="ticketMessages"></div>
                     <div class="chat-input-row">
                         <input type="text" id="ticketReplyInput" class="auth-input" placeholder="Write a reply..." onkeydown="if(event.key==='Enter') window.sendTicketReply()" />
-                        <button class="copy-btn" style="width:auto; padding:0 22px;" onclick="window.sendTicketReply()">
-                            <i data-lucide="send" style="width:16px;height:16px;"></i>
-                        </button>
+                        <button class="copy-btn" style="width:auto; padding:0 22px;" onclick="window.sendTicketReply()"><i data-lucide="send" style="width:16px;height:16px;"></i></button>
                     </div>
                 </div>
             </div>
@@ -1053,8 +957,8 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
 <script>
   window.SOCIAL_LINKS = {
-      youtube:  "https://youtube.com/@ ТВОЙ_КАНАЛ",
-      discord:  "https://discord.gg/ ТВОЙ_СЕРВЕР",
+      youtube:  "https://youtube.com/@ТВОЙ_КАНАЛ",
+      discord:  "https://discord.gg/ТВОЙ_СЕРВЕР",
       roblox:   "https://www.roblox.com/communities/1108155741/Encoders-Studios#!/about",
       telegram: "https://t.me/universalscriptsroblox"
   };
@@ -1068,59 +972,84 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   };
 
   let currentLang = 'en';
-  let globalWarpSpeedY = 0;
   let renderScriptsTimeout;
   let renderExploitsTimeout;
   let isNavTransitioning = false;
   let isInHub = false;
   let isAuthModeRegister = false;
   let currentUser = null;
-  
-  // Флаги для редактирования в Dev-панели
+
   let editingScriptId = null;
   let editingExploitId = null;
   let editingAccountUid = null;
 
-  // Оптимизация для слабых устройств
   const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const isLowEnd = isMobileDevice || window.innerWidth <= 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 
-  function renderUserBadgesInlineHtml(badgesArray) {
-      if (!Array.isArray(badgesArray) || badgesArray.length === 0) return '';
-      return badgesArray.map(badgeKey => {
-          const def = window.ACHIEVEMENT_DEFINITIONS[badgeKey];
-          if (!def) return '';
-          const title = currentLang === 'ru' ? def.title_ru : def.title_en;
-          return `<span class="acc-badge-icon ${def.cssClass}" title="${title}"><i data-lucide="${def.icon}" style="width:14px;height:14px;"></i></span>`;
-      }).join('');
-  }
-
+  // ==================== CURSOR GRADIENT (optimized) ====================
+  // Caches element rects, throttles with rAF, skips tiny movements.
   function initCursorGradientText() {
-      if (isLowEnd) return; // Отключаем на слабых устройствах
-      const updateTextGradients = (clientX, clientY) => {
-          const textElements = document.querySelectorAll('.cursor-gradient-text');
-          for (let i = 0; i < textElements.length; i++) {
-              const el = textElements[i];
-              if (el.offsetParent === null) continue;
-              const rect = el.getBoundingClientRect();
-              el.style.setProperty('--cursor-x', `${(clientX - rect.left).toFixed(1)}px`);
-              el.style.setProperty('--cursor-y', `${(clientY - rect.top).toFixed(1)}px`);
+      if (isLowEnd) return;
+      const elements = [];
+      const collect = () => {
+          elements.length = 0;
+          const list = document.querySelectorAll('.cursor-gradient-text');
+          for (let i = 0; i < list.length; i++) {
+              if (list[i].offsetParent !== null) elements.push({ el: list[i], rect: null });
           }
       };
-      window.addEventListener('mousemove', (e) => updateTextGradients(e.clientX, e.clientY), { passive: true });
-      window.addEventListener('touchmove', (e) => { if (e.touches && e.touches[0]) updateTextGradients(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+      const refreshRects = () => {
+          for (let i = 0; i < elements.length; i++) {
+              elements[i].rect = elements[i].el.getBoundingClientRect();
+          }
+      };
+      let scheduled = false;
+      let lastX = -999, lastY = -999;
+      const update = (cx, cy) => {
+          scheduled = false;
+          if (Math.abs(cx - lastX) < 3 && Math.abs(cy - lastY) < 3) return;
+          lastX = cx; lastY = cy;
+          for (let i = 0; i < elements.length; i++) {
+              const r = elements[i].rect;
+              if (!r) continue;
+              elements[i].el.style.setProperty('--cursor-x', (cx - r.left).toFixed(1) + 'px');
+              elements[i].el.style.setProperty('--cursor-y', (cy - r.top).toFixed(1) + 'px');
+          }
+      };
+      const onMove = (cx, cy) => {
+          if (scheduled) return;
+          scheduled = true;
+          requestAnimationFrame(() => update(cx, cy));
+      };
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY), { passive: true });
+      window.addEventListener('touchmove', (e) => { if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => { collect(); refreshRects(); }, 150);
+      }, { passive: true });
+      window.addEventListener('scroll', () => {
+          // refresh rects on scroll end, throttle
+          clearTimeout(window.__cgScrollTimer);
+          window.__cgScrollTimer = setTimeout(refreshRects, 120);
+      }, { passive: true });
+      // collect after DOM ready
+      requestAnimationFrame(() => { collect(); refreshRects(); });
+      window.__cgCollect = collect;
   }
 
+  // ==================== INK ENGINE ====================
   const InkEngine = {
       canvas: null, ctx: null, mode: 'idle', progress: 0,
       strands: [], blobs: [], droplets: [], animFrame: null,
       init() { this.canvas = document.getElementById('planetInkCanvas'); if (this.canvas) this.ctx = this.canvas.getContext('2d'); },
       spawnTendrils() {
           this.strands = []; this.blobs = []; this.droplets = [];
-          const count = isLowEnd ? 12 : 38; // Меньше нитей на слабых устройствах
+          const count = isLowEnd ? 10 : 28;
           for (let i = 0; i < count; i++) {
-              const isMain = i < (isLowEnd ? 5 : 16);
-              const t = isMain ? (i / 15) : Math.random();
+              const isMain = i < (isLowEnd ? 4 : 12);
+              const t = isMain ? (i / 12) : Math.random();
               const yBase = 70 + t * 400;
               const dyFromCenter = (yBase - 270) / 225;
               const chordHalf = Math.sqrt(Math.max(0.08, 1 - dyFromCenter * dyFromCenter)) * 225;
@@ -1142,15 +1071,11 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       startContracting() { this.mode = 'contracting'; this.progress = 0; },
       triggerSplash() {
           this.mode = 'splashing'; this.progress = 0; this.droplets = [];
-          const dropCount = isLowEnd ? 15 : 46;
+          const dropCount = isLowEnd ? 15 : 40;
           for (let i = 0; i < dropCount; i++) {
               const angle = (Math.random() - 0.5) * Math.PI * 1.9;
               const speed = Math.random() * 7.5 + 2.5;
-              this.droplets.push({
-                  x: 270 + (Math.random() - 0.5) * 14, y: 80 + Math.random() * 380,
-                  vx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1), vy: (Math.random() - 0.5) * 5,
-                  r: Math.random() * 8.5 + 3.2, alpha: 1
-              });
+              this.droplets.push({ x: 270 + (Math.random() - 0.5) * 14, y: 80 + Math.random() * 380, vx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1), vy: (Math.random() - 0.5) * 5, r: Math.random() * 8.5 + 3.2, alpha: 1 });
           }
       },
       stopAndClear() { this.mode = 'idle'; if (this.ctx && this.canvas) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; } },
@@ -1241,8 +1166,8 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   let inkStageTimer = null, inkPullTimer = null, sliceResetTimer = null;
 
   function initInteractivePlanetPhysics() {
-      if (isMobileDevice) return; // Отключаем тяжелую физику на мобилках
-      
+      if (isMobileDevice) return;
+
       const planetContainer = document.getElementById('planetContainer');
       const shakeWrapper = document.getElementById('planetShakeWrapper');
       const realEarth = document.getElementById('realEarth');
@@ -1262,6 +1187,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       let velX = baseSpinSpeedX, velY = 0;
       let ringSpinDeg = 0, tiltX = 0, tiltY = 0, targetTiltX = 0, targetTiltY = 0;
       let isDragging = false, startPointerX = 0, startPointerY = 0, lastPointerX = 0, lastPointerY = 0, totalMoveDistance = 0;
+      let isVisible = true;
+      let rafId = null;
+      let idleFrames = 0;
+
+      const io = new IntersectionObserver((entries) => {
+          isVisible = entries[0].isIntersecting;
+      }, { threshold: 0 });
+      io.observe(planetContainer);
 
       function isInteractiveUIElement(target) {
           if (!target || !target.closest) return false;
@@ -1323,6 +1256,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           lastPointerX = clientX; lastPointerY = clientY; totalMoveDistance = 0;
           document.body.classList.add('dragging-planet');
           if (planetContainer) planetContainer.classList.add('planet-dragging-active');
+          idleFrames = 0;
       }
 
       function onPointerMove(e) {
@@ -1341,6 +1275,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           velX = dx * 0.95; velY = dy * 0.7;
           targetTiltY = Math.max(-28, Math.min(28, (clientX - window.innerWidth / 2) * 0.04));
           targetTiltX = Math.max(-22, Math.min(22, -(clientY - window.innerHeight / 2) * 0.04));
+          idleFrames = 0;
       }
 
       function onPointerUp() {
@@ -1362,7 +1297,15 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       window.addEventListener('touchmove', onPointerMove, { passive: true });
       window.addEventListener('touchend', onPointerUp);
 
+      // Throttled render: skip when tab hidden or planet off-screen.
+      // If we're not dragging and nothing is moving, back off to lower fps.
       function updatePlanetLoop() {
+          rafId = null;
+          if (document.hidden || !isVisible) {
+              schedule();
+              return;
+          }
+          const moved = Math.abs(velX - baseSpinSpeedX) > 0.01 || Math.abs(velY) > 0.01 || isDragging || isPlanetSliced;
           if (!isPlanetSliced) {
               if (!isDragging) {
                   velX += (baseSpinSpeedX - velX) * 0.035;
@@ -1374,25 +1317,35 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               if (texPosX >= 1800) texPosX -= 1800;
               if (texPosY <= -900) texPosY += 900;
               if (texPosY >= 900) texPosY -= 900;
-              const bgPosString = `${texPosX.toFixed(1)}px ${texPosY.toFixed(1)}px`;
+              const bgPosString = texPosX.toFixed(1) + 'px ' + texPosY.toFixed(1) + 'px';
               texLeft.style.backgroundPosition = bgPosString;
               texRight.style.backgroundPosition = bgPosString;
               ringSpinDeg = (ringSpinDeg + 0.18 + velX * 0.35) % 360;
-              const ringTransform = `rotate(${ringSpinDeg.toFixed(2)}deg)`;
+              const ringTransform = 'rotate(' + ringSpinDeg.toFixed(2) + 'deg)';
               if (ringSvgBack) ringSvgBack.style.transform = ringTransform;
               if (ringSvgFront) ringSvgFront.style.transform = ringTransform;
           }
           tiltX += (targetTiltX - tiltX) * 0.12;
           tiltY += (targetTiltY - tiltY) * 0.12;
-          const ringPlaneTransform = `rotateX(${(75 + tiltX * 0.5).toFixed(2)}deg) rotateY(${(-10 + tiltY * 0.6).toFixed(2)}deg)`;
+          const ringPlaneTransform = 'rotateX(' + (75 + tiltX * 0.5).toFixed(2) + 'deg) rotateY(' + (-10 + tiltY * 0.6).toFixed(2) + 'deg)';
           if (ringBack) ringBack.style.transform = ringPlaneTransform;
           if (ringFront) ringFront.style.transform = ringPlaneTransform;
-          realEarth.style.transform = `rotateX(${(tiltX * 0.35).toFixed(2)}deg) rotateY(${(tiltY * 0.35).toFixed(2)}deg)`;
-          requestAnimationFrame(updatePlanetLoop);
+          realEarth.style.transform = 'rotateX(' + (tiltX * 0.35).toFixed(2) + 'deg) rotateY(' + (tiltY * 0.35).toFixed(2) + 'deg)';
+          if (!moved) idleFrames++; else idleFrames = 0;
+          schedule(idleFrames > 30 ? 66 : 0);
       }
-      requestAnimationFrame(updatePlanetLoop);
+      function schedule(delay) {
+          if (rafId !== null) return;
+          if (delay) {
+              rafId = setTimeout(() => { rafId = null; updatePlanetLoop(); }, delay);
+          } else {
+              rafId = requestAnimationFrame(updatePlanetLoop);
+          }
+      }
+      schedule();
   }
 
+  // ==================== NAV ====================
   window.handleEnterHubClick = function() {
       if (currentUser) window.enterAppFromLanding('tab-main', true);
       else window.openAuthScreen(true);
@@ -1462,21 +1415,19 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const passInput = document.getElementById('authPassInput').value.trim();
       if (!loginInput || !passInput) { window.showToast('Please enter both Login and Password!'); return; }
       if (!window.FB) { window.showToast('Firebase is still loading, try again in a second.'); return; }
-
       const email = usernameToEmail(loginInput);
       const btn = document.getElementById('authSubmitBtn');
       btn.disabled = true;
-
       try {
           if (isAuthModeRegister) {
               const cred = await window.FB.createUserWithEmailAndPassword(window.FB.auth, email, passInput);
               await window.FB.setDoc(window.FB.doc(window.FB.db, "users", cred.user.uid), {
                   username: loginInput, plan: "Free Access", role: "user", badges: ["verified"], createdAt: window.FB.serverTimestamp()
               });
-              window.showToast(`Account "${loginInput}" created!`);
+              window.showToast('Account "' + loginInput + '" created!');
           } else {
               await window.FB.signInWithEmailAndPassword(window.FB.auth, email, passInput);
-              window.showToast(`Welcome back, ${loginInput}!`);
+              window.showToast('Welcome back, ' + loginInput + '!');
           }
       } catch (error) {
           let errorMsg = error.message || 'Auth error';
@@ -1489,7 +1440,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           return;
       }
       btn.disabled = false;
-
       const authWrap = document.getElementById('authWrapper');
       authWrap.style.opacity = '0';
       setTimeout(() => {
@@ -1512,7 +1462,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const planEl = document.getElementById('profilePlanText');
       const achGridEl = document.getElementById('profileAchievementsGrid');
       const devPanel = document.getElementById('devControlPanelWrapper');
-
       const userObj = currentUser || { username: 'Guest User', role: 'guest', plan: 'Free Access', badges: [] };
 
       if (nameEl) nameEl.textContent = userObj.username;
@@ -1521,22 +1470,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
       if (achGridEl) {
           if (!userObj.badges || userObj.badges.length === 0) {
-              achGridEl.innerHTML = `<div style="font-size:13px; color:var(--text-secondary);">No achievement badges unlocked on this account yet.</div>`;
+              achGridEl.innerHTML = '<div style="font-size:13px; color:var(--text-secondary);">No achievement badges unlocked on this account yet.</div>';
           } else {
               achGridEl.innerHTML = userObj.badges.map(bKey => {
                   const def = window.ACHIEVEMENT_DEFINITIONS[bKey];
                   if (!def) return '';
                   const title = currentLang === 'ru' ? def.title_ru : def.title_en;
                   const desc = currentLang === 'ru' ? def.desc_ru : def.desc_en;
-                  return `<div class="achievement-pill-card">
-                      <span class="acc-badge-icon ${def.cssClass}" style="width:36px;height:36px;border-radius:10px;flex-shrink:0;">
-                          <i data-lucide="${def.icon}" style="width:18px;height:18px;"></i>
-                      </span>
-                      <div class="ach-info">
-                          <span class="ach-title">${title}</span>
-                          <span class="ach-desc">${desc}</span>
-                      </div>
-                  </div>`;
+                  return '<div class="achievement-pill-card"><span class="acc-badge-icon ' + def.cssClass + '" style="width:36px;height:36px;border-radius:10px;flex-shrink:0;"><i data-lucide="' + def.icon + '" style="width:18px;height:18px;"></i></span><div class="ach-info"><span class="ach-title">' + title + '</span><span class="ach-desc">' + desc + '</span></div></div>';
               }).join('');
           }
       }
@@ -1548,6 +1489,16 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       window.updateIcons();
   };
 
+  function renderUserBadgesInlineHtml(badgesArray) {
+      if (!Array.isArray(badgesArray) || badgesArray.length === 0) return '';
+      return badgesArray.map(badgeKey => {
+          const def = window.ACHIEVEMENT_DEFINITIONS[badgeKey];
+          if (!def) return '';
+          const title = currentLang === 'ru' ? def.title_ru : def.title_en;
+          return '<span class="acc-badge-icon ' + def.cssClass + '" title="' + title + '"><i data-lucide="' + def.icon + '" style="width:14px;height:14px;"></i></span>';
+      }).join('');
+  }
+
   window.switchDevSubtab = function(sectionId, btn) {
       document.querySelectorAll('.dev-subtab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dev-form-section').forEach(s => s.classList.remove('active'));
@@ -1556,15 +1507,15 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       if (sec) sec.classList.add('active');
   };
 
-  // ==================== УПРАВЛЕНИЕ СКРИПТАМИ ====================
+  // ==================== DEV: SCRIPTS ====================
   window.populateDevDropdowns = function() {
       const scrSelect = document.getElementById('devEditScriptSelect');
       if (scrSelect) {
           scrSelect.innerHTML = '<option value="">-- Создать новый скрипт --</option>';
-          window.STATIC_SCRIPTS.forEach(s => {
+          (window.STATIC_SCRIPTS || []).forEach(s => {
               if (s.is_placeholder) return;
               const opt = document.createElement('option');
-              opt.value = s.id || s.title; // Используем ID из Firebase, если есть
+              opt.value = s.id || s.title;
               opt.textContent = s.title + (s._fromFirestore ? " (Cloud)" : " (Local)");
               scrSelect.appendChild(opt);
           });
@@ -1572,7 +1523,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const expSelect = document.getElementById('devEditExploitSelect');
       if (expSelect) {
           expSelect.innerHTML = '<option value="">-- Создать новый эксплойт --</option>';
-          window.STATIC_EXPLOITS.forEach(e => {
+          (window.STATIC_EXPLOITS || []).forEach(e => {
               if (e.is_placeholder) return;
               const opt = document.createElement('option');
               opt.value = e.id || e.title;
@@ -1584,25 +1535,24 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
   window.loadScriptToEdit = function(val) {
       const btnText = document.getElementById('devScrBtnText');
+      const delBar = document.getElementById('devScriptDeleteBar');
       if (!val) {
           editingScriptId = null;
           btnText.textContent = "Publish Script to Hub";
-          document.getElementById('devScrTitle').value = '';
-          document.getElementById('devScrGame').value = '';
-          document.getElementById('devScrBanner').value = '';
-          document.getElementById('devScrTags').value = '';
-          document.getElementById('devScrExecs').value = '';
-          document.getElementById('devScrDiscord').value = '';
-          document.getElementById('devScrDesc').value = '';
-          document.getElementById('devScrCode').value = '';
+          if (delBar) delBar.classList.remove('show');
+          ['devScrTitle','devScrGame','devScrBanner','devScrTags','devScrExecs','devScrDiscord','devScrDesc','devScrCode'].forEach(id => {
+              const el = document.getElementById(id); if (el) el.value = '';
+          });
           return;
       }
       const script = window.STATIC_SCRIPTS.find(s => (s.id || s.title) === val);
       if (!script) return;
-      
       editingScriptId = script._fromFirestore ? script.id : null;
       btnText.textContent = editingScriptId ? "Update Script in Hub" : "Publish (создаст копию в Cloud)";
-      
+      if (delBar) {
+          if (editingScriptId) delBar.classList.add('show');
+          else delBar.classList.remove('show');
+      }
       document.getElementById('devScrTitle').value = script.title || '';
       document.getElementById('devScrGame').value = script.game || '';
       document.getElementById('devScrBanner').value = script.banner_url || '';
@@ -1636,39 +1586,61 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       try {
           if (editingScriptId) {
               await window.FB.updateDoc(window.FB.doc(window.FB.db, "scripts", editingScriptId), scriptData);
-              window.showToast(`Script "${title}" updated in Cloud!`);
+              window.showToast('Script "' + title + '" updated in Cloud!');
           } else {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), { ...scriptData, createdAt: window.FB.serverTimestamp() });
-              window.showToast(`Script "${title}" published to Cloud!`);
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), Object.assign({}, scriptData, { createdAt: window.FB.serverTimestamp() }));
+              window.showToast('Script "' + title + '" published to Cloud!');
           }
           document.getElementById('devEditScriptSelect').value = '';
           window.loadScriptToEdit('');
-          // Данные перезагрузятся через onSnapshot в идеале, но здесь вручную:
-          window.loadFirestoreData(); 
+          window.loadFirestoreData();
       } catch (e) { window.showToast('Error: ' + e.message); }
   };
 
-  // ==================== УПРАВЛЕНИЕ ЭКСПЛОЙТАМИ ====================
+  window.devDeleteCurrentScript = async function() {
+      if (!editingScriptId || !window.FB) return;
+      const title = document.getElementById('devScrTitle').value.trim() || 'this script';
+      if (!confirm('Удалить "' + title + '" из облака? Это необратимо.')) return;
+      try {
+          await window.FB.deleteDoc(window.FB.doc(window.FB.db, "scripts", editingScriptId));
+          window.showToast('Script deleted.');
+          document.getElementById('devEditScriptSelect').value = '';
+          window.loadScriptToEdit('');
+          window.loadFirestoreData();
+      } catch (e) { window.showToast('Delete failed: ' + e.message); }
+  };
+
+  window.deleteScriptFromCard = async function(id, title) {
+      if (!id || !window.FB) { window.showToast('Этот скрипт — локальный, удалить нельзя.'); return; }
+      if (!confirm('Удалить "' + title + '"? Это необратимо.')) return;
+      try {
+          await window.FB.deleteDoc(window.FB.doc(window.FB.db, "scripts", id));
+          window.showToast('Script "' + title + '" deleted.');
+          window.loadFirestoreData();
+      } catch (e) { window.showToast('Delete failed: ' + e.message); }
+  };
+
+  // ==================== DEV: EXPLOITS ====================
   window.loadExploitToEdit = function(val) {
       const btnText = document.getElementById('devExpBtnText');
+      const delBar = document.getElementById('devExploitDeleteBar');
       if (!val) {
           editingExploitId = null;
           btnText.textContent = "Publish Exploit to Hub";
-          document.getElementById('devExpTitle').value = '';
-          document.getElementById('devExpPlatform').value = '';
-          document.getElementById('devExpBanner').value = '';
-          document.getElementById('devExpLink').value = '';
-          document.getElementById('devExpTags').value = '';
-          document.getElementById('devExpInfo').value = '';
-          document.getElementById('devExpDesc').value = '';
+          if (delBar) delBar.classList.remove('show');
+          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpTags','devExpInfo','devExpDesc'].forEach(id => {
+              const el = document.getElementById(id); if (el) el.value = '';
+          });
           return;
       }
       const exp = window.STATIC_EXPLOITS.find(e => (e.id || e.title) === val);
       if (!exp) return;
-      
       editingExploitId = exp._fromFirestore ? exp.id : null;
       btnText.textContent = editingExploitId ? "Update Exploit in Hub" : "Publish (создаст копию в Cloud)";
-      
+      if (delBar) {
+          if (editingExploitId) delBar.classList.add('show');
+          else delBar.classList.remove('show');
+      }
       document.getElementById('devExpTitle').value = exp.title || '';
       document.getElementById('devExpPlatform').value = exp.platform || '';
       document.getElementById('devExpBanner').value = exp.banner_url || '';
@@ -1699,10 +1671,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       try {
           if (editingExploitId) {
               await window.FB.updateDoc(window.FB.doc(window.FB.db, "exploits", editingExploitId), expData);
-              window.showToast(`Exploit "${title}" updated in Cloud!`);
+              window.showToast('Exploit "' + title + '" updated in Cloud!');
           } else {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), { ...expData, createdAt: window.FB.serverTimestamp() });
-              window.showToast(`Exploit "${title}" published to Cloud!`);
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), Object.assign({}, expData, { createdAt: window.FB.serverTimestamp() }));
+              window.showToast('Exploit "' + title + '" published to Cloud!');
           }
           document.getElementById('devEditExploitSelect').value = '';
           window.loadExploitToEdit('');
@@ -1710,75 +1682,78 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       } catch (e) { window.showToast('Error: ' + e.message); }
   };
 
-  // ==================== УПРАВЛЕНИЕ АККАУНТАМИ ====================
+  window.devDeleteCurrentExploit = async function() {
+      if (!editingExploitId || !window.FB) return;
+      const title = document.getElementById('devExpTitle').value.trim() || 'this exploit';
+      if (!confirm('Удалить "' + title + '" из облака? Это необратимо.')) return;
+      try {
+          await window.FB.deleteDoc(window.FB.doc(window.FB.db, "exploits", editingExploitId));
+          window.showToast('Exploit deleted.');
+          document.getElementById('devEditExploitSelect').value = '';
+          window.loadExploitToEdit('');
+          window.loadFirestoreData();
+      } catch (e) { window.showToast('Delete failed: ' + e.message); }
+  };
+
+  window.deleteExploitFromCard = async function(id, title) {
+      if (!id || !window.FB) { window.showToast('Этот эксплойт — локальный, удалить нельзя.'); return; }
+      if (!confirm('Удалить "' + title + '"? Это необратимо.')) return;
+      try {
+          await window.FB.deleteDoc(window.FB.doc(window.FB.db, "exploits", id));
+          window.showToast('Exploit "' + title + '" deleted.');
+          window.loadFirestoreData();
+      } catch (e) { window.showToast('Delete failed: ' + e.message); }
+  };
+
+  // ==================== DEV: ACCOUNTS ====================
   window.devSaveAccountAndBadges = async function() {
       if (!window.FB) return;
       const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
       if (!editingAccountUid) { window.showToast('Сначала выбери пользователя из списка!'); return; }
-      
       const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
       const role = selectedBadges.includes('developer') ? 'developer' : 'user';
-
       try {
-          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", editingAccountUid), {
-              plan: plan,
-              badges: selectedBadges,
-              role: role
-          });
-          window.showToast(`Аккаунт обновлён в Firebase!`);
+          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", editingAccountUid), { plan: plan, badges: selectedBadges, role: role });
+          window.showToast('Аккаунт обновлён в Firebase!');
           window.renderDevAccountsTable();
-      } catch (e) {
-          window.showToast('Ошибка сохранения: ' + e.message);
-      }
+      } catch (e) { window.showToast('Ошибка сохранения: ' + e.message); }
   };
 
-  window.selectDevAccountForEdit = async function(uid, username, plan, badges) {
+  window.selectDevAccountForEdit = function(uid, username, plan, badges) {
       editingAccountUid = uid;
       document.getElementById('devAccLogin').value = username;
       document.getElementById('devAccPlan').value = plan || 'Free Access';
-      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(badges) && badges.includes(cb.value); });
+      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(badges) && badges.indexOf(cb.value) !== -1; });
   };
 
   window.renderDevAccountsTable = async function() {
       const container = document.getElementById('devAccountsListContainer');
       if (!container || !window.FB) return;
       container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка пользователей из Firebase...</div>';
-      
       try {
           const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
           const accounts = [];
           snap.forEach(d => { const data = d.data(); data.uid = d.id; accounts.push(data); });
-          
           if (accounts.length === 0) {
               container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary);">Пользователи не найдены.</div>';
               return;
           }
-
-          container.innerHTML = accounts.map(acc => `
-              <div class="dev-acc-row">
-                  <div style="display:flex; align-items:center; gap:8px;">
-                      <strong style="font-size:14px;">${acc.username || 'Unknown'}</strong>
-                      <span class="user-badges-inline">${renderUserBadgesInlineHtml(acc.badges)}</span>
-                      <span style="font-size:11px; color:var(--text-secondary);">(${acc.plan || 'Free'})</span>
-                  </div>
-                  <button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit('${acc.uid}', '${(acc.username || '').replace(/'/g, "\\'")}', '${(acc.plan || '').replace(/'/g, "\\'")}', ${JSON.stringify(acc.badges || []).replace(/"/g, '&quot;')})">
-                      Редактировать
-                  </button>
-              </div>
-          `).join('');
+          container.innerHTML = accounts.map(acc => {
+              const badgesJson = JSON.stringify(acc.badges || []).replace(/"/g, '&quot;');
+              const safeUser = (acc.username || '').replace(/'/g, "\\'");
+              const safePlan = (acc.plan || '').replace(/'/g, "\\'");
+              return '<div class="dev-acc-row"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + (acc.username || 'Unknown') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + (acc.plan || 'Free') + ')</span></div><button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + safeUser + '\', \'' + safePlan + '\', ' + badgesJson + ')">Редактировать</button></div>';
+          }).join('');
           window.updateIcons();
       } catch (e) {
-          container.innerHTML = '<div style="font-size:12px; color:var(--red);">Ошибка загрузки.</div>';
-          console.error(e);
+          container.innerHTML = '<div style="font-size:12px; color:var(--error);">Ошибка загрузки.</div>';
       }
   };
 
-  // ==================== ОСТАЛЬНОЕ ====================
+  // ==================== SUPPORT CHAT ====================
   function getSupportMessages() {
       try { const saved = JSON.parse(localStorage.getItem('gs_support_chat_v1') || 'null'); if (Array.isArray(saved) && saved.length > 0) return saved; } catch (e) {}
-      const initialMsgs = [
-          { sender: "System", text: "Welcome to Global Scripts Support! Ask any questions here.", time: "12:00" }
-      ];
+      const initialMsgs = [{ sender: "System", text: "Welcome to Global Scripts Support! Ask any questions here.", time: "12:00" }];
       localStorage.setItem('gs_support_chat_v1', JSON.stringify(initialMsgs));
       return initialMsgs;
   }
@@ -1790,13 +1765,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       box.innerHTML = msgs.map(m => {
           const isOwn = currentUser && currentUser.username && currentUser.username.toLowerCase() === m.sender.toLowerCase();
           const safeText = m.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          return `<div class="chat-msg-item ${isOwn ? 'own-msg' : ''}">
-              <div class="chat-msg-header">
-                  <span>${m.sender}</span>
-                  <span class="chat-msg-time">${m.time}</span>
-              </div>
-              <div class="chat-msg-text">${safeText}</div>
-          </div>`;
+          return '<div class="chat-msg-item ' + (isOwn ? 'own-msg' : '') + '"><div class="chat-msg-header"><span>' + m.sender + '</span><span class="chat-msg-time">' + m.time + '</span></div><div class="chat-msg-text">' + safeText + '</div></div>';
       }).join('');
       box.scrollTop = box.scrollHeight;
       window.updateIcons();
@@ -1817,17 +1786,11 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       window.renderSupportChat();
   };
 
-  const TAB_TO_PATH = {
-      'start': '/start', 'login': '/login', 'tab-main': '/profile', 'tab-scripts': '/scripts',
-      'tab-exploits': '/exploits', 'tab-keys': '/keys', 'tab-faq': '/faq', 'tab-about': '/who-are-we'
-  };
-  const PATH_TO_TAB = {
-      '/': 'start', '/start': 'start', '/login': 'login', '/profile': 'tab-main',
-      '/scripts': 'tab-scripts', '/exploits': 'tab-exploits', '/keys': 'tab-keys',
-      '/faq': 'tab-faq', '/who-are-we': 'tab-about', '/about': 'tab-about'
-  };
+  // ==================== ROUTER ====================
+  const TAB_TO_PATH = { 'start': '/start', 'login': '/login', 'tab-main': '/profile', 'tab-scripts': '/scripts', 'tab-exploits': '/exploits', 'tab-keys': '/keys', 'tab-faq': '/faq', 'tab-about': '/who-are-we' };
+  const PATH_TO_TAB = { '/': 'start', '/start': 'start', '/login': 'login', '/profile': 'tab-main', '/scripts': 'tab-scripts', '/exploits': 'tab-exploits', '/keys': 'tab-keys', '/faq': 'tab-faq', '/who-are-we': 'tab-about', '/about': 'tab-about' };
 
-  window.setRouteUrl = function(targetKey, replace = false) {
+  window.setRouteUrl = function(targetKey, replace) {
       const path = TAB_TO_PATH[targetKey] || '/start';
       try {
           if (window.location.protocol !== 'file:') {
@@ -1875,9 +1838,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       if (!rawUrl) return '';
       let url = rawUrl.trim();
       const ghRefsMatch = url.match(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(?:raw|blob)\/refs\/heads\/([^\/]+)\/(.+)$/i);
-      if (ghRefsMatch) return `https://raw.githubusercontent.com/${ghRefsMatch[1]}/${ghRefsMatch[2]}/${ghRefsMatch[3]}/${ghRefsMatch[4]}`;
+      if (ghRefsMatch) return 'https://raw.githubusercontent.com/' + ghRefsMatch[1] + '/' + ghRefsMatch[2] + '/' + ghRefsMatch[3] + '/' + ghRefsMatch[4];
       const ghSimpleMatch = url.match(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(?:raw|blob)\/([^\/]+)\/(.+)$/i);
-      if (ghSimpleMatch) return `https://raw.githubusercontent.com/${ghSimpleMatch[1]}/${ghSimpleMatch[2]}/${ghSimpleMatch[3]}/${ghSimpleMatch[4]}`;
+      if (ghSimpleMatch) return 'https://raw.githubusercontent.com/' + ghSimpleMatch[1] + '/' + ghSimpleMatch[2] + '/' + ghSimpleMatch[3] + '/' + ghSimpleMatch[4];
       return url;
   }
 
@@ -1894,30 +1857,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       } catch (e) {}
       return (fallbackTitle || 'Exploit').replace(/[^a-zA-Z0-9_-]/g, '_') + '.exe';
   }
-
-  window.probeAllExploitFileSizes = function() {
-      if (!window.STATIC_EXPLOITS) return;
-      window.STATIC_EXPLOITS.forEach((item, idx) => {
-          if (item.is_placeholder || !item.link || item._sizeProbed) return;
-          item._sizeProbed = true;
-          const directUrl = normalizeDownloadUrl(item.link);
-          if (!isDirectBinaryFileUrl(directUrl)) return;
-          fetch(directUrl, { method: 'HEAD' }).then(res => {
-              if (res.ok) {
-                  const len = parseInt(res.headers.get('Content-Length') || '0', 10);
-                  if (len > 0) {
-                      const realMB = (len / (1024 * 1024)).toFixed(1);
-                      item.real_size_mb = realMB;
-                      const sizeChip = document.getElementById(`exp-size-chip-${idx}`);
-                      const btnLabel = document.getElementById(`exp-dl-label-${idx}`);
-                      if (sizeChip) { sizeChip.innerHTML = `<i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ${realMB} MB`; sizeChip.style.display = 'inline-flex'; }
-                      if (btnLabel) btnLabel.textContent = `${i18n[currentLang].e_down} (${realMB} MB)`;
-                      window.updateIcons();
-                  }
-              }
-          }).catch(() => {});
-      });
-  };
 
   window.removeDownloadCard = function(dlId) {
       const entry = activeDownloadsMap.get(dlId);
@@ -1938,31 +1877,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       cardEl.className = 'download-item-card';
       cardEl.id = dlId;
       const knownMB = parseFloat(item.real_size_mb || item.file_size_mb || 0);
-      const initialBytesStr = knownMB > 0 ? `0.0 MB / ${knownMB.toFixed(1)} MB (0%)` : `0.0 MB (0%)`;
-      cardEl.innerHTML = `
-          <div class="dl-header">
-              <div class="dl-title-group">
-                  <div class="dl-icon-box" id="${dlId}-icon"><i data-lucide="download-cloud"></i></div>
-                  <div class="dl-file-info">
-                      <span class="dl-filename">${fileName}</span>
-                      <span class="dl-status-text" id="${dlId}-status">${i18n[currentLang].dl_starting}</span>
-                  </div>
-              </div>
-              <button class="dl-close-btn" onclick="window.removeDownloadCard('${dlId}')" title="Cancel / Close"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
-          </div>
-          <div class="dl-progress-track"><div class="dl-progress-fill" id="${dlId}-fill"></div></div>
-          <div class="dl-stats-row">
-              <span class="dl-bytes-text" id="${dlId}-bytes">${initialBytesStr}</span>
-              <span class="dl-speed-badge" id="${dlId}-speed">0.0 MB/s</span>
-          </div>
-      `;
+      const initialBytesStr = knownMB > 0 ? '0.0 MB / ' + knownMB.toFixed(1) + ' MB (0%)' : '0.0 MB (0%)';
+      cardEl.innerHTML =
+          '<div class="dl-header"><div class="dl-title-group"><div class="dl-icon-box"><i data-lucide="download-cloud"></i></div><div class="dl-file-info"><span class="dl-filename">' + fileName + '</span><span class="dl-status-text" id="' + dlId + '-status">' + i18n[currentLang].dl_starting + '</span></div></div><button class="dl-close-btn" onclick="window.removeDownloadCard(\'' + dlId + '\')"><i data-lucide="x" style="width:14px;height:14px;"></i></button></div>' +
+          '<div class="dl-progress-track"><div class="dl-progress-fill" id="' + dlId + '-fill"></div></div>' +
+          '<div class="dl-stats-row"><span class="dl-bytes-text" id="' + dlId + '-bytes">' + initialBytesStr + '</span><span class="dl-speed-badge" id="' + dlId + '-speed">0.0 MB/s</span></div>';
       stack.appendChild(cardEl);
       window.updateIcons();
       requestAnimationFrame(() => cardEl.classList.add('show'));
-      const statusEl = document.getElementById(`${dlId}-status`);
-      const fillEl = document.getElementById(`${dlId}-fill`);
-      const bytesEl = document.getElementById(`${dlId}-bytes`);
-      const speedEl = document.getElementById(`${dlId}-speed`);
+      const statusEl = document.getElementById(dlId + '-status');
+      const fillEl = document.getElementById(dlId + '-fill');
+      const bytesEl = document.getElementById(dlId + '-bytes');
+      const speedEl = document.getElementById(dlId + '-speed');
       const abortController = new AbortController();
       activeDownloadsMap.set(dlId, { abortController, timer: null });
       if (isDirectBinaryFileUrl(directUrl)) {
@@ -1976,34 +1902,34 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               if (contentLength > 0) {
                   const realMB = (contentLength / (1024 * 1024)).toFixed(1);
                   item.real_size_mb = realMB;
-                  const sizeChip = document.getElementById(`exp-size-chip-${exploitIndex}`);
-                  const btnLabel = document.getElementById(`exp-dl-label-${exploitIndex}`);
-                  if (sizeChip) { sizeChip.innerHTML = `<i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ${realMB} MB`; sizeChip.style.display = 'inline-flex'; }
-                  if (btnLabel) btnLabel.textContent = `${i18n[currentLang].e_down} (${realMB} MB)`;
+                  const sizeChip = document.getElementById('exp-size-chip-' + exploitIndex);
+                  const btnLabel = document.getElementById('exp-dl-label-' + exploitIndex);
+                  if (sizeChip) { sizeChip.innerHTML = '<i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + realMB + ' MB'; sizeChip.style.display = 'inline-flex'; }
+                  if (btnLabel) btnLabel.textContent = i18n[currentLang].e_down + ' (' + realMB + ' MB)';
                   window.updateIcons();
               }
               if (statusEl) statusEl.textContent = i18n[currentLang].dl_downloading;
               while (true) {
-                  const { done, value } = await reader.read();
-                  if (done) break;
-                  chunks.push(value);
-                  receivedBytes += value.length;
+                  const r = await reader.read();
+                  if (r.done) break;
+                  chunks.push(r.value);
+                  receivedBytes += r.value.length;
                   const now = performance.now();
                   const elapsedSec = (now - lastTime) / 1000;
                   if (elapsedSec >= 0.14) {
                       const speedMBs = ((receivedBytes - lastBytes) / (1024 * 1024)) / elapsedSec;
-                      if (speedEl) speedEl.textContent = `${Math.max(0.4, speedMBs).toFixed(1)} MB/s`;
+                      if (speedEl) speedEl.textContent = Math.max(0.4, speedMBs).toFixed(1) + ' MB/s';
                       lastTime = now; lastBytes = receivedBytes;
                   }
                   const currentMB = receivedBytes / (1024 * 1024);
                   if (contentLength > 0) {
                       const totalMB = contentLength / (1024 * 1024);
                       const pct = Math.min(100, Math.round((receivedBytes / contentLength) * 100));
-                      if (fillEl) fillEl.style.width = `${pct}%`;
-                      if (bytesEl) bytesEl.textContent = `${currentMB.toFixed(1)} MB / ${totalMB.toFixed(1)} MB (${pct}%)`;
+                      if (fillEl) fillEl.style.width = pct + '%';
+                      if (bytesEl) bytesEl.textContent = currentMB.toFixed(1) + ' MB / ' + totalMB.toFixed(1) + ' MB (' + pct + '%)';
                   } else {
-                      if (fillEl) fillEl.style.width = `75%`;
-                      if (bytesEl) bytesEl.textContent = `${currentMB.toFixed(1)} MB`;
+                      if (fillEl) fillEl.style.width = '75%';
+                      if (bytesEl) bytesEl.textContent = currentMB.toFixed(1) + ' MB';
                   }
               }
               const blob = new Blob(chunks, { type: 'application/octet-stream' });
@@ -2014,7 +1940,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               setTimeout(() => URL.revokeObjectURL(blobUrl), 15000);
               const finalMB = (receivedBytes / (1024 * 1024)).toFixed(1);
               if (fillEl) fillEl.style.width = '100%';
-              if (bytesEl) bytesEl.textContent = `${finalMB} MB / ${finalMB} MB (100%)`;
+              if (bytesEl) bytesEl.textContent = finalMB + ' MB / ' + finalMB + ' MB (100%)';
               if (speedEl) speedEl.textContent = 'DONE';
               if (statusEl) statusEl.textContent = i18n[currentLang].dl_completed;
               return;
@@ -2032,12 +1958,12 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           if (!activeDownloadsMap.has(dlId)) { clearInterval(simTimer); return; }
           const speed = (Math.random() * 5 + 9.5);
           currentPct = Math.min(100, currentPct + Math.floor(Math.random() * 14 + 10));
-          if (fillEl) fillEl.style.width = `${currentPct}%`;
+          if (fillEl) fillEl.style.width = currentPct + '%';
           if (totalMB > 0) {
               const curMB = ((totalMB * currentPct) / 100).toFixed(1);
-              if (bytesEl) bytesEl.textContent = `${curMB} MB / ${totalMB.toFixed(1)} MB (${currentPct}%)`;
-          } else if (bytesEl) bytesEl.textContent = `${i18n[currentLang].dl_direct_stream} (${currentPct}%)`;
-          if (speedEl) speedEl.textContent = `${speed.toFixed(1)} MB/s`;
+              if (bytesEl) bytesEl.textContent = curMB + ' MB / ' + totalMB.toFixed(1) + ' MB (' + currentPct + '%)';
+          } else if (bytesEl) bytesEl.textContent = i18n[currentLang].dl_direct_stream + ' (' + currentPct + '%)';
+          if (speedEl) speedEl.textContent = speed.toFixed(1) + ' MB/s';
           if (currentPct >= 100) {
               clearInterval(simTimer);
               if (speedEl) speedEl.textContent = 'DONE';
@@ -2112,21 +2038,22 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           window.renderExploits();
           window.renderSupportChat();
           body.classList.remove('lang-blur');
-      }, 350);
+      }, 320);
   };
 
   window.showToast = function(desc) {
       document.getElementById('toastDesc').innerText = desc;
       const toast = document.getElementById('toastNotification');
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
   };
 
   window.toggleMobileMenu = function() {
       document.getElementById('mobileMenuOverlay').classList.toggle('show');
   };
 
-  window.switchTab = function(targetId, pushHistory = true) {
+  window.switchTab = function(targetId, pushHistory) {
       const navBtns = document.querySelectorAll('.nav-btn');
       const tabContents = document.querySelectorAll('.tab-content');
       navBtns.forEach(b => b.classList.remove('active'));
@@ -2141,7 +2068,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       if (targetId === 'tab-faq') { window.renderSupportChat(); if (typeof window.loadTicketsFromFirestore === 'function') window.loadTicketsFromFirestore(); }
   };
 
-  window.enterAppFromLanding = function(initialTab = 'tab-main', pushHistory = true) {
+  window.enterAppFromLanding = function(initialTab, pushHistory) {
       if (isNavTransitioning) return;
       isNavTransitioning = true;
       isInHub = true;
@@ -2153,7 +2080,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       landing.style.opacity = '0'; landing.style.transform = 'translateY(-15px)';
       authWrap.style.opacity = '0';
       if (planetContainer && !isMobileDevice) planetContainer.classList.add('hub-active');
-      globalWarpSpeedY = 25;
       if (pushHistory) window.setRouteUrl(initialTab, false);
       setTimeout(() => {
           landing.style.display = 'none';
@@ -2177,7 +2103,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       }, 420);
   };
 
-  window.returnToLanding = function(pushHistory = true) {
+  window.returnToLanding = function(pushHistory) {
       if (isNavTransitioning) return;
       isNavTransitioning = true;
       isInHub = false;
@@ -2191,7 +2117,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       navbar.style.opacity = '0'; mainWrapper.style.opacity = '0';
       mainWrapper.style.transform = 'translateY(15px)'; authWrap.style.opacity = '0';
       if (planetContainer && !isMobileDevice) planetContainer.classList.remove('hub-active');
-      globalWarpSpeedY = 22;
       if (pushHistory) window.setRouteUrl('start', false);
       setTimeout(() => {
           navbar.style.display = 'none';
@@ -2221,14 +2146,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       let extraLink = item.games_link || '';
       if (Array.isArray(item.supported_games)) gamesList = item.supported_games.slice();
       else if (typeof item.supported_games === 'string' && item.supported_games.trim() !== '') gamesList = item.supported_games.split(/\||\n/).map(s => s.trim()).filter(Boolean);
-      else if (cleanDesc.includes('SUPPORTED GAMES') || cleanDesc.includes('|')) {
+      else if (cleanDesc.indexOf('SUPPORTED GAMES') !== -1 || cleanDesc.indexOf('|') !== -1) {
           const urlMatch = cleanDesc.match(/https?:\/\/[^\s]+/);
           if (urlMatch) extraLink = urlMatch[0];
           const lines = cleanDesc.split('\n').map(l => l.trim()).filter(Boolean);
           const summaryLines = [];
           lines.forEach(line => {
-              if (line.includes('|')) line.split('|').forEach(part => { const g = part.trim(); if (g) gamesList.push(g); });
-              else if (!line.toUpperCase().includes('SUPPORTED GAMES') && !line.toLowerCase().includes('supported games and growing') && !line.startsWith('http')) {
+              if (line.indexOf('|') !== -1) line.split('|').forEach(part => { const g = part.trim(); if (g) gamesList.push(g); });
+              else if (line.toUpperCase().indexOf('SUPPORTED GAMES') === -1 && line.toLowerCase().indexOf('supported games and growing') === -1 && line.indexOf('http') !== 0) {
                   if (gamesList.length === 0) summaryLines.push(line);
                   else gamesList.push(line);
               }
@@ -2238,24 +2163,28 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       return { gamesList, cleanDesc, extraLink };
   }
 
-  function buildExtraDetailsHtml(item, isPlaceholder, origIndex = -1, isExploit = false) {
+  function buildExtraDetailsHtml(item, isPlaceholder, origIndex, isExploit) {
       if (isPlaceholder) return '';
       let metaParts = [];
-      if (item.version) metaParts.push(`<span class="meta-chip"><i data-lucide="git-branch" style="width:11px;height:11px;"></i> ${item.version}</span>`);
-      if (item.author) metaParts.push(`<span class="meta-chip"><i data-lucide="user" style="width:11px;height:11px;"></i> ${item.author}</span>`);
+      if (item.version) metaParts.push('<span class="meta-chip"><i data-lucide="git-branch" style="width:11px;height:11px;"></i> ' + item.version + '</span>');
+      if (item.author) metaParts.push('<span class="meta-chip"><i data-lucide="user" style="width:11px;height:11px;"></i> ' + item.author + '</span>');
       const sizeVal = item.real_size_mb || item.file_size_mb;
       if (isExploit && origIndex >= 0) {
           const disp = sizeVal ? 'inline-flex' : 'none';
-          metaParts.push(`<span class="meta-chip" id="exp-size-chip-${origIndex}" style="display:${disp};"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ${sizeVal || ''} MB</span>`);
-      } else if (sizeVal) metaParts.push(`<span class="meta-chip"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ${sizeVal} MB</span>`);
-      if (item.status) metaParts.push(`<span class="meta-chip status-online"><i data-lucide="activity" style="width:11px;height:11px;"></i> ${item.status}</span>`);
-      let metaRowHtml = metaParts.length > 0 ? `<div class="card-meta-row">${metaParts.join('')}</div>` : '';
+          metaParts.push('<span class="meta-chip" id="exp-size-chip-' + origIndex + '" style="display:' + disp + ';"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + (sizeVal || '') + ' MB</span>');
+      } else if (sizeVal) metaParts.push('<span class="meta-chip"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + sizeVal + ' MB</span>');
+      if (item.status) metaParts.push('<span class="meta-chip status-online"><i data-lucide="activity" style="width:11px;height:11px;"></i> ' + item.status + '</span>');
+      let metaRowHtml = metaParts.length > 0 ? '<div class="card-meta-row">' + metaParts.join('') + '</div>' : '';
       let featuresHtml = '';
       if (Array.isArray(item.features) && item.features.length > 0) {
-          const fTags = item.features.map(f => `<span class="feature-tag">${f}</span>`).join('');
-          featuresHtml = `<div class="features-list-box">${fTags}</div>`;
+          const fTags = item.features.map(f => '<span class="feature-tag">' + f + '</span>').join('');
+          featuresHtml = '<div class="features-list-box">' + fTags + '</div>';
       }
       return metaRowHtml + featuresHtml;
+  }
+
+  function escapeJsString(s) {
+      return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   }
 
   window.renderScripts = function() {
@@ -2267,14 +2196,15 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           let filter = document.getElementById('filterScripts') ? document.getElementById('filterScripts').value : 'all';
           let searchQ = document.getElementById('searchScripts') ? document.getElementById('searchScripts').value.toLowerCase().trim() : '';
           let filteredScripts = window.STATIC_SCRIPTS || [];
-          if (filter !== 'all') filteredScripts = filteredScripts.filter(item => item.tags && item.tags.includes(filter));
+          if (filter !== 'all') filteredScripts = filteredScripts.filter(item => item.tags && item.tags.indexOf(filter) !== -1);
           if (searchQ) filteredScripts = filteredScripts.filter(item => {
               const parsed = extractScriptGamesData(item);
-              const inTitleOrGame = item.title.toLowerCase().includes(searchQ) || item.game.toLowerCase().includes(searchQ);
-              return inTitleOrGame || parsed.gamesList.some(g => g.toLowerCase().includes(searchQ));
+              const inTitleOrGame = item.title.toLowerCase().indexOf(searchQ) !== -1 || item.game.toLowerCase().indexOf(searchQ) !== -1;
+              return inTitleOrGame || parsed.gamesList.some(g => g.toLowerCase().indexOf(searchQ) !== -1);
           });
+          const isDev = currentUser && currentUser.role === 'developer';
           if (filteredScripts.length === 0) {
-              container.innerHTML = `<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">${i18n[currentLang].s_no_scripts}</p></div>`;
+              container.innerHTML = '<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">' + i18n[currentLang].s_no_scripts + '</p></div>';
           } else {
               const numCols = getMasonryColumnCount();
               const cols = Array.from({ length: numCols }, () => []);
@@ -2282,60 +2212,50 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   let isPlaceholder = item.is_placeholder === true;
                   let displayTitle = isPlaceholder ? "???" : item.title;
                   let displayGame = isPlaceholder ? "???" : item.game;
-                  const { gamesList, cleanDesc, extraLink } = extractScriptGamesData(item);
-                  let displayDesc = isPlaceholder ? `<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>` : (cleanDesc || "").replace(/</g, "&lt;");
+                  const parsed = extractScriptGamesData(item);
+                  let displayDesc = isPlaceholder ? '<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>' : (parsed.cleanDesc || '').replace(/</g, '&lt;');
                   let origIndex = window.STATIC_SCRIPTS.indexOf(item);
                   let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, false);
                   let supportedGamesHtml = '';
-                  if (!isPlaceholder && gamesList.length > 0) {
-                      let sortedGames = gamesList.slice();
-                      if (searchQ) sortedGames.sort((a, b) => (a.toLowerCase().includes(searchQ) ? 0 : 1) - (b.toLowerCase().includes(searchQ) ? 0 : 1));
+                  if (!isPlaceholder && parsed.gamesList.length > 0) {
+                      let sortedGames = parsed.gamesList.slice();
+                      if (searchQ) sortedGames.sort((a, b) => (a.toLowerCase().indexOf(searchQ) !== -1 ? 0 : 1) - (b.toLowerCase().indexOf(searchQ) !== -1 ? 0 : 1));
                       const pillsHtml = sortedGames.map(gameName => {
-                          const isMatch = searchQ && gameName.toLowerCase().includes(searchQ);
-                          const safeName = gameName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                          return `<span class="sg-pill${isMatch ? ' match' : ''}">${safeName}</span>`;
+                          const isMatch = searchQ && gameName.toLowerCase().indexOf(searchQ) !== -1;
+                          const safeName = gameName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                          return '<span class="sg-pill' + (isMatch ? ' match' : '') + '">' + safeName + '</span>';
                       }).join('');
-                      const linkChipHtml = extraLink ? `<a href="${extraLink}" target="_blank" rel="noopener noreferrer" class="sg-link-chip"><i data-lucide="external-link" style="width:11px;height:11px;"></i> ${i18n[currentLang].sg_list_link || 'Discord'}</a>` : '';
-                      supportedGamesHtml = `<div class="supported-games-box">
-                          <div class="sg-header">
-                              <div class="sg-title-wrap"><i data-lucide="gamepad-2" style="width:14px;height:14px;color:var(--success);"></i><span>${i18n[currentLang].sg_title || 'Supported Games'}</span><span class="sg-count-badge">${gamesList.length}</span></div>
-                              <div class="sg-actions">${linkChipHtml}<button type="button" class="sg-toggle-btn" onclick="window.toggleSupportedGames(this)">${i18n[currentLang].sg_all || 'Show All'}</button></div>
-                          </div>
-                          <div class="sg-pills-container">${pillsHtml}</div>
-                      </div>`;
+                      const linkChipHtml = parsed.extraLink ? '<a href="' + parsed.extraLink + '" target="_blank" rel="noopener noreferrer" class="sg-link-chip"><i data-lucide="external-link" style="width:11px;height:11px;"></i> ' + (i18n[currentLang].sg_list_link || 'Discord') + '</a>' : '';
+                      supportedGamesHtml = '<div class="supported-games-box"><div class="sg-header"><div class="sg-title-wrap"><i data-lucide="gamepad-2" style="width:14px;height:14px;color:var(--success);"></i><span>' + (i18n[currentLang].sg_title || 'Supported Games') + '</span><span class="sg-count-badge">' + parsed.gamesList.length + '</span></div><div class="sg-actions">' + linkChipHtml + '<button type="button" class="sg-toggle-btn" onclick="window.toggleSupportedGames(this)">' + (i18n[currentLang].sg_all || 'Show All') + '</button></div></div><div class="sg-pills-container">' + pillsHtml + '</div></div>';
                   }
                   let displayInfo = '';
-                  if (item.executors_info) displayInfo = isPlaceholder ? `<span class="blurred-text">Tested on Unknown Level 8 executors</span>` : item.executors_info.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                  if (item.executors_info) displayInfo = isPlaceholder ? '<span class="blurred-text">Tested on Unknown Level 8 executors</span>' : item.executors_info.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                   let badgeHtml = '';
-                  if (item.tags) item.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_' + t] || t}</span>`; });
+                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
                   let btnHtml = isPlaceholder
-                      ? `<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_soon}</span></button>`
-                      : `<button class="copy-btn" onclick="window.copyScriptCode(${origIndex}, this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_copy}</span></button>`;
-                  let discBtn = (!isPlaceholder && item.script_discord) ? `<button class="discord-icon-btn" title="Discord" onclick="window.open('${item.script_discord}', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>` : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? `<button class="discord-icon-btn" title="Website" onclick="window.open('${item.website_link}', '_blank')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>` : '';
-                  let cardHtml = `<div class="script-card">
-                    <div class="script-banner-wrapper">
-                        <div class="badge-row">${badgeHtml}</div>
-                        <div class="${bannerClass}" style="background-image: url('${item.banner_url}');"></div>
-                    </div>
-                    <div class="script-content">
-                      <div class="script-header"><h3>${displayTitle}</h3><span class="game-tag">${displayGame}</span></div>
-                      ${extraDetailsHtml}
-                      ${displayDesc ? `<p class="script-desc">${displayDesc}</p>` : ''}
-                      ${supportedGamesHtml}
-                      <div style="display:flex; gap:10px; margin-top: 4px;">${btnHtml}${discBtn}${webBtn}</div>
-                      ${displayInfo ? `<div class="executor-info">${displayInfo}</div>` : ''}
-                    </div>
-                  </div>`;
+                      ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
+                      : '<button class="copy-btn" onclick="window.copyScriptCode(' + origIndex + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copy + '</span></button>';
+                  let discBtn = (!isPlaceholder && item.script_discord) ? '<button class="discord-icon-btn" title="Discord" onclick="window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
+                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                  // dev actions (delete only if cloud)
+                  let devActionsHtml = '';
+                  if (isDev && !isPlaceholder) {
+                      if (item._fromFirestore) {
+                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn danger" title="Удалить скрипт" onclick="event.stopPropagation(); window.deleteScriptFromCard(\'' + item.id + '\', \'' + escapeJsString(item.title) + '\')"><i data-lucide="trash-2" style="width:14px;height:14px;"></i></button></div>';
+                      } else {
+                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local скрипт — удалить из облака нельзя" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
+                      }
+                  }
+                  let cardHtml = '<div class="script-card"><div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content"><div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayGame + '</span></div>' + extraDetailsHtml + (displayDesc ? '<p class="script-desc">' + displayDesc + '</p>' : '') + supportedGamesHtml + '<div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
-              const dividerHtml = `<div class="section-separator"><div class="section-divider-line"></div></div>`;
-              container.innerHTML = cols.map(colCards => `<div class="cards-column">${colCards.join(dividerHtml)}</div>`).join('');
+              const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
+              container.innerHTML = cols.map(colCards => '<div class="cards-column">' + colCards.join(dividerHtml) + '</div>').join('');
           }
           window.updateIcons();
           requestAnimationFrame(() => container.classList.add('show'));
-      }, 150);
+      }, 120);
   };
 
   window.renderExploits = function() {
@@ -2347,10 +2267,11 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           let filter = document.getElementById('filterExploits') ? document.getElementById('filterExploits').value : 'all';
           let searchQ = document.getElementById('searchExploits') ? document.getElementById('searchExploits').value.toLowerCase() : '';
           let filteredExps = window.STATIC_EXPLOITS || [];
-          if (filter !== 'all') filteredExps = filteredExps.filter(item => item.tags && item.tags.includes(filter));
-          if (searchQ) filteredExps = filteredExps.filter(item => item.title.toLowerCase().includes(searchQ));
+          if (filter !== 'all') filteredExps = filteredExps.filter(item => item.tags && item.tags.indexOf(filter) !== -1);
+          if (searchQ) filteredExps = filteredExps.filter(item => item.title.toLowerCase().indexOf(searchQ) !== -1);
+          const isDev = currentUser && currentUser.role === 'developer';
           if (filteredExps.length === 0) {
-              container.innerHTML = `<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">${i18n[currentLang].s_no_scripts}</p></div>`;
+              container.innerHTML = '<div class="disabled-box" style="grid-column: 1 / -1;"><i data-lucide="search-x" style="width:40px;height:40px; margin-bottom:14px; opacity:0.6;"></i><p style="margin:0; font-size:15px;">' + i18n[currentLang].s_no_scripts + '</p></div>';
           } else {
               const numCols = getMasonryColumnCount();
               const cols = Array.from({ length: numCols }, () => []);
@@ -2358,141 +2279,162 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   let isPlaceholder = item.is_placeholder === true;
                   let displayTitle = isPlaceholder ? "???" : item.title;
                   let displayPlatform = isPlaceholder ? "???" : item.platform;
-                  let displayDesc = isPlaceholder ? `<span class="blurred-text">Super secret new executor currently under heavy development.</span>` : (item.description || "").replace(/</g, "&lt;");
+                  let displayDesc = isPlaceholder ? '<span class="blurred-text">Super secret new executor currently under heavy development.</span>' : (item.description || '').replace(/</g, '&lt;');
                   let origIndex = window.STATIC_EXPLOITS.indexOf(item);
                   let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, true);
                   let displayInfo = '';
-                  if (item.info) displayInfo = isPlaceholder ? `<span class="blurred-text">Requires Key: ??? | Version: ???</span>` : item.info.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                  if (item.info) displayInfo = isPlaceholder ? '<span class="blurred-text">Requires Key: ??? | Version: ???</span>' : item.info.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                   let badgeHtml = '';
-                  if (item.tags) item.tags.forEach(t => { badgeHtml += `<span class="badge">${i18n[currentLang]['f_' + t] || t}</span>`; });
+                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
                   const sizeVal = item.real_size_mb || item.file_size_mb;
-                  let sizeLabel = sizeVal ? ` (${sizeVal} MB)` : '';
+                  let sizeLabel = sizeVal ? ' (' + sizeVal + ' MB)' : '';
                   let btnHtml = isPlaceholder
-                      ? `<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_soon}</span></button>`
-                      : `<button class="copy-btn" onclick="window.startInAppDownload(${origIndex})" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-${origIndex}">${i18n[currentLang].e_down}${sizeLabel}</span></button>`;
-                  let discBtn = (!isPlaceholder && item.discord_link) ? `<button class="discord-icon-btn" title="Discord" onclick="window.open('${item.discord_link}', '_blank')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>` : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? `<button class="discord-icon-btn" title="Website" onclick="window.open('${item.website_link}', '_blank')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>` : '';
-                  let cardHtml = `<div class="script-card">
-                    <div class="script-banner-wrapper">
-                        <div class="badge-row">${badgeHtml}</div>
-                        <div class="${bannerClass}" style="background-image: url('${item.banner_url}');"></div>
-                    </div>
-                    <div class="script-content">
-                      <div class="script-header"><h3>${displayTitle}</h3><span class="game-tag">${displayPlatform}</span></div>
-                      ${extraDetailsHtml}
-                      <p class="script-desc">${displayDesc}</p>
-                      <div style="display:flex; gap:10px; margin-top: 4px;">${btnHtml}${discBtn}${webBtn}</div>
-                      ${displayInfo ? `<div class="executor-info">${displayInfo}</div>` : ''}
-                    </div>
-                  </div>`;
+                      ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
+                      : '<button class="copy-btn" onclick="window.startInAppDownload(' + origIndex + ')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-' + origIndex + '">' + i18n[currentLang].e_down + sizeLabel + '</span></button>';
+                  let discBtn = (!isPlaceholder && item.discord_link) ? '<button class="discord-icon-btn" title="Discord" onclick="window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
+                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                  let devActionsHtml = '';
+                  if (isDev && !isPlaceholder) {
+                      if (item._fromFirestore) {
+                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn danger" title="Удалить эксплойт" onclick="event.stopPropagation(); window.deleteExploitFromCard(\'' + item.id + '\', \'' + escapeJsString(item.title) + '\')"><i data-lucide="trash-2" style="width:14px;height:14px;"></i></button></div>';
+                      } else {
+                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local эксплойт — удалить из облака нельзя" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
+                      }
+                  }
+                  let cardHtml = '<div class="script-card"><div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content"><div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + extraDetailsHtml + '<p class="script-desc">' + displayDesc + '</p><div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
-              const dividerHtml = `<div class="section-separator"><div class="section-divider-line"></div></div>`;
-              container.innerHTML = cols.map(colCards => `<div class="cards-column">${colCards.join(dividerHtml)}</div>`).join('');
+              const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
+              container.innerHTML = cols.map(colCards => '<div class="cards-column">' + colCards.join(dividerHtml) + '</div>').join('');
           }
           window.updateIcons();
-          window.probeAllExploitFileSizes();
           requestAnimationFrame(() => container.classList.add('show'));
-      }, 150);
+      }, 120);
   };
 
   let lastColCount = getMasonryColumnCount();
+  let resizeDebounce = null;
   window.addEventListener('resize', () => {
-      const newColCount = getMasonryColumnCount();
-      if (newColCount !== lastColCount) {
-          lastColCount = newColCount;
-          const scrTab = document.getElementById('tab-scripts');
-          const expTab = document.getElementById('tab-exploits');
-          if (scrTab && scrTab.classList.contains('active')) window.renderScripts();
-          if (expTab && expTab.classList.contains('active')) window.renderExploits();
-      }
+      clearTimeout(resizeDebounce);
+      resizeDebounce = setTimeout(() => {
+          const newColCount = getMasonryColumnCount();
+          if (newColCount !== lastColCount) {
+              lastColCount = newColCount;
+              const scrTab = document.getElementById('tab-scripts');
+              const expTab = document.getElementById('tab-exploits');
+              if (scrTab && scrTab.classList.contains('active')) window.renderScripts();
+              if (expTab && expTab.classList.contains('active')) window.renderExploits();
+          }
+      }, 180);
   }, { passive: true });
 
   window.copyScriptCode = function(index, btn) {
-    const finalCode = window.STATIC_SCRIPTS[index].script_code;
-    if (!finalCode) return;
-    navigator.clipboard.writeText(finalCode).then(() => {
-      const originalHtml = btn.innerHTML;
-      btn.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;"></i> <span>${i18n[currentLang].s_copied}</span>`;
-      btn.style.backgroundColor = 'var(--success)'; btn.style.color = '#fff';
-      window.updateIcons();
-      setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = ''; btn.style.color = ''; window.updateIcons(); }, 2000);
-    });
+      const finalCode = window.STATIC_SCRIPTS[index].script_code;
+      if (!finalCode) return;
+      navigator.clipboard.writeText(finalCode).then(() => {
+          const originalHtml = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copied + '</span>';
+          btn.style.backgroundColor = 'var(--success)'; btn.style.color = '#fff';
+          window.updateIcons();
+          setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = ''; btn.style.color = ''; window.updateIcons(); }, 2000);
+      });
   };
 
+  // ==================== SPACE BACKGROUND (optimized) ====================
+  // Halved star count. Halved comet count. Paused when tab hidden. Uses a small blur-free render.
   function initSpaceBackground() {
-      if (isLowEnd) return; // Отключаем тяжелые частицы на мобилках
+      if (isLowEnd) return;
       const canvas = document.getElementById('bgCanvas');
       if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let w, h, comets = [], movingStars = [];
-      function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; generateStars(); }
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let w, h, comets = [], stars = [];
+      let lastFrame = 0;
+      const FRAME_MS = 1000 / 45; // 45fps cap
+
+      function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+          w = canvas.width = Math.floor(window.innerWidth * dpr);
+          h = canvas.height = Math.floor(window.innerHeight * dpr);
+          canvas.style.width = window.innerWidth + 'px';
+          canvas.style.height = window.innerHeight + 'px';
+          generateStars();
+      }
       function generateStars() {
-          movingStars = [];
-          const starCount = 150;
+          stars = [];
+          const starCount = 70;
           for (let i = 0; i < starCount; i++) {
               const angle = Math.random() * Math.PI * 2;
-              const moveSpeed = Math.random() * 0.35 + 0.08;
-              movingStars.push({ x: Math.random() * w, y: Math.random() * h, s: Math.random() * 1.6 + 0.4, a: Math.random(), twinkleSpeed: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.007 + 0.003), vx: Math.cos(angle) * moveSpeed, vy: Math.sin(angle) * moveSpeed });
+              const moveSpeed = Math.random() * 0.28 + 0.06;
+              stars.push({
+                  x: Math.random() * w, y: Math.random() * h,
+                  s: Math.random() * 1.4 + 0.3, a: Math.random(),
+                  twinkleSpeed: (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.006 + 0.002),
+                  vx: Math.cos(angle) * moveSpeed, vy: Math.sin(angle) * moveSpeed
+              });
           }
       }
       class Comet {
           constructor() { this.reset(true); }
-          reset(initial = false) {
+          reset(initial) {
               this.x = initial ? Math.random() * w : w + Math.random() * 500;
               this.y = initial ? Math.random() * h : -Math.random() * 500;
               this.length = Math.random() * 60 + 20;
-              this.speed = Math.random() * 4 + 3;
+              this.speed = Math.random() * 3.5 + 3;
               this.opacity = Math.random() * 0.4 + 0.1;
           }
-          draw(globalAlpha) {
-              ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(this.x - this.length, this.y + this.length);
-              ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity * globalAlpha})`; ctx.lineWidth = 1; ctx.stroke();
-              let currentSpeed = this.speed;
-              if (globalWarpSpeedY > 0) currentSpeed += globalWarpSpeedY * 1.5;
-              this.x -= currentSpeed; this.y += currentSpeed;
-              if (this.x < -100 || this.y > h + 100) this.reset();
+          draw() {
+              ctx.beginPath();
+              ctx.moveTo(this.x, this.y);
+              ctx.lineTo(this.x - this.length, this.y + this.length);
+              ctx.strokeStyle = 'rgba(255, 255, 255, ' + this.opacity + ')';
+              ctx.lineWidth = 1;
+              ctx.stroke();
+              this.x -= this.speed; this.y += this.speed;
+              if (this.x < -100 || this.y > h + 100) this.reset(false);
           }
       }
-      const cometCount = 35;
+      const cometCount = 14;
       for (let i = 0; i < cometCount; i++) comets.push(new Comet());
       window.addEventListener('resize', resize, { passive: true });
-      let actualBloom = 0;
-      function animate() {
-          if (!document.hidden) {
-              ctx.clearRect(0, 0, w, h);
-              let isLight = document.documentElement.getAttribute('data-theme') === 'light';
-              if (globalWarpSpeedY > 0) { globalWarpSpeedY *= 0.95; if (globalWarpSpeedY < 0.1) globalWarpSpeedY = 0; }
-              if (actualBloom < 1) actualBloom += 0.008;
-              if (!isLight) {
-                  ctx.fillStyle = '#ffffff';
-                  for (let i = 0; i < movingStars.length; i++) {
-                      let st = movingStars[i];
-                      st.a += st.twinkleSpeed;
-                      if (st.a > 1) { st.a = 1; st.twinkleSpeed *= -1; }
-                      if (st.a < 0.1) { st.a = 0.1; st.twinkleSpeed *= -1; }
-                      st.x += st.vx; st.y += st.vy;
-                      if (st.x < 0) st.x = w; else if (st.x > w) st.x = 0;
-                      if (st.y < 0) st.y = h; else if (st.y > h) st.y = 0;
-                      ctx.globalAlpha = st.a * actualBloom;
-                      ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI * 2); ctx.fill();
-                  }
-                  ctx.globalAlpha = 1;
-                  for (let i = 0; i < comets.length; i++) comets[i].draw(actualBloom);
+      resize();
+
+      let rafId = null;
+      function animate(now) {
+          rafId = null;
+          if (document.hidden) { rafId = requestAnimationFrame(animate); return; }
+          if (now - lastFrame < FRAME_MS) { rafId = requestAnimationFrame(animate); return; }
+          lastFrame = now;
+          ctx.clearRect(0, 0, w, h);
+          let isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          if (!isLight) {
+              ctx.fillStyle = '#ffffff';
+              for (let i = 0; i < stars.length; i++) {
+                  const st = stars[i];
+                  st.a += st.twinkleSpeed;
+                  if (st.a > 1) { st.a = 1; st.twinkleSpeed *= -1; }
+                  if (st.a < 0.1) { st.a = 0.1; st.twinkleSpeed *= -1; }
+                  st.x += st.vx; st.y += st.vy;
+                  if (st.x < 0) st.x = w; else if (st.x > w) st.x = 0;
+                  if (st.y < 0) st.y = h; else if (st.y > h) st.y = 0;
+                  ctx.globalAlpha = st.a;
+                  ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI * 2); ctx.fill();
               }
+              ctx.globalAlpha = 1;
+              for (let i = 0; i < comets.length; i++) comets[i].draw();
           }
-          requestAnimationFrame(animate);
+          rafId = requestAnimationFrame(animate);
       }
-      resize(); animate();
+      rafId = requestAnimationFrame(animate);
   }
 
+  // ==================== BOOT ====================
   document.addEventListener('DOMContentLoaded', () => {
     try {
         const savedCustomScripts = JSON.parse(localStorage.getItem('gs_custom_scripts') || '[]');
-        if (Array.isArray(savedCustomScripts) && savedCustomScripts.length > 0) window.STATIC_SCRIPTS.unshift(...savedCustomScripts);
+        if (Array.isArray(savedCustomScripts) && savedCustomScripts.length > 0) window.STATIC_SCRIPTS.unshift.apply(window.STATIC_SCRIPTS, savedCustomScripts);
         const savedCustomExps = JSON.parse(localStorage.getItem('gs_custom_exploits') || '[]');
-        if (Array.isArray(savedCustomExps) && savedCustomExps.length > 0) window.STATIC_EXPLOITS.unshift(...savedCustomExps);
+        if (Array.isArray(savedCustomExps) && savedCustomExps.length > 0) window.STATIC_EXPLOITS.unshift.apply(window.STATIC_EXPLOITS, savedCustomExps);
         const savedUser = JSON.parse(localStorage.getItem('gs_active_user') || 'null');
         if (savedUser && savedUser.username) currentUser = savedUser;
     } catch (e) {}
@@ -2524,8 +2466,8 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           title: "Hoho Hub", game: "Blox fruits",
           tags: ["old", "popular", "stable", "key system", "paid"],
           banner_url: "https://raw.githubusercontent.com/acsu123/HohoV2/refs/heads/main/BloxFruit/keysystem/hoho_logo.png",
-          script_code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()`,
-          description: "An old and stable script, the first of all the best scripts for Blox Fruits. It requires a lot of performance; on low‑end devices, there may be lags.",
+          script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()',
+          description: "An old and stable script, the first of all the best scripts for Blox Fruits. It requires a lot of performance; on low-end devices, there may be lags.",
           executors_info: "Working on exploits: Delta, Madium",
           script_discord: "https://discord.com/invite/hohohub"
       },
@@ -2533,7 +2475,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           title: "Silence Hub", game: "Muscle Legends",
           tags: ["new", "popular", "stable"],
           banner_url: "https://silencestudios.vercel.app/assets/silencelogo.png",
-          script_code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/silencedevs/SilenceScripts/main/Loader/Loader.luau", true))()`,
+          script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/silencedevs/SilenceScripts/main/Loader/Loader.luau", true))()',
           description: "An excellent and functional script!",
           executors_info: "Working on exploits: Delta, Nexomia",
           script_discord: "https://discord.gg/9eFf93Kg8D"
@@ -2542,7 +2484,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           title: "Ronix Universal Hub", game: "Any Games (71+ Supported)",
           tags: ["new", "popular", "stable"],
           banner_url: "https://raw.githubusercontent.com/DancingUnicornLol/RonixExec/main/image/discord/ronix-supported-games.png",
-          script_code: `loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/fda9babd071d6b536a745774b6bc681c.lua"))()`,
+          script_code: 'loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/fda9babd071d6b536a745774b6bc681c.lua"))()',
           description: "Universal hub supporting 71+ popular Roblox games with auto-detection.",
           games_link: "https://discord.com/channels/1352066418744754318/1457426542417281085/1552306230687568005",
           supported_games: [
@@ -2602,28 +2544,22 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
   async function loadFirestoreData() {
       if (!window.FB) return;
-      
       try {
           const scrSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "scripts"));
           const firestoreScripts = [];
           scrSnap.forEach(d => { const data = d.data(); data.id = d.id; data._fromFirestore = true; firestoreScripts.push(data); });
-          
-          // Удаляем старые облачные и добавляем новые
           window.STATIC_SCRIPTS = window.STATIC_SCRIPTS.filter(s => !s._fromFirestore);
           window.STATIC_SCRIPTS = firestoreScripts.concat(window.STATIC_SCRIPTS);
           window.renderScripts();
       } catch (e) { console.warn('Firestore scripts load failed:', e); }
-
       try {
           const expSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "exploits"));
           const firestoreExps = [];
           expSnap.forEach(d => { const data = d.data(); data.id = d.id; data._fromFirestore = true; firestoreExps.push(data); });
-          
           window.STATIC_EXPLOITS = window.STATIC_EXPLOITS.filter(s => !s._fromFirestore);
           window.STATIC_EXPLOITS = firestoreExps.concat(window.STATIC_EXPLOITS);
           window.renderExploits();
       } catch (e) { console.warn('Firestore exploits load failed:', e); }
-      
       if (currentUser && currentUser.role === 'developer') {
           window.populateDevDropdowns();
       }
@@ -2637,13 +2573,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "users", user.uid));
                   if (docSnap.exists()) {
                       const data = docSnap.data();
-                      currentUser = {
-                          uid: user.uid,
-                          username: data.username,
-                          role: data.role || 'user',
-                          plan: data.plan || 'Free Access',
-                          badges: Array.isArray(data.badges) ? data.badges : []
-                      };
+                      currentUser = { uid: user.uid, username: data.username, role: data.role || 'user', plan: data.plan || 'Free Access', badges: Array.isArray(data.badges) ? data.badges : [] };
                   } else {
                       currentUser = { uid: user.uid, username: user.email.split('@')[0], role: 'user', plan: 'Free Access', badges: ['verified'] };
                   }
@@ -2671,30 +2601,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       try {
           const ticketsRef = window.FB.collection(window.FB.db, "tickets");
           let q = ticketsRef;
-          if (currentUser.role !== "developer") {
-              q = window.FB.query(ticketsRef, window.FB.where("creatorId", "==", currentUser.uid));
-          }
+          if (currentUser.role !== "developer") q = window.FB.query(ticketsRef, window.FB.where("creatorId", "==", currentUser.uid));
           const snap = await window.FB.getDocs(q);
           const tickets = [];
           snap.forEach(d => { const data = d.data(); data.id = d.id; tickets.push(data); });
           tickets.sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
-
           const list = document.getElementById('ticketsList');
           if (!list) return;
           if (!tickets.length) {
               list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);font-size:12px;padding:20px;">No tickets yet</div>';
               return;
           }
-          list.innerHTML = tickets.map(t => `
-              <div class="ticket-item ${t.id === activeTicketId ? 'active' : ''}" onclick="window.selectTicket('${t.id}')">
-                  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary);">
-                      <span>#${t.id.slice(0, 4)}</span>
-                      <span style="color:${t.status === 'closed' ? 'gray' : 'var(--success)'}">${t.status === 'closed' ? 'Closed' : 'Open'}</span>
-                  </div>
-                  <div style="font-size:13px;font-weight:700;margin:4px 0;">${t.title}</div>
-                  <div style="font-size:11px;color:var(--text-secondary);">by ${t.creatorName}</div>
-              </div>
-          `).join('');
+          list.innerHTML = tickets.map(t => '<div class="ticket-item ' + (t.id === activeTicketId ? 'active' : '') + '" onclick="window.selectTicket(\'' + t.id + '\')"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary);"><span>#' + t.id.slice(0, 4) + '</span><span style="color:' + (t.status === 'closed' ? 'gray' : 'var(--success)') + '">' + (t.status === 'closed' ? 'Closed' : 'Open') + '</span></div><div style="font-size:13px;font-weight:700;margin:4px 0;">' + t.title + '</div><div style="font-size:11px;color:var(--text-secondary);">by ' + t.creatorName + '</div></div>').join('');
           window.updateIcons();
       } catch (e) { console.warn('Tickets load failed:', e); }
   };
@@ -2704,29 +2622,13 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       activeTicketId = id;
       document.getElementById('ticketViewEmpty').style.display = 'none';
       document.getElementById('ticketViewActive').style.display = 'flex';
-
       try {
           const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "tickets", id));
           if (!docSnap.exists()) return;
           const data = docSnap.data();
-
-          document.getElementById('ticketHeader').innerHTML = `
-              <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--card-border);">
-                  <div>
-                      <div style="font-size:11px;color:var(--text-secondary);">#${id.slice(0,4)} • by ${data.creatorName}</div>
-                      <div style="font-size:16px;font-weight:800;">${data.title}</div>
-                  </div>
-                  ${data.status === 'open' && currentUser.role === 'developer' ? `<button class="ui-btn" onclick="window.closeTicket('${id}')">Close</button>` : ''}
-              </div>
-          `;
-
+          document.getElementById('ticketHeader').innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--card-border);"><div><div style="font-size:11px;color:var(--text-secondary);">#' + id.slice(0,4) + ' • by ' + data.creatorName + '</div><div style="font-size:16px;font-weight:800;">' + data.title + '</div></div>' + (data.status === 'open' && currentUser.role === 'developer' ? '<button class="ui-btn" onclick="window.closeTicket(\'' + id + '\')">Close</button>' : '') + '</div>';
           const box = document.getElementById('ticketMessages');
-          box.innerHTML = (data.messages || []).map(m => `
-              <div class="chat-msg-item ${m.senderId === currentUser.uid ? 'own-msg' : ''}">
-                  <div class="chat-msg-header"><span>${m.sender}</span><span class="chat-msg-time">${m.time}</span></div>
-                  <div class="chat-msg-text">${m.text}</div>
-              </div>
-          `).join('');
+          box.innerHTML = (data.messages || []).map(m => '<div class="chat-msg-item ' + (m.senderId === currentUser.uid ? 'own-msg' : '') + '"><div class="chat-msg-header"><span>' + m.sender + '</span><span class="chat-msg-time">' + m.time + '</span></div><div class="chat-msg-text">' + m.text + '</div></div>').join('');
           box.scrollTop = box.scrollHeight;
           window.loadTicketsFromFirestore();
       } catch (e) { console.warn('Select ticket failed:', e); }
@@ -2744,7 +2646,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const title = document.getElementById('ticketTitleInput').value.trim();
       const desc = document.getElementById('ticketDescInput').value.trim();
       if (!title || !desc) { window.showToast('Enter title and description'); return; }
-
       try {
           await window.FB.addDoc(window.FB.collection(window.FB.db, "tickets"), {
               title: title, creatorId: currentUser.uid, creatorName: currentUser.username, status: "open",
@@ -2762,7 +2663,6 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const input = document.getElementById('ticketReplyInput');
       const text = input.value.trim();
       if (!text) return;
-
       try {
           await window.FB.updateDoc(window.FB.doc(window.FB.db, "tickets", activeTicketId), {
               messages: window.FB.arrayUnion({ sender: currentUser.username, senderId: currentUser.uid, text: text, time: new Date().toLocaleTimeString() }),
@@ -2776,9 +2676,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   window.closeTicket = async function(id) {
       if (!window.FB) return;
       try {
-          await window.FB.updateDoc(window.FB.doc(window.FB.db, "tickets", id), {
-              status: "closed", updatedAt: window.FB.serverTimestamp()
-          });
+          await window.FB.updateDoc(window.FB.doc(window.FB.db, "tickets", id), { status: "closed", updatedAt: window.FB.serverTimestamp() });
           window.selectTicket(id);
       } catch (e) { window.showToast('Close failed: ' + (e.message || 'error')); }
   };
