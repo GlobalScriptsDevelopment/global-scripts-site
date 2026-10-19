@@ -526,6 +526,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 .file-upload-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px; border: 1px dashed var(--card-border); border-radius: 12px; background: rgba(255,255,255,0.03); color: var(--text-secondary); cursor: pointer; transition: 0.2s; font-weight: 600; font-size: 13px; }
 .file-upload-btn:hover { border-color: var(--text-primary); color: var(--text-primary); background: rgba(255,255,255,0.08); }
 
+/* Tags Editor */
+.tags-editor-list { display: flex; flex-wrap: wrap; gap: 5px; min-height: 24px; margin-bottom: 5px; }
+.tag-pill-editable { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: 0.2s; }
+.tag-pill-editable:hover { background: rgba(239, 68, 68, 0.2); border-color: var(--error); }
+
 @media (max-width: 850px) {
   .sdm-body { grid-template-columns: 1fr; }
 }
@@ -909,7 +914,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                             <option value="draft">Draft (Hidden)</option>
                         </select>
                     </div>
-                    
+
                     <div class="dev-form-grid">
                         <input type="text" id="devScrBanner" class="auth-input" placeholder="Banner Image URL (Auto-filled)" style="grid-column: span 2;" />
                         <div class="file-upload-wrapper">
@@ -918,14 +923,41 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                         </div>
                     </div>
 
-                    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;">
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('new')">new</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('popular')">popular</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('stable')">stable</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('pc')">pc</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('mobile')">mobile</button>
+                    <div class="dev-form-grid">
+                        <input type="color" id="devScrAuthorColor" class="auth-input" style="height:42px; padding:4px;" title="Author Color" />
+                        <select id="devScrAuthorFont" class="auth-input">
+                            <option value="inherit">Default Font</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="monospace">Monospace</option>
+                            <option value="'Courier New', monospace">Courier</option>
+                            <option value="cursive">Cursive</option>
+                            <option value="fantasy">Fantasy</option>
+                        </select>
+                        <div class="dev-badge-checkboxes" id="devScrAuthorBadges" style="grid-column: span 2;">
+                            <span class="profile-label" style="width:100%; margin-bottom:5px;">AUTHOR BADGES:</span>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="verified" class="dev-author-badge-scr" /> ✔️ Verified</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="popular" class="dev-author-badge-scr" /> 🔥 Popular</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="developer" class="dev-author-badge-scr" /> 💻 Developer</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="vip" class="dev-author-badge-scr" /> 👑 VIP</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="tester" class="dev-author-badge-scr" /> 🧪 Tester</label>
+                        </div>
                     </div>
-                    <input type="text" id="devScrTags" class="auth-input" placeholder="Tags comma-separated" />
+
+                    <textarea id="devScrGames" class="dev-textarea" placeholder="Supported Games (one per line or comma-separated)"></textarea>
+
+                    <div id="devScrTagsList" class="tags-editor-list"></div>
+                    <div style="display:flex; gap:5px; margin-bottom:5px;">
+                        <input type="text" id="devScrTagInput" class="auth-input" placeholder="Add custom tag..." style="flex:1;" onkeydown="if(event.key==='Enter') window.addCustomTag('scr')" />
+                        <button type="button" class="ui-btn" onclick="window.addCustomTag('scr')">Add Tag</button>
+                    </div>
+                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('scr', 'new')">new</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('scr', 'popular')">popular</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('scr', 'stable')">stable</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('scr', 'pc')">pc</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('scr', 'mobile')">mobile</button>
+                    </div>
+
                     <input type="text" id="devScrDiscord" class="auth-input" placeholder="Discord Invite Link" />
                     <textarea id="devScrDesc" class="dev-textarea" placeholder="Short Description..."></textarea>
                     <textarea id="devScrCode" class="dev-textarea" placeholder='loadstring(game:HttpGet("https://..."))()'></textarea>
@@ -962,13 +994,40 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                         </div>
                     </div>
 
-                    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;">
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('pc')">pc</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('mobile')">mobile</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('keyless')">keyless</button>
-                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('updated')">updated</button>
+                    <div class="dev-form-grid">
+                        <input type="color" id="devExpAuthorColor" class="auth-input" style="height:42px; padding:4px;" title="Author Color" />
+                        <select id="devExpAuthorFont" class="auth-input">
+                            <option value="inherit">Default Font</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="monospace">Monospace</option>
+                            <option value="'Courier New', monospace">Courier</option>
+                            <option value="cursive">Cursive</option>
+                            <option value="fantasy">Fantasy</option>
+                        </select>
+                        <div class="dev-badge-checkboxes" id="devExpAuthorBadges" style="grid-column: span 2;">
+                            <span class="profile-label" style="width:100%; margin-bottom:5px;">AUTHOR BADGES:</span>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="verified" class="dev-author-badge-exp" /> ✔️ Verified</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="popular" class="dev-author-badge-exp" /> 🔥 Popular</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="developer" class="dev-author-badge-exp" /> 💻 Developer</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="vip" class="dev-author-badge-exp" /> 👑 VIP</label>
+                            <label class="dev-badge-check-label"><input type="checkbox" value="tester" class="dev-author-badge-exp" /> 🧪 Tester</label>
+                        </div>
                     </div>
-                    <input type="text" id="devExpTags" class="auth-input" placeholder="Tags (pc, mobile, keyless)" />
+
+                    <textarea id="devExpGames" class="dev-textarea" placeholder="Supported Games (one per line or comma-separated)"></textarea>
+
+                    <div id="devExpTagsList" class="tags-editor-list"></div>
+                    <div style="display:flex; gap:5px; margin-bottom:5px;">
+                        <input type="text" id="devExpTagInput" class="auth-input" placeholder="Add custom tag..." style="flex:1;" onkeydown="if(event.key==='Enter') window.addCustomTag('exp')" />
+                        <button type="button" class="ui-btn" onclick="window.addCustomTag('exp')">Add Tag</button>
+                    </div>
+                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('exp', 'pc')">pc</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('exp', 'mobile')">mobile</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('exp', 'keyless')">keyless</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addCustomTagValue('exp', 'updated')">updated</button>
+                    </div>
+
                     <input type="text" id="devExpInfo" class="auth-input" placeholder="Info (Requires Key: No)" />
                     <textarea id="devExpDesc" class="dev-textarea" placeholder="Description..."></textarea>
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewExploit()">
@@ -1153,6 +1212,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
   let editingScriptId = null;
   let editingExploitId = null;
   let editingAccountUid = null;
+
+  let tempScrTags = [];
+  let tempExpTags = [];
 
   // ==================== MAINTENANCE / SITE CONTROL ====================
   const SITE_OWNER_USERNAME = "Rob4ik02"; // <-- ВПИШИ СВОЙ ЛОГИН ЗДЕСЬ
@@ -1741,14 +1803,43 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       }).join('');
   }
 
-  window.addTag = function(tag) {
-      const input = document.getElementById('devScrTags') || document.getElementById('devExpTags');
-      if(!input) return;
-      let current = input.value.split(',').map(s=>s.trim()).filter(Boolean);
-      if(!current.includes(tag)) {
-          current.push(tag);
-          input.value = current.join(', ');
+  window.renderTagsEditor = function(kind) {
+      const listId = kind === 'scr' ? 'devScrTagsList' : 'devExpTagsList';
+      const list = document.getElementById(listId);
+      if (!list) return;
+      const tags = kind === 'scr' ? tempScrTags : tempExpTags;
+      list.innerHTML = tags.map(t => `<span class="tag-pill-editable" onclick="window.removeTag('${kind}', '${t}')">${t} <i data-lucide="x" style="width:12px;height:12px;"></i></span>`).join('');
+      window.updateIcons();
+  };
+
+  window.addCustomTag = function(kind) {
+      const inputId = kind === 'scr' ? 'devScrTagInput' : 'devExpTagInput';
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const val = input.value.trim().toLowerCase();
+      if (!val) return;
+      if (kind === 'scr') {
+          if (!tempScrTags.includes(val)) tempScrTags.push(val);
+      } else {
+          if (!tempExpTags.includes(val)) tempExpTags.push(val);
       }
+      input.value = '';
+      renderTagsEditor(kind);
+  };
+
+  window.addCustomTagValue = function(kind, val) {
+      if (kind === 'scr') {
+          if (!tempScrTags.includes(val)) tempScrTags.push(val);
+      } else {
+          if (!tempExpTags.includes(val)) tempExpTags.push(val);
+      }
+      renderTagsEditor(kind);
+  };
+
+  window.removeTag = function(kind, tag) {
+      if (kind === 'scr') tempScrTags = tempScrTags.filter(t => t !== tag);
+      else tempExpTags = tempExpTags.filter(t => t !== tag);
+      renderTagsEditor(kind);
   };
 
   window.switchDevSubtab = function(sectionId, btn) {
@@ -1822,8 +1913,13 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           editingScriptId = null;
           btnText.textContent = "Publish Script";
           if (delBar) delBar.classList.remove('show');
-          ['devScrTitle','devScrGame','devScrBanner','devScrVersion','devScrAuthor','devScrTags','devScrExecs','devScrDiscord','devScrDesc','devScrCode'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devScrTitle','devScrGame','devScrBanner','devScrVersion','devScrAuthor','devScrDiscord','devScrDesc','devScrCode','devScrGames'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
           const st = document.getElementById('devScrStatus'); if(st) st.value = 'published';
+          document.getElementById('devScrAuthorColor').value = '#ffffff';
+          document.getElementById('devScrAuthorFont').value = 'inherit';
+          document.querySelectorAll('.dev-author-badge-scr').forEach(cb => cb.checked = false);
+          tempScrTags = [];
+          renderTagsEditor('scr');
           return;
       }
       const script = window.STATIC_SCRIPTS.find(s => (s.id || s.title) === val);
@@ -1836,11 +1932,17 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       document.getElementById('devScrBanner').value = script.banner_url || '';
       document.getElementById('devScrVersion').value = script.version || '';
       document.getElementById('devScrAuthor').value = script.author || '';
-      document.getElementById('devScrTags').value = (script.tags || []).join(', ');
-      document.getElementById('devScrExecs').value = script.executors_info || '';
       document.getElementById('devScrDiscord').value = script.script_discord || '';
       document.getElementById('devScrDesc').value = script.description || '';
       document.getElementById('devScrCode').value = script.script_code || '';
+      document.getElementById('devScrGames').value = (script.supported_games || []).join('\n');
+      document.getElementById('devScrAuthorColor').value = script.author_color || '#ffffff';
+      document.getElementById('devScrAuthorFont').value = script.author_font || 'inherit';
+      document.querySelectorAll('.dev-author-badge-scr').forEach(cb => {
+          cb.checked = Array.isArray(script.author_badges) && script.author_badges.includes(cb.value);
+      });
+      tempScrTags = script.tags ? script.tags.slice() : [];
+      renderTagsEditor('scr');
       const st = document.getElementById('devScrStatus'); if(st) st.value = script.status || 'published';
   };
 
@@ -1851,8 +1953,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const banner = document.getElementById('devScrBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
       const version = document.getElementById('devScrVersion').value.trim();
       const author = document.getElementById('devScrAuthor').value.trim();
-      const tagsRaw = document.getElementById('devScrTags').value.trim() || 'new, stable';
-      const execs = document.getElementById('devScrExecs').value.trim() || '';
+      const authorColor = document.getElementById('devScrAuthorColor').value;
+      const authorFont = document.getElementById('devScrAuthorFont').value;
+      const authorBadges = Array.from(document.querySelectorAll('.dev-author-badge-scr:checked')).map(cb => cb.value);
+      const gamesRaw = document.getElementById('devScrGames').value.trim();
+      const supported_games = gamesRaw ? gamesRaw.split(/\n|,/).map(s => s.trim()).filter(Boolean) : [];
       const discord = document.getElementById('devScrDiscord').value.trim();
       const desc = document.getElementById('devScrDesc').value.trim() || '';
       const code = document.getElementById('devScrCode').value.trim();
@@ -1860,10 +1965,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       if (!title || !code) { window.showToast('Enter Script Title and Lua Code!'); return; }
 
       const scriptData = {
-          title, game, version, author, status,
-          tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
+          title, game, version, author, status, supported_games,
+          author_color: authorColor, author_font: authorFont, author_badges: authorBadges,
+          tags: tempScrTags.slice(),
           banner_url: banner, script_code: code, description: desc,
-          executors_info: execs, script_discord: discord,
+          script_discord: discord,
           updatedAt: window.FB.serverTimestamp()
       };
 
@@ -1919,8 +2025,13 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           editingExploitId = null;
           btnText.textContent = "Publish Exploit";
           if (delBar) delBar.classList.remove('show');
-          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpVersion','devExpAuthor','devExpTags','devExpInfo','devExpDesc'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpVersion','devExpAuthor','devExpInfo','devExpDesc','devExpGames'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
           const st = document.getElementById('devExpStatus'); if(st) st.value = 'published';
+          document.getElementById('devExpAuthorColor').value = '#ffffff';
+          document.getElementById('devExpAuthorFont').value = 'inherit';
+          document.querySelectorAll('.dev-author-badge-exp').forEach(cb => cb.checked = false);
+          tempExpTags = [];
+          renderTagsEditor('exp');
           return;
       }
       const exp = window.STATIC_EXPLOITS.find(e => (e.id || e.title) === val);
@@ -1934,9 +2045,16 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       document.getElementById('devExpLink').value = exp.link || '';
       document.getElementById('devExpVersion').value = exp.version || '';
       document.getElementById('devExpAuthor').value = exp.author || '';
-      document.getElementById('devExpTags').value = (exp.tags || []).join(', ');
       document.getElementById('devExpInfo').value = exp.info || '';
       document.getElementById('devExpDesc').value = exp.description || '';
+      document.getElementById('devExpGames').value = (exp.supported_games || []).join('\n');
+      document.getElementById('devExpAuthorColor').value = exp.author_color || '#ffffff';
+      document.getElementById('devExpAuthorFont').value = exp.author_font || 'inherit';
+      document.querySelectorAll('.dev-author-badge-exp').forEach(cb => {
+          cb.checked = Array.isArray(exp.author_badges) && exp.author_badges.includes(cb.value);
+      });
+      tempExpTags = exp.tags ? exp.tags.slice() : [];
+      renderTagsEditor('exp');
       const st = document.getElementById('devExpStatus'); if(st) st.value = exp.status || 'published';
   };
 
@@ -1948,15 +2066,20 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const link = document.getElementById('devExpLink').value.trim();
       const version = document.getElementById('devExpVersion').value.trim();
       const author = document.getElementById('devExpAuthor').value.trim();
-      const tagsRaw = document.getElementById('devExpTags').value.trim() || 'pc';
+      const authorColor = document.getElementById('devExpAuthorColor').value;
+      const authorFont = document.getElementById('devExpAuthorFont').value;
+      const authorBadges = Array.from(document.querySelectorAll('.dev-author-badge-exp:checked')).map(cb => cb.value);
+      const gamesRaw = document.getElementById('devExpGames').value.trim();
+      const supported_games = gamesRaw ? gamesRaw.split(/\n|,/).map(s => s.trim()).filter(Boolean) : [];
       const info = document.getElementById('devExpInfo').value.trim() || '';
       const desc = document.getElementById('devExpDesc').value.trim() || '';
       const status = document.getElementById('devExpStatus').value || 'published';
       if (!title || !link) { window.showToast('Enter Exploit Title and Download URL!'); return; }
 
       const expData = {
-          title, platform, version, author, status,
-          tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
+          title, platform, version, author, status, supported_games,
+          author_color: authorColor, author_font: authorFont, author_badges: authorBadges,
+          tags: tempExpTags.slice(),
           banner_url: banner, link, description: desc, info,
           updatedAt: window.FB.serverTimestamp()
       };
@@ -2518,26 +2641,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       return { gamesList, cleanDesc, extraLink };
   }
 
-  function buildExtraDetailsHtml(item, isPlaceholder, origIndex, isExploit) {
-      if (isPlaceholder) return '';
-      let metaParts = [];
-      if (item.version) metaParts.push('<span class="meta-chip"><i data-lucide="git-branch" style="width:11px;height:11px;"></i> ' + item.version + '</span>');
-      if (item.author) metaParts.push('<span class="meta-chip"><i data-lucide="user" style="width:11px;height:11px;"></i> ' + item.author + '</span>');
-      const sizeVal = item.real_size_mb || item.file_size_mb;
-      if (isExploit && origIndex >= 0) {
-          const disp = sizeVal ? 'inline-flex' : 'none';
-          metaParts.push('<span class="meta-chip" id="exp-size-chip-' + origIndex + '" style="display:' + disp + ';"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + (sizeVal || '') + ' MB</span>');
-      } else if (sizeVal) metaParts.push('<span class="meta-chip"><i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + sizeVal + ' MB</span>');
-      if (item.status) metaParts.push('<span class="meta-chip status-online"><i data-lucide="activity" style="width:11px;height:11px;"></i> ' + item.status + '</span>');
-      let metaRowHtml = metaParts.length > 0 ? '<div class="card-meta-row">' + metaParts.join('') + '</div>' : '';
-      let featuresHtml = '';
-      if (Array.isArray(item.features) && item.features.length > 0) {
-          const fTags = item.features.map(f => '<span class="feature-tag">' + f + '</span>').join('');
-          featuresHtml = '<div class="features-list-box">' + fTags + '</div>';
-      }
-      return metaRowHtml + featuresHtml;
-  }
-
   function escapeJsString(s) {
       return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   }
@@ -2589,6 +2692,27 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const likes = item.likes || 0;
       const dislikes = item.dislikes || 0;
 
+      const authorColor = item.author_color || 'inherit';
+      const authorFont = item.author_font || 'inherit';
+      const authorBadgesHtml = (item.author_badges || []).map(b => {
+          const def = window.ACHIEVEMENT_DEFINITIONS[b];
+          if (!def) return '';
+          return `<span class="acc-badge-icon ${def.cssClass}" style="width:18px;height:18px;margin-left:4px;vertical-align:middle;"><i data-lucide="${def.icon}" style="width:12px;height:12px;"></i></span>`;
+      }).join('');
+
+      const gamesHtml = (item.supported_games && item.supported_games.length > 0)
+          ? `<div style="margin-top:10px;">
+               <div style="font-size:11px; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px;">Supported Games (${item.supported_games.length})</div>
+               <div style="display:flex; flex-wrap:wrap; gap:4px; max-height:80px; overflow-y:auto;">
+                 ${item.supported_games.map(g => `<span class="badge" style="background:rgba(255,255,255,0.05); color:var(--text-primary); font-size:10px; text-transform:none;">${g}</span>`).join('')}
+               </div>
+             </div>`
+          : '';
+
+      const descHtml = item.description ? `<div style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-top:10px;">${item.description.replace(/</g, '&lt;')}</div>` : '';
+      const infoHtml = item.executors_info ? `<div style="font-size:11px; color:var(--text-secondary); font-family:monospace; margin-top:10px; padding-top:10px; border-top:1px solid var(--card-border);">${item.executors_info.replace(/</g, '&lt;')}</div>` : '';
+      const discordHtml = item.script_discord ? `<a href="${item.script_discord}" target="_blank" class="ui-btn" style="margin-top:10px; display:inline-flex; text-decoration:none; font-size:11px; padding:6px 10px;"><i data-lucide="message-square" style="width:14px;height:14px;"></i> Discord</a>` : '';
+
       modal.innerHTML = `
           <div class="sdm-header">
               <div class="sdm-header-left">
@@ -2621,12 +2745,16 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                       <div class="sdm-author-left">
                           <div class="sdm-author-avatar">${authorInitial}</div>
                           <div>
-                              <div class="sdm-author-name">${authorName}</div>
+                              <div class="sdm-author-name" style="color:${authorColor}; font-family:${authorFont};">${authorName}${authorBadgesHtml}</div>
                               <div class="sdm-author-role">Author</div>
                           </div>
                       </div>
                   </div>
+                  ${descHtml}
+                  ${gamesHtml}
+                  ${infoHtml}
                   <div class="sdm-actions-row">${actionBtns}</div>
+                  ${discordHtml}
                   <div class="sdm-stats-grid">
                       <div class="sdm-stat-box">
                           <span class="sdm-stat-label">Views</span>
@@ -2941,6 +3069,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
     initInteractivePlanetPhysics();
     initCursorGradientText();
     window.refreshUserProfileUI();
+    window.renderTagsEditor('scr');
+    window.renderTagsEditor('exp');
 
     const savedLang = localStorage.getItem('lang') || 'en';
     currentLang = savedLang;
