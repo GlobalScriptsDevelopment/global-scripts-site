@@ -572,7 +572,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAR0nG86BOfYCzcWkInda8aC4T8JhHKOi4",
@@ -587,13 +586,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     window.FB = {
-      auth, db, storage,
+      auth, db,
       createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
-      doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot, increment, orderBy,
-      ref, uploadBytes, getDownloadURL
+      doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot, increment, orderBy
     };
     window.dispatchEvent(new Event('fb-ready'));
   </script>
@@ -897,6 +894,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                 </div>
 
                 <div id="dev-tab-scripts" class="dev-form-section active">
+                    <button class="ui-btn" style="margin-bottom: 10px; width: 100%; border-color: var(--success); color: var(--success);" onclick="window.loadSilenceHubTemplate()">
+                        <i data-lucide="download" style="width:14px;height:14px;"></i> Вставить шаблон Silence Hub
+                    </button>
                     <select id="devEditScriptSelect" class="dev-select" style="width: 100%; margin-bottom: 10px;" onchange="window.loadScriptToEdit(this.value)">
                         <option value="">-- Создать новый скрипт --</option>
                     </select>
@@ -1848,7 +1848,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       btn.classList.add('active');
       const sec = document.getElementById(sectionId);
       if (sec) sec.classList.add('active');
-      
+
       if (sectionId !== 'dev-tab-scripts') { editingScriptId = null; const s = document.getElementById('devEditScriptSelect'); if (s) s.value = ''; window.loadScriptToEdit && window.loadScriptToEdit(''); }
       if (sectionId !== 'dev-tab-exploits') { editingExploitId = null; const s = document.getElementById('devEditExploitSelect'); if (s) s.value = ''; window.loadExploitToEdit && window.loadExploitToEdit(''); }
       if (sectionId === 'dev-tab-tickets') window.renderDevTicketsList();
@@ -1882,20 +1882,23 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
   window.uploadBannerImage = async function(input, targetInputId) {
       const file = input.files[0];
       if (!file) return;
-      if (!window.FB || !window.FB.storage) {
-          window.showToast('Firebase Storage не инициализирован!');
-          return;
-      }
       const btn = input.nextElementSibling;
       const originalHtml = btn.innerHTML;
       btn.innerHTML = '<i data-lucide="loader" class="spin" style="width:16px;height:16px;"></i> Загрузка...';
       window.updateIcons();
       try {
-          const storageRef = window.FB.ref(window.FB.storage, 'banners/' + Date.now() + '_' + file.name);
-          await window.FB.uploadBytes(storageRef, file);
-          const url = await window.FB.getDownloadURL(storageRef);
-          document.getElementById(targetInputId).value = url;
-          window.showToast('Изображение загружено!');
+          const formData = new FormData();
+          formData.append('reqtype', 'fileupload');
+          formData.append('fileToUpload', file);
+          const response = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: formData });
+          if (!response.ok) throw new Error('Ошибка сервера ' + response.status);
+          const text = await response.text();
+          if (text.startsWith('https://files.catbox.moe/')) {
+              document.getElementById(targetInputId).value = text.trim();
+              window.showToast('Баннер загружен!');
+          } else {
+              throw new Error('Странный ответ от Catbox: ' + text.substring(0, 50));
+          }
       } catch (e) {
           console.error(e);
           window.showToast('Ошибка загрузки: ' + e.message);
@@ -1904,6 +1907,40 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           input.value = '';
           window.updateIcons();
       }
+  };
+
+  // ==================== SILENCE HUB TEMPLATE ====================
+  window.loadSilenceHubTemplate = function() {
+      const t = window.SILENCE_HUB_TEMPLATE;
+      if (!t) return;
+
+      editingScriptId = null;
+      document.getElementById('devEditScriptSelect').value = '';
+      document.getElementById('devScrBtnText').textContent = "Publish Script";
+      document.getElementById('devScriptDeleteBar').classList.remove('show');
+
+      document.getElementById('devScrTitle').value = t.title;
+      document.getElementById('devScrGame').value = t.game;
+      document.getElementById('devScrVersion').value = t.version;
+      document.getElementById('devScrAuthor').value = t.author;
+      document.getElementById('devScrBanner').value = t.banner_url;
+      document.getElementById('devScrDesc').value = t.description;
+      document.getElementById('devScrCode').value = t.script_code;
+      document.getElementById('devScrDiscord').value = t.script_discord || '';
+      document.getElementById('devScrStatus').value = t.status || 'published';
+
+      tempScrTags = t.tags ? t.tags.slice() : [];
+      window.renderTagsEditor('scr');
+
+      document.getElementById('devScrGames').value = (t.supported_games || []).join('\n');
+
+      document.getElementById('devScrAuthorColor').value = t.author_color || '#ffffff';
+      document.getElementById('devScrAuthorFont').value = t.author_font || 'inherit';
+      document.querySelectorAll('.dev-author-badge-scr').forEach(cb => {
+          cb.checked = Array.isArray(t.author_badges) && t.author_badges.includes(cb.value);
+      });
+
+      window.showToast('Шаблон Silence Hub загружен в форму. Можете редактировать.');
   };
 
   window.loadScriptToEdit = function(val) {
@@ -2148,10 +2185,10 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
               const userAttr = safeUser.replace(/'/g, "\\'");
               const planAttr = safePlan.replace(/'/g, "\\'");
               const isBanned = acc.isBanned;
-              const banBtn = isBanned 
+              const banBtn = isBanned
                   ? '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--success); color:var(--success);" onclick="window.toggleBan(\'' + acc.uid + '\', false)">Unban</button>'
                   : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
-                  
+
               return '<div class="dev-acc-row" style="'+(isBanned?'opacity:0.5; border-color:var(--error);':'')+'"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + (isBanned?' (BANNED)':'') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><div style="display:flex; gap:5px;">' + banBtn + '<button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Edit</button></div></div>';
           }).join('');
           window.updateIcons();
@@ -2182,7 +2219,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       if (!editingAccountUid) { window.showToast('Сначала выбери пользователя из списка!'); return; }
       const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
       const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
-      
+
       const canBeDev = selectedBadges.includes('developer');
       if (canBeDev && editingAccountUid !== currentUser.uid) {
           window.showToast('Developer role назначается только через Firebase Admin SDK / custom claims.');
@@ -2338,11 +2375,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
   window.startInAppDownload = async function(exploitIndex) {
       const item = window.STATIC_EXPLOITS[exploitIndex];
       if (!item || !item.link) return;
-      
+
       if (item._fromFirestore && item.id) {
           try { window.FB.updateDoc(window.FB.doc(window.FB.db, "exploits", item.id), { clicks: window.FB.increment(1) }); } catch(e){}
       }
-      
+
       window.closeScriptDetail();
 
       const stack = document.getElementById('downloadStackContainer');
@@ -2687,7 +2724,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
       const authorInitial = item.author ? item.author.charAt(0).toUpperCase() : 'U';
       const authorName = item.author || 'Unknown Author';
-      
+
       const views = item.clicks || 0;
       const likes = item.likes || 0;
       const dislikes = item.dislikes || 0;
@@ -2847,11 +2884,11 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   let badgeHtml = '';
                   if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge '+(t==='keyless'?'badge-green':'')+'">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
-                  
+
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
                       : '<button class="copy-btn" onclick="event.stopPropagation(); window.copyScriptCode(' + origIndex + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copy + '</span></button>';
-                  
+
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
@@ -2860,12 +2897,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   }
                   let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
 
-                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' + 
-                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' + 
-                      '<div class="script-content">' + 
-                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayGame + '</span></div>' + 
-                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') + 
-                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' + 
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' +
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' +
+                      '<div class="script-content">' +
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayGame + '</span></div>' +
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') +
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' +
                       '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
@@ -2911,7 +2948,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
                       : '<button class="copy-btn" onclick="event.stopPropagation(); window.startInAppDownload(' + origIndex + ')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-' + origIndex + '">' + i18n[currentLang].e_down + sizeLabel + '</span></button>';
-                  
+
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
@@ -2920,12 +2957,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   }
                   let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
 
-                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' + 
-                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' + 
-                      '<div class="script-content">' + 
-                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + 
-                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') + 
-                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' + 
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' +
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' +
+                      '<div class="script-content">' +
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' +
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') +
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' +
                       '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
@@ -2957,7 +2994,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const item = window.STATIC_SCRIPTS[index];
       const finalCode = item.script_code;
       if (!finalCode) return;
-      
+
       if (item._fromFirestore && item.id) {
           try { window.FB.updateDoc(window.FB.doc(window.FB.db, "scripts", item.id), { clicks: window.FB.increment(1) }); } catch(e){}
       }
@@ -3102,6 +3139,20 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 </script>
 
 <script>
+  // ==================== SILENCE HUB TEMPLATE DATA ====================
+  window.SILENCE_HUB_TEMPLATE = {
+      title: "Silence Hub", game: "Muscle Legends",
+      tags: ["new", "popular", "stable"],
+      banner_url: "https://silencestudios.vercel.app/assets/silencelogo.png",
+      script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/silencedevs/SilenceScripts/main/Loader/Loader.luau", true))()',
+      description: "An excellent and functional script!",
+      executors_info: "Working on exploits: Delta, Nexomia",
+      script_discord: "https://discord.gg/9eFf93Kg8D",
+      version: "v1.4",
+      author: "silencedevs",
+      status: "published"
+  };
+
   window.STATIC_SCRIPTS = [
       {
           title: "Hoho Hub", game: "Blox fruits",
@@ -3113,17 +3164,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           script_discord: "https://discord.com/invite/hohohub",
           version: "v2.1",
           author: "acsu123"
-      },
-      {
-          title: "Silence Hub", game: "Muscle Legends",
-          tags: ["new", "popular", "stable"],
-          banner_url: "https://silencestudios.vercel.app/assets/silencelogo.png",
-          script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/silencedevs/SilenceScripts/main/Loader/Loader.luau", true))()',
-          description: "An excellent and functional script!",
-          executors_info: "Working on exploits: Delta, Nexomia",
-          script_discord: "https://discord.gg/9eFf93Kg8D",
-          version: "v1.4",
-          author: "silencedevs"
       },
       {
           title: "Ronix Universal Hub", game: "Any Games (71+ Supported)",
@@ -3234,12 +3274,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                           await window.FB.signOut(window.FB.auth);
                           return;
                       }
-                      currentUser = { 
-                          uid: user.uid, 
-                          username: data.username, 
-                          role: isDevClaim ? 'developer' : 'user', 
-                          plan: data.plan || 'Free Access', 
-                          badges: Array.isArray(data.badges) ? data.badges : [] 
+                      currentUser = {
+                          uid: user.uid,
+                          username: data.username,
+                          role: isDevClaim ? 'developer' : 'user',
+                          plan: data.plan || 'Free Access',
+                          badges: Array.isArray(data.badges) ? data.badges : []
                       };
                   } else {
                       currentUser = { uid: user.uid, username: user.email.split('@')[0], role: 'user', plan: 'Free Access', badges: ['verified'] };
