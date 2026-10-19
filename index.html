@@ -346,7 +346,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
 .cards-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; align-items: stretch; }
 .cards-column { display: flex; flex-direction: column; width: 100%; gap: 24px; }
-.cards-column > .section-separator { display: none; } /* убираем разделители внутри колонок, если они ломают сетку */
+.cards-column > .section-separator { display: none; }
 
 .script-card {
     padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%;
@@ -381,30 +381,31 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .features-list-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .feature-tag { font-size: 11px; font-weight: 600; color: var(--text-primary); background: rgba(255, 255, 255, 0.06); padding: 3px 8px; border-radius: 6px; }
 
-.script-banner { width: 100%; height: 175px; flex: 0 0 175px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
+.script-banner { width: 100%; height: 140px; flex: 0 0 140px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
 .script-banner-wrapper { overflow: hidden; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; position: relative; }
 
-.badge-row { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 5; flex-wrap: wrap; }
-.badge { background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.badge-row { position: absolute; top: 8px; left: 8px; right: 40px; display: flex; gap: 4px; z-index: 5; flex-wrap: wrap; }
+.badge { background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 3px 6px; border-radius: 6px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge-green { background: rgba(16,185,129,0.2); color: #10b981; border-color: #10b981; }
 
-.dev-card-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; z-index: 6; }
-.dev-icon-btn { background: rgba(0,0,0,0.75); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.dev-card-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; z-index: 6; }
+.dev-icon-btn { background: rgba(0,0,0,0.75); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .dev-icon-btn:hover { background: rgba(255,255,255,0.15); }
 .dev-icon-btn.danger:hover { background: rgba(239, 68, 68, 0.7); border-color: var(--error); }
 
-.script-content { padding: 16px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; z-index: 2; }
+.script-content { padding: 12px 14px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; z-index: 2; }
 .script-header { display: flex; flex-direction: column; gap: 2px; margin: 0; }
-.script-header h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 1.25; }
-.game-tag { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-.script-desc { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+.script-header h3 { margin: 0; font-size: 16px; font-weight: 800; line-height: 1.25; }
+.game-tag { font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.script-desc { margin: 0; font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
 
-.copy-btn { background: var(--accent); color: var(--accent-text); border: none; padding: 11px 16px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+.copy-btn { background: var(--accent); color: var(--accent-text); border: none; padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; }
 .copy-btn * { color: inherit; }
 .copy-btn:hover { transform: translateY(-2px); }
 
-.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 11px; border-radius: 10px; cursor: pointer; transition: transform 0.15s, border-color 0.15s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.discord-icon-btn { background: transparent; border: 1px solid var(--card-border); color: var(--text-primary); padding: 8px; border-radius: 8px; cursor: pointer; transition: transform 0.15s, border-color 0.15s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .discord-icon-btn:hover { border-color: var(--text-primary); transform: translateY(-2px); }
-.executor-info { font-size: 12px; color: var(--text-secondary); padding-top: 10px; border-top: 1px solid var(--card-border); white-space: pre-line; line-height: 1.45; font-weight: 500; font-family: monospace; }
+.executor-info { font-size: 11px; color: var(--text-secondary); padding-top: 8px; border-top: 1px solid var(--card-border); white-space: pre-line; line-height: 1.45; font-weight: 500; font-family: monospace; }
 
 .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 4px; }
 .profile-item { border-left: 2px solid var(--card-border); padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
@@ -475,28 +476,70 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     margin: 0; line-height: 1.6; font-weight: 500;
 }
 
-/* ==== FIX: Модалка деталей ==== */
+/* ==== SCRIPT BLOX STYLE MODAL ==== */
 .script-detail-overlay {
     position: fixed; inset: 0; z-index: 95000;
-    background: rgba(0,0,0,0.78); backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
     display: none; align-items: center; justify-content: center;
-    padding: 24px;
+    padding: 20px;
 }
 .script-detail-overlay.show { display: flex; }
 .script-detail-modal {
-    background: #0e0e12; border: 1px solid var(--card-border); border-radius: 20px;
-    width: 100%; max-width: 720px; max-height: 88vh; overflow: hidden;
-    display: flex; flex-direction: column; box-shadow: var(--shadow-drop);
+    background: #0a0a0e; border: 1px solid var(--card-border); border-radius: 16px;
+    width: 100%; max-width: 950px; max-height: 92vh; overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+    position: relative;
 }
-.sdm-banner { height: 200px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
-.sdm-body { padding: 20px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
-.sdm-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.sdm-title-row h2 { margin: 0; font-size: 24px; font-weight: 800; }
-.sdm-close { background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); color: var(--text-primary); width: 34px; height: 34px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.sdm-meta { display: flex; flex-wrap: wrap; gap: 6px; }
-.sdm-actions { display: flex; gap: 10px; margin-top: 6px; }
-.sdm-actions .copy-btn { flex: 1; }
-.sdm-code-preview { background: rgba(0,0,0,0.35); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; font-family: monospace; font-size: 12px; color: var(--text-secondary); max-height: 180px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+.sdm-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px; border-bottom: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.02);
+}
+.sdm-header-left { display: flex; align-items: center; gap: 10px; }
+.sdm-title { margin: 0; font-size: 18px; font-weight: 800; }
+.sdm-close { background: rgba(255,255,255,0.06); border: none; color: var(--text-secondary); width: 30px; height: 30px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.sdm-close:hover { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+.sdm-body { padding: 20px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sdm-left { display: flex; flex-direction: column; gap: 16px; }
+.sdm-banner { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 12px; border: 1px solid var(--card-border); }
+.sdm-code-box { background: #0d0d12; border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.sdm-code-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); font-weight: 600; }
+.sdm-code-area { font-family: monospace; font-size: 12px; color: #a5b4fc; line-height: 1.5; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+
+.sdm-right { display: flex; flex-direction: column; gap: 20px; }
+.sdm-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.sdm-game-info { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--card-border); }
+.sdm-game-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; }
+.sdm-game-text { display: flex; flex-direction: column; gap: 2px; }
+.sdm-game-name { font-size: 14px; font-weight: 800; }
+.sdm-game-sub { font-size: 11px; color: var(--text-secondary); }
+
+.sdm-author-info { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--card-border); }
+.sdm-author-left { display: flex; align-items: center; gap: 10px; }
+.sdm-author-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; }
+.sdm-author-name { font-size: 14px; font-weight: 700; }
+.sdm-author-role { font-size: 11px; color: var(--text-secondary); }
+
+.sdm-actions-row { display: flex; gap: 10px; }
+.sdm-actions-row .copy-btn { height: 44px; font-size: 14px; }
+.sdm-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sdm-stat-box { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.sdm-stat-label { font-size: 11px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
+.sdm-stat-val { font-size: 20px; font-weight: 800; }
+
+.sdm-vote-box { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; text-align: center; }
+.sdm-vote-box h4 { margin: 0 0 10px 0; font-size: 14px; font-weight: 700; }
+.sdm-vote-btns { display: flex; gap: 10px; }
+.sdm-vote-btn { flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; border: 1px solid transparent; }
+.sdm-vote-yes { background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.3); }
+.sdm-vote-yes:hover { background: rgba(16, 185, 129, 0.25); }
+.sdm-vote-no { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+.sdm-vote-no:hover { background: rgba(239, 68, 68, 0.25); }
+
+@media (max-width: 850px) {
+  .sdm-body { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 960px) { .cards-masonry { grid-template-columns: repeat(2, 1fr); } }
 
@@ -534,7 +577,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAR0nG86BOfYCzcWkInda8aC4T8JhHKOi4",
@@ -553,7 +596,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     window.FB = {
       auth, db,
       createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
-      doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot
+      doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, deleteDoc, serverTimestamp, arrayUnion, onSnapshot, increment, orderBy
     };
     window.dispatchEvent(new Event('fb-ready'));
   </script>
@@ -850,9 +893,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                     <span>Developer Control Center</span>
                 </p>
                 <div class="dev-subtabs">
-                    <button class="dev-subtab-btn active" onclick="window.switchDevSubtab('dev-tab-scripts', this)"><i data-lucide="code" style="width:14px;height:14px;"></i> Manage Scripts</button>
-                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-exploits', this)"><i data-lucide="cpu" style="width:14px;height:14px;"></i> Manage Exploits</button>
-                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-accounts', this)"><i data-lucide="award" style="width:14px;height:14px;"></i> Manage Accounts</button>
+                    <button class="dev-subtab-btn active" onclick="window.switchDevSubtab('dev-tab-scripts', this)"><i data-lucide="code" style="width:14px;height:14px;"></i> Scripts</button>
+                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-exploits', this)"><i data-lucide="cpu" style="width:14px;height:14px;"></i> Exploits</button>
+                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-accounts', this)"><i data-lucide="award" style="width:14px;height:14px;"></i> Accounts</button>
+                    <button class="dev-subtab-btn" onclick="window.switchDevSubtab('dev-tab-tickets', this)"><i data-lucide="life-buoy" style="width:14px;height:14px;"></i> Tickets</button>
                 </div>
 
                 <div id="dev-tab-scripts" class="dev-form-section active">
@@ -861,20 +905,32 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                     </select>
                     <div class="dev-delete-bar" id="devScriptDeleteBar">
                         <span>Редактируется существующий скрипт. Можно удалить из облака.</span>
-                        <button class="btn-danger" onclick="window.devDeleteCurrentScript()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить скрипт</button>
+                        <button class="btn-danger" onclick="window.devDeleteCurrentScript()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить</button>
                     </div>
                     <div class="dev-form-grid">
                         <input type="text" id="devScrTitle" class="auth-input" placeholder="Script Title" />
                         <input type="text" id="devScrGame" class="auth-input" placeholder="Game Name" />
                         <input type="text" id="devScrBanner" class="auth-input" placeholder="Banner Image URL" />
-                        <input type="text" id="devScrTags" class="auth-input" placeholder="Tags comma-separated" />
-                        <input type="text" id="devScrExecs" class="auth-input" placeholder="Working Executors" />
-                        <input type="text" id="devScrDiscord" class="auth-input" placeholder="Discord Invite Link" />
+                        <input type="text" id="devScrVersion" class="auth-input" placeholder="Version (e.g. v1.0)" />
+                        <input type="text" id="devScrAuthor" class="auth-input" placeholder="Author" />
+                        <select id="devScrStatus" class="auth-input" style="padding: 10px 14px;">
+                            <option value="published">Published (Visible)</option>
+                            <option value="draft">Draft (Hidden)</option>
+                        </select>
                     </div>
-                    <input type="text" id="devScrDesc" class="auth-input" placeholder="Short Description..." />
+                    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;">
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('new')">new</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('popular')">popular</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('stable')">stable</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('pc')">pc</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('mobile')">mobile</button>
+                    </div>
+                    <input type="text" id="devScrTags" class="auth-input" placeholder="Tags comma-separated" />
+                    <input type="text" id="devScrDiscord" class="auth-input" placeholder="Discord Invite Link" />
+                    <textarea id="devScrDesc" class="dev-textarea" placeholder="Short Description..."></textarea>
                     <textarea id="devScrCode" class="dev-textarea" placeholder='loadstring(game:HttpGet("https://..."))()'></textarea>
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewScript()">
-                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devScrBtnText">Publish Script to Hub</span>
+                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devScrBtnText">Publish Script</span>
                     </button>
                 </div>
 
@@ -884,19 +940,31 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                     </select>
                     <div class="dev-delete-bar" id="devExploitDeleteBar">
                         <span>Редактируется существующий эксплойт. Можно удалить из облака.</span>
-                        <button class="btn-danger" onclick="window.devDeleteCurrentExploit()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить эксплойт</button>
+                        <button class="btn-danger" onclick="window.devDeleteCurrentExploit()"><i data-lucide="trash-2" style="width:14px;height:14px;"></i> Удалить</button>
                     </div>
                     <div class="dev-form-grid">
                         <input type="text" id="devExpTitle" class="auth-input" placeholder="Exploit Title" />
                         <input type="text" id="devExpPlatform" class="auth-input" placeholder="Platform (Windows / Mobile)" />
                         <input type="text" id="devExpBanner" class="auth-input" placeholder="Banner Image URL" />
                         <input type="text" id="devExpLink" class="auth-input" placeholder="Direct Download URL" />
-                        <input type="text" id="devExpTags" class="auth-input" placeholder="Tags (pc, mobile, keyless)" />
-                        <input type="text" id="devExpInfo" class="auth-input" placeholder="Info (Requires Key: No)" />
+                        <input type="text" id="devExpVersion" class="auth-input" placeholder="Version" />
+                        <input type="text" id="devExpAuthor" class="auth-input" placeholder="Author" />
+                        <select id="devExpStatus" class="auth-input" style="padding: 10px 14px;">
+                            <option value="published">Published (Visible)</option>
+                            <option value="draft">Draft (Hidden)</option>
+                        </select>
                     </div>
-                    <input type="text" id="devExpDesc" class="auth-input" placeholder="Description..." />
+                    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;">
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('pc')">pc</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('mobile')">mobile</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('keyless')">keyless</button>
+                        <button type="button" class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.addTag('updated')">updated</button>
+                    </div>
+                    <input type="text" id="devExpTags" class="auth-input" placeholder="Tags (pc, mobile, keyless)" />
+                    <input type="text" id="devExpInfo" class="auth-input" placeholder="Info (Requires Key: No)" />
+                    <textarea id="devExpDesc" class="dev-textarea" placeholder="Description..."></textarea>
                     <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.devAddNewExploit()">
-                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devExpBtnText">Publish Exploit to Hub</span>
+                        <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> <span id="devExpBtnText">Publish Exploit</span>
                     </button>
                 </div>
 
@@ -925,10 +993,11 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                             <i data-lucide="pause-circle" style="width:14px;height:14px;"></i>
                             <span id="maintenanceBtnText">Pause Site</span>
                         </button>
-                        <p style="font-size:11px; color:var(--text-secondary); margin:10px 0 0 0; line-height:1.5;">
-                            Locks the entire site behind a maintenance screen for everyone except you. You can still reach <code style="background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:4px;">/login</code> to sign back in if needed.
-                        </p>
                     </div>
+                </div>
+
+                <div id="dev-tab-tickets" class="dev-form-section">
+                    <div id="devTicketsList" style="display:flex; flex-direction:column; gap:10px; max-height:400px; overflow-y:auto;"></div>
                 </div>
             </div>
         </div>
@@ -1638,7 +1707,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       }
 
       if (devPanel) {
-          if (userObj.role === 'developer') { devPanel.classList.add('show'); window.populateDevDropdowns(); window.renderDevAccountsTable(); }
+          if (userObj.role === 'developer') { devPanel.classList.add('show'); window.populateDevDropdowns(); window.renderDevAccountsTable(); window.renderDevTicketsList(); }
           else devPanel.classList.remove('show');
       }
 
@@ -1661,6 +1730,16 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       }).join('');
   }
 
+  window.addTag = function(tag) {
+      const input = document.getElementById('devScrTags') || document.getElementById('devExpTags');
+      if(!input) return;
+      let current = input.value.split(',').map(s=>s.trim()).filter(Boolean);
+      if(!current.includes(tag)) {
+          current.push(tag);
+          input.value = current.join(', ');
+      }
+  };
+
   window.switchDevSubtab = function(sectionId, btn) {
       document.querySelectorAll('.dev-subtab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dev-form-section').forEach(s => s.classList.remove('active'));
@@ -1670,6 +1749,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       
       if (sectionId !== 'dev-tab-scripts') { editingScriptId = null; const s = document.getElementById('devEditScriptSelect'); if (s) s.value = ''; window.loadScriptToEdit && window.loadScriptToEdit(''); }
       if (sectionId !== 'dev-tab-exploits') { editingExploitId = null; const s = document.getElementById('devEditExploitSelect'); if (s) s.value = ''; window.loadExploitToEdit && window.loadExploitToEdit(''); }
+      if (sectionId === 'dev-tab-tickets') window.renderDevTicketsList();
   };
 
   window.populateDevDropdowns = function() {
@@ -1702,24 +1782,28 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const delBar = document.getElementById('devScriptDeleteBar');
       if (!val) {
           editingScriptId = null;
-          btnText.textContent = "Publish Script to Hub";
+          btnText.textContent = "Publish Script";
           if (delBar) delBar.classList.remove('show');
-          ['devScrTitle','devScrGame','devScrBanner','devScrTags','devScrExecs','devScrDiscord','devScrDesc','devScrCode'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devScrTitle','devScrGame','devScrBanner','devScrVersion','devScrAuthor','devScrTags','devScrExecs','devScrDiscord','devScrDesc','devScrCode'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          const st = document.getElementById('devScrStatus'); if(st) st.value = 'published';
           return;
       }
       const script = window.STATIC_SCRIPTS.find(s => (s.id || s.title) === val);
       if (!script) return;
       editingScriptId = script._fromFirestore ? script.id : null;
-      btnText.textContent = editingScriptId ? "Update Script in Hub" : "Publish (создаст копию в Cloud)";
+      btnText.textContent = editingScriptId ? "Update Script" : "Publish (создаст копию)";
       if (delBar) { if (editingScriptId) delBar.classList.add('show'); else delBar.classList.remove('show'); }
       document.getElementById('devScrTitle').value = script.title || '';
       document.getElementById('devScrGame').value = script.game || '';
       document.getElementById('devScrBanner').value = script.banner_url || '';
+      document.getElementById('devScrVersion').value = script.version || '';
+      document.getElementById('devScrAuthor').value = script.author || '';
       document.getElementById('devScrTags').value = (script.tags || []).join(', ');
       document.getElementById('devScrExecs').value = script.executors_info || '';
       document.getElementById('devScrDiscord').value = script.script_discord || '';
       document.getElementById('devScrDesc').value = script.description || '';
       document.getElementById('devScrCode').value = script.script_code || '';
+      const st = document.getElementById('devScrStatus'); if(st) st.value = script.status || 'published';
   };
 
   window.devAddNewScript = async function() {
@@ -1727,15 +1811,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const title = document.getElementById('devScrTitle').value.trim();
       const game = document.getElementById('devScrGame').value.trim() || 'Universal';
       const banner = document.getElementById('devScrBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
+      const version = document.getElementById('devScrVersion').value.trim();
+      const author = document.getElementById('devScrAuthor').value.trim();
       const tagsRaw = document.getElementById('devScrTags').value.trim() || 'new, stable';
       const execs = document.getElementById('devScrExecs').value.trim() || '';
       const discord = document.getElementById('devScrDiscord').value.trim();
       const desc = document.getElementById('devScrDesc').value.trim() || '';
       const code = document.getElementById('devScrCode').value.trim();
+      const status = document.getElementById('devScrStatus').value || 'published';
       if (!title || !code) { window.showToast('Enter Script Title and Lua Code!'); return; }
 
       const scriptData = {
-          title, game,
+          title, game, version, author, status,
           tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
           banner_url: banner, script_code: code, description: desc,
           executors_info: execs, script_discord: discord,
@@ -1744,11 +1831,20 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
       try {
           if (editingScriptId) {
+              // Save history before update
+              const oldDoc = await window.FB.getDoc(window.FB.doc(window.FB.db, "scripts", editingScriptId));
+              if(oldDoc.exists() && oldDoc.data().script_code !== code) {
+                  await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts", editingScriptId, "history"), {
+                      old_code: oldDoc.data().script_code,
+                      replacedAt: window.FB.serverTimestamp(),
+                      replacedBy: currentUser.username
+                  });
+              }
               await window.FB.updateDoc(window.FB.doc(window.FB.db, "scripts", editingScriptId), scriptData);
-              window.showToast('Script "' + title + '" updated in Cloud!');
+              window.showToast('Script updated!');
           } else {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), Object.assign({}, scriptData, { createdAt: window.FB.serverTimestamp() }));
-              window.showToast('Script "' + title + '" published to Cloud!');
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "scripts"), Object.assign({}, scriptData, { createdAt: window.FB.serverTimestamp(), clicks: 0, likes: 0, dislikes: 0 }));
+              window.showToast('Script published!');
           }
           document.getElementById('devEditScriptSelect').value = '';
           window.loadScriptToEdit('');
@@ -1784,23 +1880,27 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const delBar = document.getElementById('devExploitDeleteBar');
       if (!val) {
           editingExploitId = null;
-          btnText.textContent = "Publish Exploit to Hub";
+          btnText.textContent = "Publish Exploit";
           if (delBar) delBar.classList.remove('show');
-          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpTags','devExpInfo','devExpDesc'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpVersion','devExpAuthor','devExpTags','devExpInfo','devExpDesc'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          const st = document.getElementById('devExpStatus'); if(st) st.value = 'published';
           return;
       }
       const exp = window.STATIC_EXPLOITS.find(e => (e.id || e.title) === val);
       if (!exp) return;
       editingExploitId = exp._fromFirestore ? exp.id : null;
-      btnText.textContent = editingExploitId ? "Update Exploit in Hub" : "Publish (создаст копию в Cloud)";
+      btnText.textContent = editingExploitId ? "Update Exploit" : "Publish (создаст копию)";
       if (delBar) { if (editingExploitId) delBar.classList.add('show'); else delBar.classList.remove('show'); }
       document.getElementById('devExpTitle').value = exp.title || '';
       document.getElementById('devExpPlatform').value = exp.platform || '';
       document.getElementById('devExpBanner').value = exp.banner_url || '';
       document.getElementById('devExpLink').value = exp.link || '';
+      document.getElementById('devExpVersion').value = exp.version || '';
+      document.getElementById('devExpAuthor').value = exp.author || '';
       document.getElementById('devExpTags').value = (exp.tags || []).join(', ');
       document.getElementById('devExpInfo').value = exp.info || '';
       document.getElementById('devExpDesc').value = exp.description || '';
+      const st = document.getElementById('devExpStatus'); if(st) st.value = exp.status || 'published';
   };
 
   window.devAddNewExploit = async function() {
@@ -1809,13 +1909,16 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       const platform = document.getElementById('devExpPlatform').value.trim() || 'Windows';
       const banner = document.getElementById('devExpBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
       const link = document.getElementById('devExpLink').value.trim();
+      const version = document.getElementById('devExpVersion').value.trim();
+      const author = document.getElementById('devExpAuthor').value.trim();
       const tagsRaw = document.getElementById('devExpTags').value.trim() || 'pc';
       const info = document.getElementById('devExpInfo').value.trim() || '';
       const desc = document.getElementById('devExpDesc').value.trim() || '';
+      const status = document.getElementById('devExpStatus').value || 'published';
       if (!title || !link) { window.showToast('Enter Exploit Title and Download URL!'); return; }
 
       const expData = {
-          title, platform,
+          title, platform, version, author, status,
           tags: tagsRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean),
           banner_url: banner, link, description: desc, info,
           updatedAt: window.FB.serverTimestamp()
@@ -1824,10 +1927,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       try {
           if (editingExploitId) {
               await window.FB.updateDoc(window.FB.doc(window.FB.db, "exploits", editingExploitId), expData);
-              window.showToast('Exploit "' + title + '" updated in Cloud!');
+              window.showToast('Exploit updated!');
           } else {
-              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), Object.assign({}, expData, { createdAt: window.FB.serverTimestamp() }));
-              window.showToast('Exploit "' + title + '" published to Cloud!');
+              await window.FB.addDoc(window.FB.collection(window.FB.db, "exploits"), Object.assign({}, expData, { createdAt: window.FB.serverTimestamp(), clicks: 0, likes: 0, dislikes: 0 }));
+              window.showToast('Exploit published!');
           }
           document.getElementById('devEditExploitSelect').value = '';
           window.loadExploitToEdit('');
@@ -1869,7 +1972,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           container.innerHTML = '<div style="font-size:12px; color:var(--error);">Access denied.</div>';
           return;
       }
-      container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка пользователей из Firebase...</div>';
+      container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка...</div>';
       try {
           const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
           const accounts = [];
@@ -1884,12 +1987,26 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               const safePlan = escapeHtml(acc.plan || '');
               const userAttr = safeUser.replace(/'/g, "\\'");
               const planAttr = safePlan.replace(/'/g, "\\'");
-              return '<div class="dev-acc-row"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Редактировать</button></div>';
+              const isBanned = acc.isBanned;
+              const banBtn = isBanned 
+                  ? '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--success); color:var(--success);" onclick="window.toggleBan(\'' + acc.uid + '\', false)">Unban</button>'
+                  : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
+                  
+              return '<div class="dev-acc-row" style="'+(isBanned?'opacity:0.5; border-color:var(--error);':'')+'"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + (isBanned?' (BANNED)':'') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><div style="display:flex; gap:5px;">' + banBtn + '<button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Edit</button></div></div>';
           }).join('');
           window.updateIcons();
       } catch (e) {
           container.innerHTML = '<div style="font-size:12px; color:var(--error);">Ошибка загрузки.</div>';
       }
+  };
+
+  window.toggleBan = async function(uid, status) {
+      if(!window.FB || !currentUser || currentUser.role !== 'developer') return;
+      try {
+          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", uid), { isBanned: status });
+          window.showToast(status ? 'User banned.' : 'User unbanned.');
+          window.renderDevAccountsTable();
+      } catch(e) { window.showToast('Error: ' + e.message); }
   };
 
   window.selectDevAccountForEdit = function(uid, username, plan, badges) {
@@ -1920,6 +2037,21 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           window.renderDevAccountsTable();
       } catch (e) { window.showToast('Ошибка сохранения: ' + e.message); }
   };
+
+  window.renderDevTicketsList = async function() {
+      const container = document.getElementById('devTicketsList');
+      if(!container || !window.FB || !currentUser || currentUser.role !== 'developer') return;
+      container.innerHTML = 'Loading tickets...';
+      try {
+          const q = window.FB.query(window.FB.collection(window.FB.db, "tickets"), window.FB.orderBy("updatedAt", "desc"));
+          const snap = await window.FB.getDocs(q);
+          if(snap.empty) { container.innerHTML = 'No tickets found.'; return; }
+          container.innerHTML = snap.docs.map(d => {
+              const t = d.data();
+              return `<div class="dev-acc-row"><div><strong>${escapeHtml(t.title)}</strong> <span style="font-size:11px;color:var(--text-secondary)">by ${escapeHtml(t.creatorName)}</span></div><button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.switchTab('tab-faq'); document.getElementById('ticketModal').classList.remove('show'); setTimeout(()=>window.selectTicket('${d.id}'), 500); window.switchDevSubtab('dev-tab-accounts', document.querySelectorAll('.dev-subtab-btn')[2])">View</button></div>`;
+          }).join('');
+      } catch(e) { container.innerHTML = 'Error loading tickets.'; }
+  }
 
   function getSupportMessages() {
       try { const saved = JSON.parse(localStorage.getItem('gs_support_chat_v1') || 'null'); if (Array.isArray(saved) && saved.length > 0) return saved; } catch (e) {}
@@ -2046,6 +2178,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   window.startInAppDownload = async function(exploitIndex) {
       const item = window.STATIC_EXPLOITS[exploitIndex];
       if (!item || !item.link) return;
+      
+      // Increment click
+      if (item._fromFirestore && item.id) {
+          try { window.FB.updateDoc(window.FB.doc(window.FB.db, "exploits", item.id), { clicks: window.FB.increment(1) }); } catch(e){}
+      }
+      
+      window.closeScriptDetail();
+
       const stack = document.getElementById('downloadStackContainer');
       if (!stack) return;
       const directUrl = normalizeDownloadUrl(item.link);
@@ -2081,9 +2221,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   const realMB = (contentLength / (1024 * 1024)).toFixed(1);
                   item.real_size_mb = realMB;
                   const sizeChip = document.getElementById('exp-size-chip-' + exploitIndex);
-                  const btnLabel = document.getElementById('exp-dl-label-' + exploitIndex);
                   if (sizeChip) { sizeChip.innerHTML = '<i data-lucide="hard-drive" style="width:11px;height:11px;"></i> ' + realMB + ' MB'; sizeChip.style.display = 'inline-flex'; }
-                  if (btnLabel) btnLabel.textContent = i18n[currentLang].e_down + ' (' + realMB + ' MB)';
                   window.updateIcons();
               }
               if (statusEl) statusEl.textContent = i18n[currentLang].dl_downloading;
@@ -2379,7 +2517,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
   function findExploitBySlug(slug) {
       const decoded = decodeURIComponent(slug).toLowerCase();
-      return (window.STATIC_EXPLOITS || []).find(s => String(s.title).trim().toLowerCase() === decoded);
+      return (window.STATIC_EXPLOITS || []).find(e => String(e.title).trim().toLowerCase() === decoded);
   }
 
   window.openScriptDetail = function(kind, index) {
@@ -2398,40 +2536,97 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           }
       } catch (e) {}
 
-      const tagBadges = (item.tags || []).map(t => '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>').join('');
-      const metaChips = [];
-      if (item.version) metaChips.push('<span class="meta-chip"><i data-lucide="git-branch" style="width:11px;height:11px;"></i> ' + item.version + '</span>');
-      if (item.author) metaChips.push('<span class="meta-chip"><i data-lucide="user" style="width:11px;height:11px;"></i> ' + item.author + '</span>');
-      if (item.game) metaChips.push('<span class="meta-chip"><i data-lucide="gamepad-2" style="width:11px;height:11px;"></i> ' + item.game + '</span>');
-      if (item.platform) metaChips.push('<span class="meta-chip"><i data-lucide="monitor" style="width:11px;height:11px;"></i> ' + item.platform + '</span>');
-      const safeCode = (item.script_code || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const codeBlock = item.script_code ? '<div class="sdm-code-preview">' + safeCode + '</div>' : '';
-
       let actionBtns = '';
       if (kind === 'exploit') {
-          actionBtns = '<button class="copy-btn" style="background:var(--success);color:#fff;" onclick="window.startInAppDownload(' + index + '); window.closeScriptDetail();"><i data-lucide="download" style="width:16px;height:16px;"></i> ' + i18n[currentLang].e_down + '</button>';
+          actionBtns = '<button class="copy-btn" style="background:var(--success);color:#fff;" onclick="window.startInAppDownload(' + index + ')"><i data-lucide="download" style="width:16px;height:16px;"></i> ' + i18n[currentLang].e_down + '</button>';
       } else {
           actionBtns = '<button class="copy-btn" onclick="window.copyScriptCode(' + index + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> ' + i18n[currentLang].s_copy + '</button>';
       }
-      if (item.script_discord) actionBtns += '<button class="discord-icon-btn" onclick="window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>';
-      if (item.discord_link) actionBtns += '<button class="discord-icon-btn" onclick="window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>';
 
-      const info = item.executors_info || item.info || '';
+      const codePreview = item.script_code ? item.script_code.replace(/</g, '&lt;') : 'No code available.';
+      const tagsHtml = (item.tags || []).map(t => '<span class="badge '+(t==='keyless'?'badge-green':'')+'">' + (i18n[currentLang]['f_' + t] || t) + '</span>').join('');
 
-      modal.innerHTML =
-          '<div class="sdm-banner" style="background-image:url(\'' + (item.banner_url || '') + '\');"></div>' +
-          '<div class="sdm-body">' +
-              '<div class="sdm-title-row"><div><h2>' + (item.title || '') + '</h2><span class="game-tag">' + (item.game || item.platform || '') + '</span></div><button class="sdm-close" onclick="window.closeScriptDetail()"><i data-lucide="x" style="width:18px;height:18px;"></i></button></div>' +
-              '<div class="badge-row">' + tagBadges + '</div>' +
-              '<div class="sdm-meta">' + metaChips.join('') + '</div>' +
-              (item.description ? '<p class="script-desc">' + String(item.description).replace(/</g, '&lt;') + '</p>' : '') +
-              codeBlock +
-              (info ? '<div class="executor-info">' + info.replace(/</g, '&lt;') + '</div>' : '') +
-              '<div class="sdm-actions">' + actionBtns + '</div>' +
-          '</div>';
+      const authorInitial = item.author ? item.author.charAt(0).toUpperCase() : 'U';
+      const authorName = item.author || 'Unknown Author';
+      
+      const views = item.clicks || 0;
+      const likes = item.likes || 0;
+      const dislikes = item.dislikes || 0;
+
+      modal.innerHTML = `
+          <div class="sdm-header">
+              <div class="sdm-header-left">
+                  <h2 class="sdm-title">${item.title}</h2>
+                  ${item.version ? `<span class="badge" style="background:rgba(16,185,129,0.2);color:#10b981;border-color:#10b981;">${item.version}</span>` : ''}
+              </div>
+              <button class="sdm-close" onclick="window.closeScriptDetail()"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
+          </div>
+          <div class="sdm-body">
+              <div class="sdm-left">
+                  <div class="sdm-banner" style="background-image:url('${item.banner_url || ''}');"></div>
+                  <div class="sdm-code-box">
+                      <div class="sdm-code-header">
+                          <span><i data-lucide="code" style="width:12px;height:12px;display:inline;vertical-align:middle;margin-right:4px;"></i> Script Code</span>
+                          <button class="ui-btn" style="padding:4px 8px;font-size:11px;" onclick="window.copyScriptCode(${index}, this)">Copy</button>
+                      </div>
+                      <div class="sdm-code-area">${codePreview}</div>
+                  </div>
+              </div>
+              <div class="sdm-right">
+                  <div class="sdm-tags-row">${tagsHtml}</div>
+                  <div class="sdm-game-info">
+                      <div class="sdm-game-icon"><i data-lucide="gamepad-2" style="width:20px;height:20px;"></i></div>
+                      <div class="sdm-game-text">
+                          <span class="sdm-game-name">${item.game || item.platform || 'Universal'}</span>
+                          <span class="sdm-game-sub">${kind === 'exploit' ? 'Platform' : 'Game'}</span>
+                      </div>
+                  </div>
+                  <div class="sdm-author-info">
+                      <div class="sdm-author-left">
+                          <div class="sdm-author-avatar">${authorInitial}</div>
+                          <div>
+                              <div class="sdm-author-name">${authorName}</div>
+                              <div class="sdm-author-role">Author</div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sdm-actions-row">${actionBtns}</div>
+                  <div class="sdm-stats-grid">
+                      <div class="sdm-stat-box">
+                          <span class="sdm-stat-label">Views</span>
+                          <span class="sdm-stat-val">${views}</span>
+                      </div>
+                      <div class="sdm-stat-box">
+                          <span class="sdm-stat-label">Likes</span>
+                          <span class="sdm-stat-val" style="color:#10b981;">${likes}</span>
+                      </div>
+                  </div>
+                  <div class="sdm-vote-box">
+                      <h4>Does it work?</h4>
+                      <div class="sdm-vote-btns">
+                          <button class="sdm-vote-btn sdm-vote-yes" onclick="window.voteScript('${kind}', '${item.id}', 'yes', this)"><i data-lucide="thumbs-up" style="width:14px;height:14px;"></i> Working</button>
+                          <button class="sdm-vote-btn sdm-vote-no" onclick="window.voteScript('${kind}', '${item.id}', 'no', this)"><i data-lucide="thumbs-down" style="width:14px;height:14px;"></i> Not working</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
 
       overlay.classList.add('show');
       window.updateIcons();
+  };
+
+  window.voteScript = function(kind, id, type, btn) {
+      if(!id) { window.showToast('Cannot vote on local scripts.'); return; }
+      if(!window.FB) return;
+      const collectionName = kind === 'exploit' ? 'exploits' : 'scripts';
+      const field = type === 'yes' ? 'likes' : 'dislikes';
+      try {
+          window.FB.updateDoc(window.FB.doc(window.FB.db, collectionName, id), { [field]: window.FB.increment(1) });
+          window.showToast('Vote counted!');
+          btn.style.opacity = '0.5';
+          btn.style.pointerEvents = 'none';
+      } catch(e) { window.showToast('Error voting.'); }
   };
 
   window.closeScriptDetail = function() {
@@ -2462,7 +2657,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       renderScriptsTimeout = setTimeout(() => {
           let filter = document.getElementById('filterScripts') ? document.getElementById('filterScripts').value : 'all';
           let searchQ = document.getElementById('searchScripts') ? document.getElementById('searchScripts').value.toLowerCase().trim() : '';
-          let filteredScripts = window.STATIC_SCRIPTS || [];
+          let filteredScripts = (window.STATIC_SCRIPTS || []).filter(item => {
+              if (item.status === 'draft' && (!currentUser || currentUser.role !== 'developer')) return false;
+              return true;
+          });
           if (filter !== 'all') filteredScripts = filteredScripts.filter(item => item.tags && item.tags.indexOf(filter) !== -1);
           if (searchQ) filteredScripts = filteredScripts.filter(item => {
               const parsed = extractScriptGamesData(item);
@@ -2482,38 +2680,29 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   const parsed = extractScriptGamesData(item);
                   let displayDesc = isPlaceholder ? '<span class="blurred-text">This is a secret upcoming script with massive features. Prepare for the launch.</span>' : (parsed.cleanDesc || '').replace(/</g, '&lt;');
                   let origIndex = window.STATIC_SCRIPTS.indexOf(item);
-                  let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, false);
-                  let supportedGamesHtml = '';
-                  if (!isPlaceholder && parsed.gamesList.length > 0) {
-                      let sortedGames = parsed.gamesList.slice();
-                      if (searchQ) sortedGames.sort((a, b) => (a.toLowerCase().indexOf(searchQ) !== -1 ? 0 : 1) - (b.toLowerCase().indexOf(searchQ) !== -1 ? 0 : 1));
-                      const pillsHtml = sortedGames.map(gameName => {
-                          const isMatch = searchQ && gameName.toLowerCase().indexOf(searchQ) !== -1;
-                          const safeName = gameName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                          return '<span class="sg-pill' + (isMatch ? ' match' : '') + '">' + safeName + '</span>';
-                      }).join('');
-                      const linkChipHtml = parsed.extraLink ? '<a href="' + parsed.extraLink + '" target="_blank" rel="noopener noreferrer" class="sg-link-chip"><i data-lucide="external-link" style="width:11px;height:11px;"></i> ' + (i18n[currentLang].sg_list_link || 'Discord') + '</a>' : '';
-                      supportedGamesHtml = '<div class="supported-games-box"><div class="sg-header"><div class="sg-title-wrap"><i data-lucide="gamepad-2" style="width:14px;height:14px;color:var(--success);"></i><span>' + (i18n[currentLang].sg_title || 'Supported Games') + '</span><span class="sg-count-badge">' + parsed.gamesList.length + '</span></div><div class="sg-actions">' + linkChipHtml + '<button type="button" class="sg-toggle-btn" onclick="window.toggleSupportedGames(this)">' + (i18n[currentLang].sg_all || 'Show All') + '</button></div></div><div class="sg-pills-container">' + pillsHtml + '</div></div>';
-                  }
-                  let displayInfo = '';
-                  if (item.executors_info) displayInfo = isPlaceholder ? '<span class="blurred-text">Tested on Unknown Level 8 executors</span>' : item.executors_info.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                   let badgeHtml = '';
-                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
+                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge '+(t==='keyless'?'badge-green':'')+'">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
+                  
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
                       : '<button class="copy-btn" onclick="event.stopPropagation(); window.copyScriptCode(' + origIndex + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copy + '</span></button>';
-                  let discBtn = (!isPlaceholder && item.script_discord) ? '<button class="discord-icon-btn" title="Discord" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                  
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
                           devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn danger" title="Удалить скрипт" onclick="event.stopPropagation(); window.deleteScriptFromCard(\'' + item.id + '\', \'' + escapeJsString(item.title) + '\')"><i data-lucide="trash-2" style="width:14px;height:14px;"></i></button></div>';
-                      } else {
-                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local скрипт" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
                       }
                   }
-                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' + '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content">' + '<div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayGame + '</span></div>' + extraDetailsHtml + (displayDesc ? '<p class="script-desc">' + displayDesc + '</p>' : '') + supportedGamesHtml + '<div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
+                  let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
+
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' + 
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' + 
+                      '<div class="script-content">' + 
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayGame + '</span></div>' + 
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') + 
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' + 
+                      '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
@@ -2532,7 +2721,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       renderExploitsTimeout = setTimeout(() => {
           let filter = document.getElementById('filterExploits') ? document.getElementById('filterExploits').value : 'all';
           let searchQ = document.getElementById('searchExploits') ? document.getElementById('searchExploits').value.toLowerCase() : '';
-          let filteredExps = window.STATIC_EXPLOITS || [];
+          let filteredExps = (window.STATIC_EXPLOITS || []).filter(item => {
+              if (item.status === 'draft' && (!currentUser || currentUser.role !== 'developer')) return false;
+              return true;
+          });
           if (filter !== 'all') filteredExps = filteredExps.filter(item => item.tags && item.tags.indexOf(filter) !== -1);
           if (searchQ) filteredExps = filteredExps.filter(item => item.title.toLowerCase().indexOf(searchQ) !== -1);
           const isDev = currentUser && currentUser.role === 'developer';
@@ -2547,28 +2739,30 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   let displayPlatform = isPlaceholder ? "???" : item.platform;
                   let displayDesc = isPlaceholder ? '<span class="blurred-text">Super secret new executor currently under heavy development.</span>' : (item.description || '').replace(/</g, '&lt;');
                   let origIndex = window.STATIC_EXPLOITS.indexOf(item);
-                  let extraDetailsHtml = buildExtraDetailsHtml(item, isPlaceholder, origIndex, true);
-                  let displayInfo = '';
-                  if (item.info) displayInfo = isPlaceholder ? '<span class="blurred-text">Requires Key: ??? | Version: ???</span>' : item.info.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                   let badgeHtml = '';
-                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
+                  if (item.tags) item.tags.forEach(t => { badgeHtml += '<span class="badge '+(t==='keyless'?'badge-green':'')+'">' + (i18n[currentLang]['f_' + t] || t) + '</span>'; });
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
                   const sizeVal = item.real_size_mb || item.file_size_mb;
                   let sizeLabel = sizeVal ? ' (' + sizeVal + ' MB)' : '';
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
                       : '<button class="copy-btn" onclick="event.stopPropagation(); window.startInAppDownload(' + origIndex + ')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-' + origIndex + '">' + i18n[currentLang].e_down + sizeLabel + '</span></button>';
-                  let discBtn = (!isPlaceholder && item.discord_link) ? '<button class="discord-icon-btn" title="Discord" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                  
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
                           devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn danger" title="Удалить эксплойт" onclick="event.stopPropagation(); window.deleteExploitFromCard(\'' + item.id + '\', \'' + escapeJsString(item.title) + '\')"><i data-lucide="trash-2" style="width:14px;height:14px;"></i></button></div>';
-                      } else {
-                          devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local эксплойт" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
                       }
                   }
-                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' + '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content">' + '<div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + extraDetailsHtml + '<p class="script-desc">' + displayDesc + '</p><div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
+                  let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
+
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' + 
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' + 
+                      '<div class="script-content">' + 
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + 
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') + 
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' + 
+                      '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
@@ -2596,8 +2790,14 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   }, { passive: true });
 
   window.copyScriptCode = function(index, btn) {
-      const finalCode = window.STATIC_SCRIPTS[index].script_code;
+      const item = window.STATIC_SCRIPTS[index];
+      const finalCode = item.script_code;
       if (!finalCode) return;
+      
+      if (item._fromFirestore && item.id) {
+          try { window.FB.updateDoc(window.FB.doc(window.FB.db, "scripts", item.id), { clicks: window.FB.increment(1) }); } catch(e){}
+      }
+
       navigator.clipboard.writeText(finalCode).then(() => {
           const originalHtml = btn.innerHTML;
           btn.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copied + '</span>';
@@ -2857,16 +3057,21 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       window.FB.onAuthStateChanged(window.FB.auth, async (user) => {
           if (user) {
               try {
-                  const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "users", user.uid));
                   const tokenResult = await user.getIdTokenResult(true); // Принудительно обновляем токен
                   const isDevClaim = tokenResult.claims.dev === true;
 
+                  const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "users", user.uid));
                   if (docSnap.exists()) {
                       const data = docSnap.data();
+                      if (data.isBanned) {
+                          window.showToast('Your account has been banned.');
+                          await window.FB.signOut(window.FB.auth);
+                          return;
+                      }
                       currentUser = { 
                           uid: user.uid, 
                           username: data.username, 
-                          role: isDevClaim ? 'developer' : 'user', // <--- ВОТ ГЛАВНАЯ ПРАВКА
+                          role: isDevClaim ? 'developer' : 'user', 
                           plan: data.plan || 'Free Access', 
                           badges: Array.isArray(data.badges) ? data.badges : [] 
                       };
