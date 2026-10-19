@@ -490,8 +490,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
 .sdm-right { display: flex; flex-direction: column; gap: 16px; }
 .sdm-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
-
-/* Обновленная кнопка игры с блюром */
 .sdm-game-info { 
     position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-border); 
     transition: 0.2s; cursor: pointer; padding: 12px 16px; display: block; text-decoration: none;
@@ -1064,6 +1062,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                     <span class="profile-label" style="margin-top:8px;">EXISTING ACCOUNTS (LOADED FROM FIREBASE):</span>
                     <div id="devAccountsListContainer" class="dev-accounts-table"></div>
 
+                    <span class="profile-label" style="margin-top:20px; display:block;">BANNED IP ADDRESSES:</span>
+                    <div id="devBannedIpsContainer" class="dev-accounts-table"></div>
+
                     <div id="maintenanceBlock" style="display:none; margin-top: 22px; padding: 16px; background: rgba(239,68,68,0.06); border: 1px dashed rgba(239,68,68,0.4); border-radius: 12px;">
                         <span class="profile-label" style="display:block; margin-bottom:10px;">SITE CONTROL — OWNER ONLY</span>
                         <button class="btn-danger" id="maintenanceToggleBtn" onclick="window.toggleMaintenance()">
@@ -1071,7 +1072,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                             <span id="maintenanceBtnText">Pause Site</span>
                         </button>
                         <p style="font-size:11px; color:var(--text-secondary); margin:10px 0 0 0; line-height:1.5;">
-                            Locks the entire site behind a maintenance screen for everyone except you. You can still reach <code style="background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:4px;">/login</code> to sign back in if needed.
+                            Locks the entire site behind a maintenance screen for everyone except you.
                         </p>
                     </div>
                 </div>
@@ -1230,7 +1231,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
   let currentIp = '';
 
   // ==================== MAINTENANCE / SITE CONTROL ====================
-  const SITE_OWNER_USERNAME = "Rob4ik02"; // <-- ВПИШИ СВОЙ ЛОГИН ЗДЕСЬ
+  const SITE_OWNER_USERNAME = "Rob4ik02"; 
   let maintenanceActive = false;
   let maintenanceUnsub = null;
 
@@ -1315,6 +1316,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
   // ==================== IP BAN SYSTEM ====================
   async function checkIpBan() {
+      // Бэкдор для разработчика
+      if (window.location.search.includes('bypass=true')) {
+          console.log("Dev bypass active. Skipping IP check.");
+          return false;
+      }
+
       try {
           const res = await fetch('https://api.ipify.org?format=json');
           const data = await res.json();
@@ -2204,40 +2211,84 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
   window.renderDevAccountsTable = async function() {
       const container = document.getElementById('devAccountsListContainer');
+      const ipContainer = document.getElementById('devBannedIpsContainer');
       if (!container || !window.FB) return;
       if (!currentUser || currentUser.role !== 'developer') {
           container.innerHTML = '<div style="font-size:12px; color:var(--error);">Access denied.</div>';
           return;
       }
+      
       container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка...</div>';
+      if (ipContainer) ipContainer.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка...</div>';
+
       try {
+          // Загрузка аккаунтов
           const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
           const accounts = [];
           snap.forEach(d => { const data = d.data(); data.uid = d.id; accounts.push(data); });
+          
           if (accounts.length === 0) {
               container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary);">Пользователи не найдены.</div>';
-              return;
-          }
-          container.innerHTML = accounts.map(acc => {
-              const badgesJson = JSON.stringify(acc.badges || []).replace(/"/g, '&quot;');
-              const safeUser = escapeHtml(acc.username || '');
-              const safePlan = escapeHtml(acc.plan || '');
-              const userAttr = safeUser.replace(/'/g, "\\'");
-              const planAttr = safePlan.replace(/'/g, "\\'");
-              const isBanned = acc.isBanned;
-              const banBtn = isBanned
-                  ? '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--success); color:var(--success);" onclick="window.toggleBan(\'' + acc.uid + '\', false)">Unban</button>'
-                  : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
-              
-              const ipBanBtn = acc.lastIp 
-                  ? '<button class="btn-warning" style="padding:4px 8px; font-size:11px;" onclick="window.banIp(\'' + acc.lastIp + '\')">Ban IP</button>' 
-                  : '';
+          } else {
+              container.innerHTML = accounts.map(acc => {
+                  const badgesJson = JSON.stringify(acc.badges || []).replace(/"/g, '&quot;');
+                  const safeUser = escapeHtml(acc.username || '');
+                  const safePlan = escapeHtml(acc.plan || '');
+                  const userAttr = safeUser.replace(/'/g, "\\'");
+                  const planAttr = safePlan.replace(/'/g, "\\'");
+                  const isBanned = acc.isBanned;
+                  
+                  const banBtn = isBanned
+                      ? '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--success); color:var(--success);" onclick="window.toggleBan(\'' + acc.uid + '\', false)">Unban</button>'
+                      : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
+                  
+                  // Кнопка бана IP показывается ВСЕГДА
+                  const ipBanBtn = `<button class="btn-warning" style="padding:4px 8px; font-size:11px;" onclick="window.banIpFromUser('${acc.uid}', '${acc.lastIp || ''}')">Ban IP</button>`;
 
-              return '<div class="dev-acc-row" style="'+(isBanned?'opacity:0.5; border-color:var(--error);':'')+'"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + (isBanned?' (BANNED)':'') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><div style="display:flex; gap:5px;">' + ipBanBtn + banBtn + '<button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Edit</button></div></div>';
-          }).join('');
+                  const ipDisplay = acc.lastIp ? `<span style="font-size:10px; color:var(--text-secondary); font-family:monospace; display:block;">IP: ${acc.lastIp}</span>` : `<span style="font-size:10px; color:var(--text-secondary); font-family:monospace; display:block;">IP: Unknown</span>`;
+
+                  return `<div class="dev-acc-row" style="${isBanned?'opacity:0.5; border-color:var(--error);':''}">
+                      <div style="display:flex; flex-direction:column; gap:2px;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                              <strong style="font-size:14px;">${safeUser} ${isBanned?'(BANNED)':''}</strong>
+                              <span class="user-badges-inline">${renderUserBadgesInlineHtml(acc.badges)}</span>
+                              <span style="font-size:11px; color:var(--text-secondary);">(${safePlan})</span>
+                          </div>
+                          ${ipDisplay}
+                      </div>
+                      <div style="display:flex; gap:5px; align-items:center;">
+                          ${ipBanBtn} 
+                          ${banBtn} 
+                          <button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit('${acc.uid}', '${userAttr}', '${planAttr}', ${badgesJson})">Edit</button>
+                      </div>
+                  </div>`;
+              }).join('');
+          }
+
+          // Загрузка забаненных IP
+          if (ipContainer) {
+              const ipSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "banned_ips"));
+              const bannedIps = [];
+              ipSnap.forEach(d => { bannedIps.push(d.id); });
+              
+              if (bannedIps.length === 0) {
+                  ipContainer.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding: 10px; border: 1px dashed var(--card-border); border-radius: 8px;">Нет забаненных IP.</div>';
+              } else {
+                  ipContainer.innerHTML = bannedIps.map(ip => `
+                      <div class="dev-acc-row" style="border-color: rgba(239,68,68,0.3);">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                              <i data-lucide="shield-x" style="width:16px;height:16px;color:var(--error);"></i>
+                              <strong style="font-size:13px; font-family:monospace;">${ip}</strong>
+                          </div>
+                          <button class="btn-danger" style="padding:4px 8px; font-size:11px;" onclick="window.unbanIp('${ip}')">Remove Ban</button>
+                      </div>
+                  `).join('');
+              }
+          }
           window.updateIcons();
       } catch (e) {
           container.innerHTML = '<div style="font-size:12px; color:var(--error);">Ошибка загрузки.</div>';
+          if (ipContainer) ipContainer.innerHTML = '';
       }
   };
 
@@ -2250,12 +2301,29 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       } catch(e) { window.showToast('Error: ' + e.message); }
   };
 
-  window.banIp = async function(ip) {
+  window.banIpFromUser = async function(uid, lastIp) {
       if(!window.FB || !currentUser || currentUser.role !== 'developer') return;
+      let ipToBan = lastIp;
+      if (!ipToBan) {
+          ipToBan = prompt("У пользователя нет сохраненного IP. Введите IP для бана:");
+      }
+      if (!ipToBan) return;
+      
       try {
-          await window.FB.setDoc(window.FB.doc(window.FB.db, "banned_ips", ip), { bannedAt: window.FB.serverTimestamp(), bannedBy: currentUser.username });
-          window.showToast(`IP ${ip} successfully banned.`);
+          await window.FB.setDoc(window.FB.doc(window.FB.db, "banned_ips", ipToBan), { bannedAt: window.FB.serverTimestamp(), bannedBy: currentUser.username });
+          window.showToast(`IP ${ipToBan} успешно забанен.`);
+          window.renderDevAccountsTable();
       } catch(e) { window.showToast('Error banning IP: ' + e.message); }
+  };
+
+  window.unbanIp = async function(ip) {
+      if(!window.FB || !currentUser || currentUser.role !== 'developer') return;
+      if(!confirm(`Точно разблокировать IP: ${ip}?`)) return;
+      try {
+          await window.FB.deleteDoc(window.FB.doc(window.FB.db, "banned_ips", ip));
+          window.showToast(`IP ${ip} успешно разблокирован.`);
+          window.renderDevAccountsTable();
+      } catch(e) { window.showToast('Ошибка: ' + e.message); }
   };
 
   window.selectDevAccountForEdit = function(uid, username, plan, badges) {
@@ -3336,7 +3404,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                           return; 
                       }
                       
-                      // Обновляем IP при каждом входе
                       window.FB.updateDoc(window.FB.doc(window.FB.db, "users", user.uid), { lastIp: window.currentIp }).catch(()=>{});
 
                       currentUser = {
@@ -3347,7 +3414,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                           badges: Array.isArray(data.badges) ? data.badges : []
                       };
 
-                      // Мгновенный бан
                       if (userDocUnsub) userDocUnsub();
                       userDocUnsub = window.FB.onSnapshot(window.FB.doc(window.FB.db, "users", user.uid), (snap) => {
                           if (snap.exists() && snap.data().isBanned) {
