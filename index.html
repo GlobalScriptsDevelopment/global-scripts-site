@@ -44,7 +44,6 @@
 }
 
 * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
-
 html { min-height: 100%; margin: 0; padding: 0; background-color: #050507; }
 
 body {
@@ -345,11 +344,12 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .fade-container { opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .fade-container.show { opacity: 1; transform: translateY(0); }
 
-.cards-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; align-items: start; }
-.cards-column { display: flex; flex-direction: column; width: 100%; }
+.cards-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; align-items: stretch; }
+.cards-column { display: flex; flex-direction: column; width: 100%; gap: 24px; }
+.cards-column > .section-separator { display: none; } /* убираем разделители внутри колонок, если они ломают сетку */
 
 .script-card {
-    padding: 0; overflow: hidden; display: flex; flex-direction: column; height: auto;
+    padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%;
     background: rgba(14, 14, 19, 0.94);
     border: 1px solid var(--card-border);
     border-radius: 20px;
@@ -381,7 +381,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .features-list-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 12px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .feature-tag { font-size: 11px; font-weight: 600; color: var(--text-primary); background: rgba(255, 255, 255, 0.06); padding: 3px 8px; border-radius: 6px; }
 
-.script-banner { width: 100%; height: 175px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
+.script-banner { width: 100%; height: 175px; flex: 0 0 175px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
 .script-banner-wrapper { overflow: hidden; width: 100%; border-top-left-radius: 20px; border-top-right-radius: 20px; position: relative; }
 
 .badge-row { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 5; flex-wrap: wrap; }
@@ -392,7 +392,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 .dev-icon-btn:hover { background: rgba(255,255,255,0.15); }
 .dev-icon-btn.danger:hover { background: rgba(239, 68, 68, 0.7); border-color: var(--error); }
 
-.script-content { padding: 16px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 0 1 auto; z-index: 2; }
+.script-content { padding: 16px 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; z-index: 2; }
 .script-header { display: flex; flex-direction: column; gap: 2px; margin: 0; }
 .script-header h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 1.25; }
 .game-tag { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
@@ -474,16 +474,29 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     font-size: 18px; color: var(--text-secondary);
     margin: 0; line-height: 1.6; font-weight: 500;
 }
-@media (max-width: 640px) {
-    .maintenance-content h1 { font-size: 30px; }
-    .maintenance-content p { font-size: 15px; }
-    .maintenance-icon { width: 90px; height: 90px; margin-bottom: 20px; }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    .easter-egg-container, .real-planet-sphere, .lua-ring, .planet-surface-tex, .maintenance-bg, .maintenance-icon { animation: none !important; transition: none !important; }
+/* ==== FIX: Модалка деталей ==== */
+.script-detail-overlay {
+    position: fixed; inset: 0; z-index: 95000;
+    background: rgba(0,0,0,0.78); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
 }
+.script-detail-overlay.show { display: flex; }
+.script-detail-modal {
+    background: #0e0e12; border: 1px solid var(--card-border); border-radius: 20px;
+    width: 100%; max-width: 720px; max-height: 88vh; overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: var(--shadow-drop);
+}
+.sdm-banner { height: 200px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); }
+.sdm-body { padding: 20px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+.sdm-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.sdm-title-row h2 { margin: 0; font-size: 24px; font-weight: 800; }
+.sdm-close { background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); color: var(--text-primary); width: 34px; height: 34px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.sdm-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.sdm-actions { display: flex; gap: 10px; margin-top: 6px; }
+.sdm-actions .copy-btn { flex: 1; }
+.sdm-code-preview { background: rgba(0,0,0,0.35); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; font-family: monospace; font-size: 12px; color: var(--text-secondary); max-height: 180px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
 
 @media (max-width: 960px) { .cards-masonry { grid-template-columns: repeat(2, 1fr); } }
 
@@ -1029,6 +1042,10 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       </div>
   </div>
 
+  <div class="script-detail-overlay" id="scriptDetailOverlay">
+      <div class="script-detail-modal" id="scriptDetailModal"></div>
+  </div>
+
 <script>
   window.SOCIAL_LINKS = {
       youtube:  "https://youtube.com/@ТВОЙ_КАНАЛ",
@@ -1343,7 +1360,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
 
       function isInteractiveUIElement(target) {
           if (!target || !target.closest) return false;
-          return Boolean(target.closest('button, input, textarea, select, a, label, .auth-card, .script-card, .dashboard-card, .feature-box, .top-bar, .mobile-menu-overlay, .download-item-card, .sg-pills-container, .ticket-modal, .ticket-item'));
+          return Boolean(target.closest('button, input, textarea, select, a, label, .auth-card, .script-card, .dashboard-card, .feature-box, .top-bar, .mobile-menu-overlay, .download-item-card, .sg-pills-container, .ticket-modal, .ticket-item, .script-detail-overlay'));
       }
 
       function getPlanetCenterAndRadius() {
@@ -1650,6 +1667,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       btn.classList.add('active');
       const sec = document.getElementById(sectionId);
       if (sec) sec.classList.add('active');
+      
+      if (sectionId !== 'dev-tab-scripts') { editingScriptId = null; const s = document.getElementById('devEditScriptSelect'); if (s) s.value = ''; window.loadScriptToEdit && window.loadScriptToEdit(''); }
+      if (sectionId !== 'dev-tab-exploits') { editingExploitId = null; const s = document.getElementById('devEditExploitSelect'); if (s) s.value = ''; window.loadExploitToEdit && window.loadExploitToEdit(''); }
   };
 
   window.populateDevDropdowns = function() {
@@ -1838,29 +1858,17 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       } catch (e) { window.showToast('Delete failed: ' + e.message); }
   };
 
-  window.devSaveAccountAndBadges = async function() {
-      if (!window.FB) return;
-      const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
-      if (!editingAccountUid) { window.showToast('Сначала выбери пользователя из списка!'); return; }
-      const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
-      const role = selectedBadges.includes('developer') ? 'developer' : 'user';
-      try {
-          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", editingAccountUid), { plan: plan, badges: selectedBadges, role: role });
-          window.showToast('Аккаунт обновлён в Firebase!');
-          window.renderDevAccountsTable();
-      } catch (e) { window.showToast('Ошибка сохранения: ' + e.message); }
-  };
-
-  window.selectDevAccountForEdit = function(uid, username, plan, badges) {
-      editingAccountUid = uid;
-      document.getElementById('devAccLogin').value = username;
-      document.getElementById('devAccPlan').value = plan || 'Free Access';
-      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(badges) && badges.indexOf(cb.value) !== -1; });
-  };
+  function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
 
   window.renderDevAccountsTable = async function() {
       const container = document.getElementById('devAccountsListContainer');
       if (!container || !window.FB) return;
+      if (!currentUser || currentUser.role !== 'developer') {
+          container.innerHTML = '<div style="font-size:12px; color:var(--error);">Access denied.</div>';
+          return;
+      }
       container.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка пользователей из Firebase...</div>';
       try {
           const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
@@ -1872,14 +1880,45 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           }
           container.innerHTML = accounts.map(acc => {
               const badgesJson = JSON.stringify(acc.badges || []).replace(/"/g, '&quot;');
-              const safeUser = (acc.username || '').replace(/'/g, "\\'");
-              const safePlan = (acc.plan || '').replace(/'/g, "\\'");
-              return '<div class="dev-acc-row"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + (acc.username || 'Unknown') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + (acc.plan || 'Free') + ')</span></div><button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + safeUser + '\', \'' + safePlan + '\', ' + badgesJson + ')">Редактировать</button></div>';
+              const safeUser = escapeHtml(acc.username || '');
+              const safePlan = escapeHtml(acc.plan || '');
+              const userAttr = safeUser.replace(/'/g, "\\'");
+              const planAttr = safePlan.replace(/'/g, "\\'");
+              return '<div class="dev-acc-row"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><button class="ui-btn" style="padding:5px 10px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Редактировать</button></div>';
           }).join('');
           window.updateIcons();
       } catch (e) {
           container.innerHTML = '<div style="font-size:12px; color:var(--error);">Ошибка загрузки.</div>';
       }
+  };
+
+  window.selectDevAccountForEdit = function(uid, username, plan, badges) {
+      editingAccountUid = uid;
+      document.getElementById('devAccLogin').value = username;
+      document.getElementById('devAccPlan').value = plan || 'Free Access';
+      document.querySelectorAll('.dev-badge-cb').forEach(cb => { cb.checked = Array.isArray(badges) && badges.indexOf(cb.value) !== -1; });
+  };
+
+  window.devSaveAccountAndBadges = async function() {
+      if (!window.FB) return;
+      if (!currentUser || currentUser.role !== 'developer') { window.showToast('Только developer может менять аккаунты.'); return; }
+      if (!editingAccountUid) { window.showToast('Сначала выбери пользователя из списка!'); return; }
+      const plan = document.getElementById('devAccPlan').value.trim() || 'Free Access';
+      const selectedBadges = Array.from(document.querySelectorAll('.dev-badge-cb:checked')).map(cb => cb.value);
+      
+      const canBeDev = selectedBadges.includes('developer');
+      if (canBeDev && editingAccountUid !== currentUser.uid) {
+          window.showToast('Developer role назначается только через Firebase Admin SDK / custom claims.');
+          return;
+      }
+      try {
+          await window.FB.updateDoc(window.FB.doc(window.FB.db, "users", editingAccountUid), {
+              plan: plan,
+              badges: selectedBadges
+          });
+          window.showToast('Аккаунт обновлён.');
+          window.renderDevAccountsTable();
+      } catch (e) { window.showToast('Ошибка сохранения: ' + e.message); }
   };
 
   function getSupportMessages() {
@@ -1933,8 +1972,17 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
   window.getCurrentRouteTarget = function() {
       let currentPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
       if (window.location.protocol === 'file:' && window.location.hash) currentPath = window.location.hash.replace(/^#/, '').toLowerCase();
+      if (/^\/scripts\/.+/.test(currentPath)) return 'tab-scripts';
+      if (/^\/exploits\/.+/.test(currentPath)) return 'tab-exploits';
       return PATH_TO_TAB[currentPath] || null;
   };
+
+  function getRouteSlug() {
+      let p = window.location.pathname;
+      if (window.location.protocol === 'file:') p = window.location.hash.replace(/^#/, '');
+      const m = p.match(/^\/(scripts|exploits)\/(.+)$/);
+      return m ? decodeURIComponent(m[2]) : null;
+  }
 
   window.addEventListener('popstate', (e) => {
       const target = (e.state && e.state.targetKey) ? e.state.targetKey : (window.getCurrentRouteTarget() || 'start');
@@ -2320,6 +2368,92 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
       return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   }
 
+  function slugify(title) {
+      return encodeURIComponent(String(title).trim().toLowerCase().replace(/\s+/g, ' '));
+  }
+
+  function findScriptBySlug(slug) {
+      const decoded = decodeURIComponent(slug).toLowerCase();
+      return (window.STATIC_SCRIPTS || []).find(s => String(s.title).trim().toLowerCase() === decoded);
+  }
+
+  function findExploitBySlug(slug) {
+      const decoded = decodeURIComponent(slug).toLowerCase();
+      return (window.STATIC_EXPLOITS || []).find(s => String(s.title).trim().toLowerCase() === decoded);
+  }
+
+  window.openScriptDetail = function(kind, index) {
+      const list = kind === 'exploit' ? window.STATIC_EXPLOITS : window.STATIC_SCRIPTS;
+      const item = list[index];
+      if (!item) return;
+      const overlay = document.getElementById('scriptDetailOverlay');
+      const modal = document.getElementById('scriptDetailModal');
+      if (!overlay || !modal) return;
+
+      const slug = slugify(item.title);
+      const basePath = kind === 'exploit' ? '/exploits/' : '/scripts/';
+      try {
+          if (window.location.protocol !== 'file:') {
+              window.history.replaceState({ targetKey: kind === 'exploit' ? 'tab-exploits' : 'tab-scripts', slug }, '', basePath + slug);
+          }
+      } catch (e) {}
+
+      const tagBadges = (item.tags || []).map(t => '<span class="badge">' + (i18n[currentLang]['f_' + t] || t) + '</span>').join('');
+      const metaChips = [];
+      if (item.version) metaChips.push('<span class="meta-chip"><i data-lucide="git-branch" style="width:11px;height:11px;"></i> ' + item.version + '</span>');
+      if (item.author) metaChips.push('<span class="meta-chip"><i data-lucide="user" style="width:11px;height:11px;"></i> ' + item.author + '</span>');
+      if (item.game) metaChips.push('<span class="meta-chip"><i data-lucide="gamepad-2" style="width:11px;height:11px;"></i> ' + item.game + '</span>');
+      if (item.platform) metaChips.push('<span class="meta-chip"><i data-lucide="monitor" style="width:11px;height:11px;"></i> ' + item.platform + '</span>');
+      const safeCode = (item.script_code || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const codeBlock = item.script_code ? '<div class="sdm-code-preview">' + safeCode + '</div>' : '';
+
+      let actionBtns = '';
+      if (kind === 'exploit') {
+          actionBtns = '<button class="copy-btn" style="background:var(--success);color:#fff;" onclick="window.startInAppDownload(' + index + '); window.closeScriptDetail();"><i data-lucide="download" style="width:16px;height:16px;"></i> ' + i18n[currentLang].e_down + '</button>';
+      } else {
+          actionBtns = '<button class="copy-btn" onclick="window.copyScriptCode(' + index + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> ' + i18n[currentLang].s_copy + '</button>';
+      }
+      if (item.script_discord) actionBtns += '<button class="discord-icon-btn" onclick="window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>';
+      if (item.discord_link) actionBtns += '<button class="discord-icon-btn" onclick="window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>';
+
+      const info = item.executors_info || item.info || '';
+
+      modal.innerHTML =
+          '<div class="sdm-banner" style="background-image:url(\'' + (item.banner_url || '') + '\');"></div>' +
+          '<div class="sdm-body">' +
+              '<div class="sdm-title-row"><div><h2>' + (item.title || '') + '</h2><span class="game-tag">' + (item.game || item.platform || '') + '</span></div><button class="sdm-close" onclick="window.closeScriptDetail()"><i data-lucide="x" style="width:18px;height:18px;"></i></button></div>' +
+              '<div class="badge-row">' + tagBadges + '</div>' +
+              '<div class="sdm-meta">' + metaChips.join('') + '</div>' +
+              (item.description ? '<p class="script-desc">' + String(item.description).replace(/</g, '&lt;') + '</p>' : '') +
+              codeBlock +
+              (info ? '<div class="executor-info">' + info.replace(/</g, '&lt;') + '</div>' : '') +
+              '<div class="sdm-actions">' + actionBtns + '</div>' +
+          '</div>';
+
+      overlay.classList.add('show');
+      window.updateIcons();
+  };
+
+  window.closeScriptDetail = function() {
+      const overlay = document.getElementById('scriptDetailOverlay');
+      if (overlay) overlay.classList.remove('show');
+      try {
+          if (window.location.protocol !== 'file:') {
+              const path = window.location.pathname;
+              if (/^\/(scripts|exploits)\//.test(path)) {
+                  window.history.replaceState({ targetKey: isInHub ? (path.indexOf('/scripts/') === 0 ? 'tab-scripts' : 'tab-exploits') : 'start' }, '', isInHub ? (path.indexOf('/scripts/') === 0 ? '/scripts' : '/exploits') : '/start');
+              }
+          }
+      } catch (e) {}
+  };
+
+  document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'scriptDetailOverlay') window.closeScriptDetail();
+  });
+  document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') window.closeScriptDetail();
+  });
+
   window.renderScripts = function() {
       clearTimeout(renderScriptsTimeout);
       const container = document.getElementById('userScriptsContainer');
@@ -2368,9 +2502,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   let bannerClass = isPlaceholder ? "script-banner blurred-img" : "script-banner";
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
-                      : '<button class="copy-btn" onclick="window.copyScriptCode(' + origIndex + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copy + '</span></button>';
-                  let discBtn = (!isPlaceholder && item.script_discord) ? '<button class="discord-icon-btn" title="Discord" onclick="window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                      : '<button class="copy-btn" onclick="event.stopPropagation(); window.copyScriptCode(' + origIndex + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_copy + '</span></button>';
+                  let discBtn = (!isPlaceholder && item.script_discord) ? '<button class="discord-icon-btn" title="Discord" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.script_discord) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
+                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
@@ -2379,7 +2513,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                           devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local скрипт" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
                       }
                   }
-                  let cardHtml = '<div class="script-card"><div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content"><div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayGame + '</span></div>' + extraDetailsHtml + (displayDesc ? '<p class="script-desc">' + displayDesc + '</p>' : '') + supportedGamesHtml + '<div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' + '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content">' + '<div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayGame + '</span></div>' + extraDetailsHtml + (displayDesc ? '<p class="script-desc">' + displayDesc + '</p>' : '') + supportedGamesHtml + '<div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
@@ -2423,9 +2557,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                   let sizeLabel = sizeVal ? ' (' + sizeVal + ' MB)' : '';
                   let btnHtml = isPlaceholder
                       ? '<button class="copy-btn btn-disabled" disabled><i data-lucide="clock" style="width:16px;height:16px;"></i> <span>' + i18n[currentLang].s_soon + '</span></button>'
-                      : '<button class="copy-btn" onclick="window.startInAppDownload(' + origIndex + ')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-' + origIndex + '">' + i18n[currentLang].e_down + sizeLabel + '</span></button>';
-                  let discBtn = (!isPlaceholder && item.discord_link) ? '<button class="discord-icon-btn" title="Discord" onclick="window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
-                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
+                      : '<button class="copy-btn" onclick="event.stopPropagation(); window.startInAppDownload(' + origIndex + ')" style="background:var(--success); color:#fff;"><i data-lucide="download" style="width:16px;height:16px;"></i> <span id="exp-dl-label-' + origIndex + '">' + i18n[currentLang].e_down + sizeLabel + '</span></button>';
+                  let discBtn = (!isPlaceholder && item.discord_link) ? '<button class="discord-icon-btn" title="Discord" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.discord_link) + '\', \'_blank\')"><i data-lucide="message-square" style="width:18px;height:18px;"></i></button>' : '';
+                  let webBtn = (!isPlaceholder && item.website_link) ? '<button class="discord-icon-btn" title="Website" onclick="event.stopPropagation(); window.open(\'' + escapeJsString(item.website_link) + '\', \'_blank\')"><i data-lucide="globe" style="width:18px;height:18px;"></i></button>' : '';
                   let devActionsHtml = '';
                   if (isDev && !isPlaceholder) {
                       if (item._fromFirestore) {
@@ -2434,7 +2568,7 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
                           devActionsHtml = '<div class="dev-card-actions"><button class="dev-icon-btn" title="Local эксплойт" style="opacity:0.5;cursor:not-allowed;"><i data-lucide="lock" style="width:12px;height:12px;"></i></button></div>';
                       }
                   }
-                  let cardHtml = '<div class="script-card"><div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content"><div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + extraDetailsHtml + '<p class="script-desc">' + displayDesc + '</p><div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' + '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div><div class="script-content">' + '<div class="script-header"><h3>' + displayTitle + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' + extraDetailsHtml + '<p class="script-desc">' + displayDesc + '</p><div style="display:flex; gap:10px; margin-top: 4px;">' + btnHtml + discBtn + webBtn + '</div>' + (displayInfo ? '<div class="executor-info">' + displayInfo + '</div>' : '') + '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
@@ -2587,6 +2721,17 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
     if (initialRoute === 'login') window.openAuthScreen(false);
     else if (initialRoute && initialRoute !== 'start') { window.enterAppFromLanding(initialRoute, false); window.setRouteUrl(initialRoute, true); }
     else window.setRouteUrl('start', true);
+
+    setTimeout(() => {
+        const slug = getRouteSlug();
+        if (!slug) return;
+        const kind = window.location.pathname.indexOf('/exploits/') === 0 ? 'exploit' : 'script';
+        const list = kind === 'exploit' ? window.STATIC_EXPLOITS : window.STATIC_SCRIPTS;
+        const item = kind === 'exploit' ? findExploitBySlug(slug) : findScriptBySlug(slug);
+        if (!item) return;
+        const idx = list.indexOf(item);
+        if (idx >= 0) window.openScriptDetail(kind, idx);
+    }, 800);
   });
 </script>
 
@@ -2599,7 +2744,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()',
           description: "An old and stable script, the first of all the best scripts for Blox Fruits. It requires a lot of performance; on low-end devices, there may be lags.",
           executors_info: "Working on exploits: Delta, Madium",
-          script_discord: "https://discord.com/invite/hohohub"
+          script_discord: "https://discord.com/invite/hohohub",
+          version: "v2.1",
+          author: "acsu123"
       },
       {
           title: "Silence Hub", game: "Muscle Legends",
@@ -2608,7 +2755,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           script_code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/silencedevs/SilenceScripts/main/Loader/Loader.luau", true))()',
           description: "An excellent and functional script!",
           executors_info: "Working on exploits: Delta, Nexomia",
-          script_discord: "https://discord.gg/9eFf93Kg8D"
+          script_discord: "https://discord.gg/9eFf93Kg8D",
+          version: "v1.4",
+          author: "silencedevs"
       },
       {
           title: "Ronix Universal Hub", game: "Any Games (71+ Supported)",
@@ -2636,7 +2785,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
               "+1 Wings For Eggs"
           ],
           executors_info: "Working on exploits: Delta, Real, Nexomia, Arceus X neo, Madium, Velocity",
-          script_discord: "https://discord.gg/9eFf93Kg8D"
+          script_discord: "https://discord.gg/9eFf93Kg8D",
+          version: "v3.0",
+          author: "DancingUnicornLol"
       }
   ];
 
@@ -2647,7 +2798,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           banner_url: "https://wearedevs.net/images/thumbnails/delta-120425.webp",
           link: "https://wrdcdn.net/r/2/1787079641789/Delta-2.733.988.apk",
           description: "The most stable and simple phone exploit, with frequent updates. It features a simple one-step key system.",
-          info: "Requires Key: Yes"
+          info: "Requires Key: Yes",
+          version: "2.733.988",
+          author: "WeAreDevs"
       },
       {
           title: "Solara", platform: "Windows",
@@ -2655,7 +2808,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           banner_url: "https://obj.wearedevs.net/images/software/solara/solara-011026.webp",
           link: "https://wrdcdn.net/r/84662/1787363716064/SolaraV3.exe",
           description: "A popular and lightweight PC exploit for Roblox, designed to bypass modern anti-cheats. It is free, highly accessible with a keyless system, and provides stable execution for standard and medium-level scripts.",
-          info: "Requires Key: No | Version: V3"
+          info: "Requires Key: No | Version: V3",
+          version: "V3",
+          author: "WeAreDevs"
       },
       {
           title: "Nexomia", platform: "Windows",
@@ -2663,7 +2818,9 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           banner_url: "https://nexomia.win/logo.png",
           link: "https://github.com/fundamentalear333-coder/fghfgh/raw/refs/heads/main/Nexomia.exe",
           description: "A highly powerful and advanced script executor for Roblox. It is known for its strong performance with complex scripts, all while offering a completely keyless experience for maximum convenience.",
-          info: "Requires Key: No"
+          info: "Requires Key: No",
+          version: "latest",
+          author: "Nexomia"
       }
   ];
 </script>
