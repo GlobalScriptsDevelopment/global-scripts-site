@@ -2858,9 +2858,18 @@ input, textarea { user-select: text; -webkit-user-select: text; font-size: 16px 
           if (user) {
               try {
                   const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "users", user.uid));
+                  const tokenResult = await user.getIdTokenResult(true); // Принудительно обновляем токен
+                  const isDevClaim = tokenResult.claims.dev === true;
+
                   if (docSnap.exists()) {
                       const data = docSnap.data();
-                      currentUser = { uid: user.uid, username: data.username, role: data.role || 'user', plan: data.plan || 'Free Access', badges: Array.isArray(data.badges) ? data.badges : [] };
+                      currentUser = { 
+                          uid: user.uid, 
+                          username: data.username, 
+                          role: isDevClaim ? 'developer' : 'user', // <--- ВОТ ГЛАВНАЯ ПРАВКА
+                          plan: data.plan || 'Free Access', 
+                          badges: Array.isArray(data.badges) ? data.badges : [] 
+                      };
                   } else {
                       currentUser = { uid: user.uid, username: user.email.split('@')[0], role: 'user', plan: 'Free Access', badges: ['verified'] };
                   }
