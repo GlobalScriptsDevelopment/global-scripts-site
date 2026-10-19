@@ -154,11 +154,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 @keyframes coreGlintShimmer { 0% { opacity: 0.55; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.18); } }
 
 #planetInkCanvas { position: absolute; top: -45px; left: -45px; width: 540px; height: 540px; z-index: 6; pointer-events: none; filter: url(#ultraInkGoo) drop-shadow(0 0 10px rgba(0, 0, 0, 0.98)); }
-
 .planet-slash-beam { position: absolute; top: 50%; left: 50%; width: 5px; height: 560px; margin-top: -280px; margin-left: -2.5px; background: linear-gradient(180deg, transparent 0%, #ffffff 20%, #fb923c 50%, #ffffff 80%, transparent 100%); box-shadow: 0 0 22px #ffffff, 0 0 45px #ea580c; transform: rotate(0deg) scaleY(0); opacity: 0; z-index: 7; pointer-events: none; border-radius: 999px; }
 .planet-slash-beam.slash-anim { animation: slashStrike 0.45s var(--smooth) forwards; }
 @keyframes slashStrike { 0% { transform: rotate(0deg) scaleY(0); opacity: 1; } 45% { transform: rotate(0deg) scaleY(1.05); opacity: 1; } 100% { transform: rotate(0deg) scaleY(1.15); opacity: 0; } }
-
 .planet-impact-wave { position: absolute; top: 50%; left: 50%; width: 450px; height: 450px; margin-top: -225px; margin-left: -225px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.9); box-shadow: 0 0 35px rgba(255, 255, 255, 0.6), inset 0 0 25px rgba(0, 0, 0, 0.9); opacity: 0; transform: scale(0.85); z-index: 8; pointer-events: none; }
 .planet-impact-wave.boom-anim { animation: impactShockwave 0.65s var(--smooth) forwards; }
 @keyframes impactShockwave { 0% { transform: scale(0.95); opacity: 1; border-width: 6px; } 100% { transform: scale(1.42); opacity: 0; border-width: 1px; } }
@@ -259,6 +257,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
 .btn-danger { background: var(--error); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
 .btn-danger:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn-warning { background: #f59e0b; color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+.btn-warning:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
 .support-chat-card { display: flex; flex-direction: column; gap: 14px; height: 460px; }
 .chat-messages-box { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 12px; background: rgba(0, 0, 0, 0.28); border: 1px solid var(--card-border); border-radius: 14px; }
@@ -456,7 +457,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
     margin: 0; line-height: 1.6; font-weight: 500;
 }
 
-/* ==== SCRIPT BLOX STYLE MODAL ==== */
 .script-detail-overlay {
     position: fixed; inset: 0; z-index: 95000;
     background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
@@ -488,14 +488,22 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 .sdm-code-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); font-weight: 600; }
 .sdm-code-area { font-family: monospace; font-size: 12px; color: #a5b4fc; line-height: 1.5; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
 
-.sdm-right { display: flex; flex-direction: column; gap: 20px; }
+.sdm-right { display: flex; flex-direction: column; gap: 16px; }
 .sdm-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.sdm-game-info { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--card-border); transition: 0.2s; }
-.sdm-game-info:hover { border-color: rgba(255,255,255,0.2); }
-.sdm-game-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; }
+
+/* Обновленная кнопка игры с блюром */
+.sdm-game-info { 
+    position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-border); 
+    transition: 0.2s; cursor: pointer; padding: 12px 16px; display: block; text-decoration: none;
+    background: #111116;
+}
+.sdm-game-info:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
+.sdm-game-info-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(12px) brightness(0.35); z-index: 0; }
+.sdm-game-info-content { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; width: 100%; }
+.sdm-game-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .sdm-game-text { display: flex; flex-direction: column; gap: 2px; }
-.sdm-game-name { font-size: 14px; font-weight: 800; }
-.sdm-game-sub { font-size: 11px; color: var(--text-secondary); }
+.sdm-game-name { font-size: 15px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.sdm-game-sub { font-size: 11px; color: #ccc; }
 
 .sdm-author-info { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--card-border); }
 .sdm-author-left { display: flex; align-items: center; gap: 10px; }
@@ -520,20 +528,16 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 .sdm-vote-no { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
 .sdm-vote-no:hover { background: rgba(239, 68, 68, 0.25); transform: scale(1.02); }
 
-/* File Upload Styles */
 .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
 .file-upload-input { position: absolute; font-size: 100px; right: 0; top: 0; opacity: 0; cursor: pointer; }
 .file-upload-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px; border: 1px dashed var(--card-border); border-radius: 12px; background: rgba(255,255,255,0.03); color: var(--text-secondary); cursor: pointer; transition: 0.2s; font-weight: 600; font-size: 13px; }
 .file-upload-btn:hover { border-color: var(--text-primary); color: var(--text-primary); background: rgba(255,255,255,0.08); }
 
-/* Tags Editor */
 .tags-editor-list { display: flex; flex-wrap: wrap; gap: 5px; min-height: 24px; margin-bottom: 5px; }
 .tag-pill-editable { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.06); border: 1px solid var(--card-border); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: 0.2s; }
 .tag-pill-editable:hover { background: rgba(239, 68, 68, 0.2); border-color: var(--error); }
 
-@media (max-width: 850px) {
-  .sdm-body { grid-template-columns: 1fr; }
-}
+@media (max-width: 850px) { .sdm-body { grid-template-columns: 1fr; } }
 
 @media (max-width: 960px) { .cards-masonry { grid-template-columns: repeat(2, 1fr); } }
 
@@ -564,6 +568,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
   .dev-select { width: 100%; max-width: 100%; min-width: 100%; }
   .cards-masonry { grid-template-columns: 1fr; }
 }
+
+/* ОПТИМИЗАЦИЯ ДЛЯ СЛАБЫХ УСТРОЙСТВ */
+.low-perf .dashboard-card, .low-perf .feature-box, .low-perf .script-card, .low-perf .top-bar, .low-perf .auth-card, .low-perf .mobile-menu-overlay { backdrop-filter: none !important; background: #0f0f14 !important; }
+.low-perf [data-theme="light"] .dashboard-card, .low-perf [data-theme="light"] .feature-box, .low-perf [data-theme="light"] .script-card, .low-perf [data-theme="light"] .top-bar, .low-perf [data-theme="light"] .auth-card { background: #f3f4f6 !important; }
+.low-perf .planet-surface-tex { animation: none !important; }
+.low-perf #bgCanvas { display: none !important; }
 </style>
 </head>
 <body id="appBody" class="lang-transition">
@@ -1215,6 +1225,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
   let tempScrTags = [];
   let tempExpTags = [];
+  
+  let userDocUnsub = null;
+  let currentIp = '';
 
   // ==================== MAINTENANCE / SITE CONTROL ====================
   const SITE_OWNER_USERNAME = "Rob4ik02"; // <-- ВПИШИ СВОЙ ЛОГИН ЗДЕСЬ
@@ -1298,6 +1311,32 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
   const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const isLowEnd = isMobileDevice || window.innerWidth <= 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  if (isLowEnd) document.body.classList.add('low-perf');
+
+  // ==================== IP BAN SYSTEM ====================
+  async function checkIpBan() {
+      try {
+          const res = await fetch('https://api.ipify.org?format=json');
+          const data = await res.json();
+          window.currentIp = data.ip;
+          if (window.FB) {
+              const ipDoc = await window.FB.getDoc(window.FB.doc(window.FB.db, "banned_ips", window.currentIp));
+              if (ipDoc.exists()) {
+                  document.body.innerHTML = `<div class="maintenance-overlay" style="display:flex;"><div class="maintenance-content"><div class="maintenance-icon"><i data-lucide="shield-x" style="width:56px;height:56px;color:var(--error);"></i></div><h1>IP BANNED</h1><p>Ваш IP-адрес заблокирован навсегда.</p></div></div>`;
+                  if (window.lucide) lucide.createIcons();
+                  return true;
+              }
+          }
+      } catch(e) { console.warn("IP check failed", e); }
+      return false;
+  }
+
+  function showBanScreen(msg) {
+      if (userDocUnsub) userDocUnsub();
+      if (window.FB) window.FB.signOut(window.FB.auth);
+      document.body.innerHTML = `<div class="maintenance-overlay" style="display:flex;"><div class="maintenance-content"><div class="maintenance-icon"><i data-lucide="ban" style="width:56px;height:56px;color:var(--error);"></i></div><h1>BANNED</h1><p>${msg || 'Ваш аккаунт был заблокирован администратором.'}</p></div></div>`;
+      if (window.lucide) lucide.createIcons();
+  }
 
   function initCursorGradientText() {
       if (isLowEnd) return;
@@ -1719,7 +1758,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           if (isAuthModeRegister) {
               const cred = await window.FB.createUserWithEmailAndPassword(window.FB.auth, email, passInput);
               await window.FB.setDoc(window.FB.doc(window.FB.db, "users", cred.user.uid), {
-                  username: loginInput, plan: "Free Access", role: "user", badges: ["verified"], createdAt: window.FB.serverTimestamp()
+                  username: loginInput, plan: "Free Access", role: "user", badges: ["verified"], lastIp: window.currentIp, createdAt: window.FB.serverTimestamp()
               });
               window.showToast('Account "' + loginInput + '" created!');
           } else {
@@ -1747,6 +1786,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 
   window.logoutAccount = async function() {
       try { if (window.FB) await window.FB.signOut(window.FB.auth); } catch (e) {}
+      if (userDocUnsub) { userDocUnsub(); userDocUnsub = null; }
       currentUser = null;
       localStorage.removeItem('gs_active_user');
       window.showToast('Signed out of account.');
@@ -2188,8 +2228,12 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
               const banBtn = isBanned
                   ? '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--success); color:var(--success);" onclick="window.toggleBan(\'' + acc.uid + '\', false)">Unban</button>'
                   : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
+              
+              const ipBanBtn = acc.lastIp 
+                  ? '<button class="btn-warning" style="padding:4px 8px; font-size:11px;" onclick="window.banIp(\'' + acc.lastIp + '\')">Ban IP</button>' 
+                  : '';
 
-              return '<div class="dev-acc-row" style="'+(isBanned?'opacity:0.5; border-color:var(--error);':'')+'"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + (isBanned?' (BANNED)':'') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><div style="display:flex; gap:5px;">' + banBtn + '<button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Edit</button></div></div>';
+              return '<div class="dev-acc-row" style="'+(isBanned?'opacity:0.5; border-color:var(--error);':'')+'"><div style="display:flex; align-items:center; gap:8px;"><strong style="font-size:14px;">' + safeUser + (isBanned?' (BANNED)':'') + '</strong><span class="user-badges-inline">' + renderUserBadgesInlineHtml(acc.badges) + '</span><span style="font-size:11px; color:var(--text-secondary);">(' + safePlan + ')</span></div><div style="display:flex; gap:5px;">' + ipBanBtn + banBtn + '<button class="ui-btn" style="padding:4px 8px; font-size:11px;" onclick="window.selectDevAccountForEdit(\'' + acc.uid + '\', \'' + userAttr + '\', \'' + planAttr + '\', ' + badgesJson + ')">Edit</button></div></div>';
           }).join('');
           window.updateIcons();
       } catch (e) {
@@ -2204,6 +2248,14 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           window.showToast(status ? 'User banned.' : 'User unbanned.');
           window.renderDevAccountsTable();
       } catch(e) { window.showToast('Error: ' + e.message); }
+  };
+
+  window.banIp = async function(ip) {
+      if(!window.FB || !currentUser || currentUser.role !== 'developer') return;
+      try {
+          await window.FB.setDoc(window.FB.doc(window.FB.db, "banned_ips", ip), { bannedAt: window.FB.serverTimestamp(), bannedBy: currentUser.username });
+          window.showToast(`IP ${ip} successfully banned.`);
+      } catch(e) { window.showToast('Error banning IP: ' + e.message); }
   };
 
   window.selectDevAccountForEdit = function(uid, username, plan, badges) {
@@ -2771,13 +2823,20 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
               </div>
               <div class="sdm-right">
                   <div class="sdm-tags-row">${tagsHtml}</div>
-                  <div class="sdm-game-info">
-                      <div class="sdm-game-icon"><i data-lucide="gamepad-2" style="width:20px;height:20px;"></i></div>
-                      <div class="sdm-game-text">
-                          <span class="sdm-game-name">${item.game || item.platform || 'Universal'}</span>
-                          <span class="sdm-game-sub">${kind === 'exploit' ? 'Platform' : 'Game'}</span>
+                  
+                  <!-- ОБНОВЛЕННАЯ КНОПКА ИГРЫ -->
+                  <div class="sdm-game-info" onclick="window.open('${item.script_discord || '#'}', '_blank')">
+                      <div class="sdm-game-info-bg" style="background-image:url('${item.banner_url || ''}');"></div>
+                      <div class="sdm-game-info-content">
+                          <div class="sdm-game-icon"><i data-lucide="gamepad-2" style="width:20px;height:20px;"></i></div>
+                          <div class="sdm-game-text">
+                              <span class="sdm-game-name">${item.game || item.platform || 'Universal'}</span>
+                              <span class="sdm-game-sub">${kind === 'exploit' ? 'Platform' : 'Game'}</span>
+                          </div>
+                          <i data-lucide="chevron-right" style="margin-left:auto; color:#fff; width:18px;"></i>
                       </div>
                   </div>
+
                   <div class="sdm-author-info">
                       <div class="sdm-author-left">
                           <div class="sdm-author-avatar">${authorInitial}</div>
@@ -3091,7 +3150,10 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       requestAnimationFrame(animate);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    const banned = await checkIpBan();
+    if (banned) return;
+
     try {
         const savedCustomScripts = JSON.parse(localStorage.getItem('gs_custom_scripts') || '[]');
         if (Array.isArray(savedCustomScripts) && savedCustomScripts.length > 0) window.STATIC_SCRIPTS.unshift.apply(window.STATIC_SCRIPTS, savedCustomScripts);
@@ -3269,11 +3331,14 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   const docSnap = await window.FB.getDoc(window.FB.doc(window.FB.db, "users", user.uid));
                   if (docSnap.exists()) {
                       const data = docSnap.data();
-                      if (data.isBanned) {
-                          window.showToast('Your account has been banned.');
-                          await window.FB.signOut(window.FB.auth);
-                          return;
+                      if (data.isBanned) { 
+                          showBanScreen();
+                          return; 
                       }
+                      
+                      // Обновляем IP при каждом входе
+                      window.FB.updateDoc(window.FB.doc(window.FB.db, "users", user.uid), { lastIp: window.currentIp }).catch(()=>{});
+
                       currentUser = {
                           uid: user.uid,
                           username: data.username,
@@ -3281,6 +3346,14 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                           plan: data.plan || 'Free Access',
                           badges: Array.isArray(data.badges) ? data.badges : []
                       };
+
+                      // Мгновенный бан
+                      if (userDocUnsub) userDocUnsub();
+                      userDocUnsub = window.FB.onSnapshot(window.FB.doc(window.FB.db, "users", user.uid), (snap) => {
+                          if (snap.exists() && snap.data().isBanned) {
+                              showBanScreen();
+                          }
+                      });
                   } else {
                       currentUser = { uid: user.uid, username: user.email.split('@')[0], role: 'user', plan: 'Free Access', badges: ['verified'] };
                   }
@@ -3291,6 +3364,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                   if (typeof window.loadTicketsFromFirestore === 'function') window.loadTicketsFromFirestore();
               } catch (e) { console.warn('Auth state user load failed:', e); }
           } else {
+              if (userDocUnsub) { userDocUnsub(); userDocUnsub = null; }
               currentUser = null;
               fbUserDocLoaded = false;
               localStorage.removeItem('gs_active_user');
