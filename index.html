@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -488,7 +487,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
     width: 100%; max-width: 950px; max-height: 92vh; overflow: hidden;
     display: flex; flex-direction: column; box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(16,185,129,0.1);
     position: relative;
-    transform: scale(0.85); /* Changed for center-out animation */
+    transform: scale(0.85);
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
@@ -513,7 +512,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 .sdm-right { display: flex; flex-direction: column; gap: 16px; }
 .sdm-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
 
-/* Обновленная кнопка игры с блюром */
 .sdm-game-info {
     position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-border);
     transition: 0.2s; cursor: pointer; padding: 16px; display: block; text-decoration: none;
@@ -969,6 +967,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                             <div class="file-upload-btn"><i data-lucide="upload" style="width:16px;height:16px;"></i> Загрузить файл с ПК</div>
                         </div>
                     </div>
+                    <!-- Новое поле для фона игры -->
+                    <input type="text" id="devScrGameImage" class="auth-input" placeholder="Game Background Image URL (for modal)" style="margin-top:-4px;" />
 
                     <div class="dev-form-grid">
                         <input type="color" id="devScrAuthorColor" class="auth-input" style="height:42px; padding:4px;" title="Author Color" />
@@ -1039,6 +1039,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
                             <div class="file-upload-btn"><i data-lucide="upload" style="width:16px;height:16px;"></i> Загрузить файл с ПК</div>
                         </div>
                     </div>
+                    <!-- Новое поле для фона игры -->
+                    <input type="text" id="devExpGameImage" class="auth-input" placeholder="Game Background Image URL (for modal)" style="margin-top:-4px;" />
 
                     <div class="dev-form-grid">
                         <input type="color" id="devExpAuthorColor" class="auth-input" style="height:42px; padding:4px;" title="Author Color" />
@@ -1253,22 +1255,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       tester: { icon: "flask-conical", cssClass: "badge-tester", title_en: "Beta Tester", title_ru: "Бета-тестер", desc_en: "Tests upcoming scripts before public release.", desc_ru: "Тестирует закрытые скрипты до релиза." }
   };
 
-  // Новые фоны для разных игр (можно дополнять)
-  window.GAME_IMAGES = {
-      "blox fruits": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop", // Пиратская тематика
-      "muscle legends": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", // Спортзал
-      "universal": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop", // Киберспорт
-      "any games": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
-  };
-  const DEFAULT_GAME_IMG = "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop";
-
   function getGameImage(gameName) {
-      if (!gameName) return window.GAME_IMAGES["universal"];
-      const lower = gameName.toLowerCase();
-      for (const key in window.GAME_IMAGES) {
-          if (lower.includes(key)) return window.GAME_IMAGES[key];
-      }
-      return window.GAME_IMAGES["universal"];
+      // Больше не используется для автоматической подстановки
+      return '';
   }
 
   let authCaptcha = { num1: 0, num2: 0, answer: 0 };
@@ -2123,6 +2112,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       document.getElementById('devScrVersion').value = t.version;
       document.getElementById('devScrAuthor').value = t.author;
       document.getElementById('devScrBanner').value = t.banner_url;
+      document.getElementById('devScrGameImage').value = t.game_image_url || '';
       document.getElementById('devScrDesc').value = t.description;
       document.getElementById('devScrCode').value = t.script_code;
       document.getElementById('devScrDiscord').value = t.script_discord || '';
@@ -2149,7 +2139,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           editingScriptId = null;
           btnText.textContent = "Publish Script";
           if (delBar) delBar.classList.remove('show');
-          ['devScrTitle','devScrGame','devScrBanner','devScrVersion','devScrAuthor','devScrDiscord','devScrDesc','devScrCode','devScrGames'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devScrTitle','devScrGame','devScrBanner','devScrVersion','devScrAuthor','devScrDiscord','devScrDesc','devScrCode','devScrGames','devScrGameImage'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
           const st = document.getElementById('devScrStatus'); if(st) st.value = 'published';
           document.getElementById('devScrAuthorColor').value = '#ffffff';
           document.getElementById('devScrAuthorFont').value = 'inherit';
@@ -2166,6 +2156,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       document.getElementById('devScrTitle').value = script.title || '';
       document.getElementById('devScrGame').value = script.game || '';
       document.getElementById('devScrBanner').value = script.banner_url || '';
+      document.getElementById('devScrGameImage').value = script.game_image_url || '';
       document.getElementById('devScrVersion').value = script.version || '';
       document.getElementById('devScrAuthor').value = script.author || '';
       document.getElementById('devScrDiscord').value = script.script_discord || '';
@@ -2187,6 +2178,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const title = document.getElementById('devScrTitle').value.trim();
       const game = document.getElementById('devScrGame').value.trim() || 'Universal';
       const banner = document.getElementById('devScrBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
+      const gameImage = document.getElementById('devScrGameImage').value.trim();
       const version = document.getElementById('devScrVersion').value.trim();
       const author = document.getElementById('devScrAuthor').value.trim();
       const authorColor = document.getElementById('devScrAuthorColor').value;
@@ -2204,7 +2196,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           title, game, version, author, status, supported_games,
           author_color: authorColor, author_font: authorFont, author_badges: authorBadges,
           tags: tempScrTags.slice(),
-          banner_url: banner, script_code: code, description: desc,
+          banner_url: banner,
+          game_image_url: gameImage,
+          script_code: code, description: desc,
           script_discord: discord,
           updatedAt: window.FB.serverTimestamp()
       };
@@ -2261,7 +2255,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           editingExploitId = null;
           btnText.textContent = "Publish Exploit";
           if (delBar) delBar.classList.remove('show');
-          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpVersion','devExpAuthor','devExpInfo','devExpDesc','devExpGames'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+          ['devExpTitle','devExpPlatform','devExpBanner','devExpLink','devExpVersion','devExpAuthor','devExpInfo','devExpDesc','devExpGames','devExpGameImage'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
           const st = document.getElementById('devExpStatus'); if(st) st.value = 'published';
           document.getElementById('devExpAuthorColor').value = '#ffffff';
           document.getElementById('devExpAuthorFont').value = 'inherit';
@@ -2278,6 +2272,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       document.getElementById('devExpTitle').value = exp.title || '';
       document.getElementById('devExpPlatform').value = exp.platform || '';
       document.getElementById('devExpBanner').value = exp.banner_url || '';
+      document.getElementById('devExpGameImage').value = exp.game_image_url || '';
       document.getElementById('devExpLink').value = exp.link || '';
       document.getElementById('devExpVersion').value = exp.version || '';
       document.getElementById('devExpAuthor').value = exp.author || '';
@@ -2299,6 +2294,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const title = document.getElementById('devExpTitle').value.trim();
       const platform = document.getElementById('devExpPlatform').value.trim() || 'Windows';
       const banner = document.getElementById('devExpBanner').value.trim() || 'https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png';
+      const gameImage = document.getElementById('devExpGameImage').value.trim();
       const link = document.getElementById('devExpLink').value.trim();
       const version = document.getElementById('devExpVersion').value.trim();
       const author = document.getElementById('devExpAuthor').value.trim();
@@ -2316,7 +2312,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           title, platform, version, author, status, supported_games,
           author_color: authorColor, author_font: authorFont, author_badges: authorBadges,
           tags: tempExpTags.slice(),
-          banner_url: banner, link, description: desc, info,
+          banner_url: banner,
+          game_image_url: gameImage,
+          link, description: desc, info,
           updatedAt: window.FB.serverTimestamp()
       };
 
@@ -3021,7 +3019,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       const infoHtml = item.executors_info ? `<div style="font-size:11px; color:var(--text-secondary); font-family:var(--font-mono); margin-top:10px; padding-top:10px; border-top:1px solid var(--card-border);">${item.executors_info.replace(/</g, '&lt;')}</div>` : '';
       const discordHtml = item.script_discord ? `<a href="${item.script_discord}" target="_blank" class="ui-btn" style="margin-top:10px; display:inline-flex; text-decoration:none; font-size:11px; padding:6px 10px;"><i data-lucide="message-square" style="width:14px;height:14px;"></i> Discord</a>` : '';
 
-      const gameBgImg = getGameImage(item.game || item.platform);
+      // Используем вручную заданную картинку игры, если она есть, иначе баннер
+      const gameBgImg = item.game_image_url || item.banner_url || '';
 
       modal.innerHTML = `
           <div class="sdm-header">
@@ -3045,7 +3044,7 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
               <div class="sdm-right">
                   <div class="sdm-tags-row">${tagsHtml}</div>
 
-                  <!-- ОБНОВЛЕННАЯ КНОПКА ИГРЫ -->
+                  <!-- КНОПКА ИГРЫ С КАСТОМНЫМ ФОНОМ -->
                   <div class="sdm-game-info" onclick="window.open('${item.script_discord || '#'}', '_blank')">
                       <div class="sdm-game-info-bg" style="background-image:url('${gameBgImg}');"></div>
                       <div class="sdm-game-info-content">
@@ -3509,7 +3508,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       script_discord: "https://discord.gg/9eFf93Kg8D",
       version: "v1.4",
       author: "silencedevs",
-      status: "published"
+      status: "published",
+      game_image_url: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"
   };
 
   window.STATIC_SCRIPTS = [
@@ -3522,7 +3522,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           executors_info: "Working on exploits: Delta, Madium",
           script_discord: "https://discord.com/invite/hohohub",
           version: "v2.1",
-          author: "acsu123"
+          author: "acsu123",
+          game_image_url: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop"
       },
       {
           title: "Ronix Universal Hub", game: "Any Games (71+ Supported)",
@@ -3552,7 +3553,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           executors_info: "Working on exploits: Delta, Real, Nexomia, Arceus X neo, Madium, Velocity",
           script_discord: "https://discord.gg/9eFf93Kg8D",
           version: "v3.0",
-          author: "DancingUnicornLol"
+          author: "DancingUnicornLol",
+          game_image_url: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
       }
   ];
 
@@ -3565,7 +3567,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           description: "The most stable and simple phone exploit, with frequent updates. It features a simple one-step key system.",
           info: "Requires Key: Yes",
           version: "2.733.988",
-          author: "WeAreDevs"
+          author: "WeAreDevs",
+          game_image_url: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
       },
       {
           title: "Solara", platform: "Windows",
@@ -3575,7 +3578,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           description: "A popular and lightweight PC exploit for Roblox, designed to bypass modern anti-cheats. It is free, highly accessible with a keyless system, and provides stable execution for standard and medium-level scripts.",
           info: "Requires Key: No | Version: V3",
           version: "V3",
-          author: "WeAreDevs"
+          author: "WeAreDevs",
+          game_image_url: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
       },
       {
           title: "Nexomia", platform: "Windows",
@@ -3585,7 +3589,8 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
           description: "A highly powerful and advanced script executor for Roblox. It is known for its strong performance with complex scripts, all while offering a completely keyless experience for maximum convenience.",
           info: "Requires Key: No",
           version: "latest",
-          author: "Nexomia"
+          author: "Nexomia",
+          game_image_url: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
       }
   ];
 </script>
@@ -3732,9 +3737,9 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
       }
 
       try {
-          const q = window.FB.query(window.FB.collection(window.FB.db, "tickets"),
-              window.FB.where("creatorId", "==", currentUser.uid),
-              window.FB.orderBy("createdAt", "desc"),
+          const q = window.FB.query(window.FB.collection(window.FB.db, "tickets"), 
+              window.FB.where("creatorId", "==", currentUser.uid), 
+              window.FB.orderBy("createdAt", "desc"), 
               window.FB.limit(1)
           );
           const snap = await window.FB.getDocs(q);
