@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,8 +28,6 @@
   --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'Geist Mono', 'JetBrains Mono', 'Fira Code', monospace;
   --font-display: 'Orbitron', sans-serif;
-
-  --planet-accent: #10b981;
 }
 
 [data-theme="light"] {
@@ -68,90 +67,6 @@ input, textarea, select { user-select: text; -webkit-user-select: text; font-siz
 *::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.42)); border-radius: 999px; }
 *::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.7); }
 
-/* ================= CUSTOM CURSOR ================= */
-#custom-cursor {
-    position: fixed; top: 0; left: 0; width: 8px; height: 8px;
-    background: #fff; border-radius: 50%; pointer-events: none; z-index: 999999;
-    transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s;
-    mix-blend-mode: difference;
-}
-#custom-cursor-ring {
-    position: fixed; top: 0; left: 0; width: 36px; height: 36px;
-    border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%; pointer-events: none; z-index: 999998;
-    transform: translate(-50%, -50%); transition: transform 0.1s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
-}
-body.hovering-interactive #custom-cursor { width: 12px; height: 12px; background: var(--planet-accent); }
-body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; border-color: var(--planet-accent); background: rgba(16, 185, 129, 0.1); }
-
-/* ================= SLIDING PILL ================= */
-.nav-container { position: relative; display: flex; gap: 8px; }
-.nav-pill {
-    position: absolute; top: 0; bottom: 0; background: rgba(255,255,255,0.1);
-    border-radius: 10px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 0; pointer-events: none; opacity: 0;
-}
-.nav-link { position: relative; z-index: 1; }
-
-/* ================= BORDER BEAM ================= */
-.script-card { position: relative; }
-.script-card::before {
-    content: ""; position: absolute; inset: -1px; z-index: -1;
-    background: conic-gradient(from 0deg, transparent 0%, transparent 70%, var(--planet-accent) 100%);
-    border-radius: 21px; opacity: 0; transition: opacity 0.3s;
-    animation: borderBeam 3s linear infinite;
-}
-.script-card:hover::before { opacity: 1; }
-@keyframes borderBeam { 100% { transform: rotate(360deg); } }
-
-/* ================= 3D TILT ================= */
-.card-3d-wrap { perspective: 1000px; }
-.script-card {
-    transition: transform 0.1s ease-out, box-shadow 0.2s, border-color 0.2s;
-    transform-style: preserve-3d;
-}
-.script-card:hover { transform: none; box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 20px rgba(16,185,129,0.2); }
-.card-glare {
-    position: absolute; inset: 0; border-radius: 20px; pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
-    opacity: 0; transition: opacity 0.2s; z-index: 10;
-}
-
-/* ================= MINI IDE ================= */
-.sdm-code-box { background: #0d0d12; border: 1px solid var(--card-border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-.sdm-code-header { background: rgba(255,255,255,0.03); padding: 8px 12px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-.ide-dots { display: flex; gap: 6px; }
-.ide-dot { width: 10px; height: 10px; border-radius: 50%; }
-.ide-dot.red { background: #ff5f56; }
-.ide-dot.yellow { background: #ffbd2e; }
-.ide-dot.green { background: #27c93f; }
-.ide-filename { color: var(--text-secondary); font-family: var(--font-mono); }
-.sdm-code-area { padding: 12px; display: flex; overflow: auto; max-height: 250px; }
-.line-numbers { display: flex; flex-direction: column; text-align: right; padding-right: 12px; color: #4b5563; border-right: 1px solid rgba(255,255,255,0.05); font-family: var(--font-mono); font-size: 12px; user-select: none; }
-.code-content { padding-left: 12px; font-family: var(--font-mono); font-size: 12px; color: #e5e7eb; white-space: pre-wrap; word-break: break-all; }
-.token-keyword { color: #c586c0; }
-.token-function { color: #dcdcaa; }
-.token-string { color: #ce9178; }
-
-/* ================= SKELETON LOADER ================= */
-.skeleton-card { background: rgba(255,255,255,0.03); border-radius: 20px; height: 300px; overflow: hidden; position: relative; }
-.skeleton-shimmer { position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); animation: shimmer 1.5s infinite; }
-@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-/* ================= HOLD-TO-VERIFY CAPTCHA ================= */
-.hold-captcha-btn {
-    width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--card-border);
-    background: rgba(0,0,0,0.3); color: var(--text-secondary); font-weight: 600;
-    cursor: pointer; position: relative; overflow: hidden; user-select: none;
-    transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;
-}
-.hold-captcha-btn.charging { border-color: var(--success); color: var(--success); }
-.hold-progress { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: rgba(16,185,129,0.2); z-index: 0; transition: width 0.1s linear; }
-.hold-text { position: relative; z-index: 1; pointer-events: none; }
-
-/* ================= TEXT SCRAMBLE ================= */
-.scramble-text { font-family: var(--font-mono); color: var(--planet-accent); }
-
-/* ================= MISC UPDATES ================= */
 .toast-notification { position: fixed; bottom: -100px; left: 24px; background: rgba(20,20,26,0.96); border: 1px solid var(--card-border); padding: 14px 18px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; z-index: 99999; transition: bottom 0.5s var(--smooth), opacity 0.5s; opacity: 0; width: 90%; max-width: 350px; backdrop-filter: blur(10px); }
 .toast-notification.show { bottom: 24px; opacity: 1; }
 .toast-text p { margin: 0; font-size: 14px; color: var(--text-primary); font-weight: 500; font-family: var(--font-sans); }
@@ -460,7 +375,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
     backdrop-filter: blur(10px);
 }
 [data-theme="light"] .script-card { background: #ffffff; }
-.script-card:hover { border-color: var(--success); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 15px rgba(16,185,129,0.15); }
+.script-card:hover { border-color: var(--success); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 15px rgba(16,185,129,0.15); }
 
 .script-banner { width: 100%; height: 140px; flex: 0 0 140px; background-size: cover; background-position: center; border-bottom: 1px solid var(--card-border); transition: transform 0.4s var(--smooth); }
 .script-card:hover .script-banner { transform: scale(1.05); }
@@ -573,7 +488,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
     width: 100%; max-width: 950px; max-height: 92vh; overflow: hidden;
     display: flex; flex-direction: column; box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(16,185,129,0.1);
     position: relative;
-    transform: scale(0.85);
+    transform: scale(0.85); /* Changed for center-out animation */
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
@@ -591,10 +506,14 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
 .sdm-body { padding: 20px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .sdm-left { display: flex; flex-direction: column; gap: 16px; }
 .sdm-banner { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-radius: 12px; border: 1px solid var(--card-border); }
+.sdm-code-box { background: #0d0d12; border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.sdm-code-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); font-weight: 600; }
+.sdm-code-area { font-family: var(--font-mono); font-size: 12px; color: #a5b4fc; line-height: 1.5; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
 
 .sdm-right { display: flex; flex-direction: column; gap: 16px; }
 .sdm-tags-row { display: flex; flex-wrap: wrap; gap: 6px; }
 
+/* Обновленная кнопка игры с блюром */
 .sdm-game-info {
     position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--card-border);
     transition: 0.2s; cursor: pointer; padding: 16px; display: block; text-decoration: none;
@@ -672,7 +591,6 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
   .real-planet-sphere.ink-gripping .planet-half.half-right { transform: translate(36px, 0px) rotate(2deg) !important; }
   .support-tickets-card { flex-direction: column; }
   .tickets-sidebar { width: 100%; max-height: 200px; }
-  #custom-cursor, #custom-cursor-ring { display: none !important; }
 }
 
 @media (max-width: 640px) {
@@ -692,9 +610,6 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
 </style>
 </head>
 <body id="appBody" class="lang-transition">
-
-  <div id="custom-cursor"></div>
-  <div id="custom-cursor-ring"></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -878,11 +793,11 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       <div class="auth-field-group">
         <input type="text" id="authLoginInput" class="auth-input" data-i18n-ph="auth_user_ph" placeholder="Login / Username" autocomplete="off" />
         <input type="password" id="authPassInput" class="auth-input" data-i18n-ph="auth_pass_ph" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter') window.submitAuthForm()" />
-        <input type="text" id="authHpInput" style="position:absolute; left:-9999px; opacity:0;" tabindex="-1" autocomplete="off" />
       </div>
-
-      <div id="authCaptchaContainer"></div>
-
+      <div style="display:flex; align-items:center; gap:10px; text-align:left; margin-top:-4px;">
+        <span id="authCaptchaLabel" style="font-weight:700; font-family:var(--font-mono); font-size:16px; color:var(--text-primary);">3 + 4 =</span>
+        <input type="number" id="authCaptchaInput" class="auth-input" style="width:80px; padding:8px;" placeholder="?" />
+      </div>
       <button class="auth-submit-btn" id="authSubmitBtn" onclick="window.submitAuthForm()">
         <i data-lucide="log-in" style="width:16px;height:16px;"></i>
         <span id="authSubmitBtnText" data-i18n="auth_btn">SIGN IN</span>
@@ -897,8 +812,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           <img src="https://raw.githubusercontent.com/GlobalScriptsDevelopment/Scripts/refs/heads/main/Icons/IconShow.png" alt="Logo" />
           <h1 class="cursor-gradient-text">Global Script's</h1>
       </div>
-      <div class="desktop-nav nav-container" id="desktopNavContainer">
-          <div class="nav-pill" id="navPill"></div>
+      <div class="desktop-nav">
           <button class="nav-link nav-btn active" data-target="tab-main" onclick="window.switchTab('tab-main', true)" data-i18n="m_main">Profile</button>
           <button class="nav-link nav-btn" data-target="tab-scripts" onclick="window.switchTab('tab-scripts', true)" data-i18n="m_scr">Scripts</button>
           <button class="nav-link nav-btn" data-target="tab-exploits" onclick="window.switchTab('tab-exploits', true)" data-i18n="m_exp">Exploits</button>
@@ -1221,11 +1135,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                 </select>
             </div>
         </div>
-        <div class="cards-masonry fade-container" id="userScriptsContainer">
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-        </div>
+        <div class="cards-masonry fade-container" id="userScriptsContainer"></div>
       </div>
 
       <div class="tab-content" id="tab-exploits">
@@ -1243,11 +1153,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                 </select>
             </div>
         </div>
-        <div class="cards-masonry fade-container" id="exploitsContainer">
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-            <div class="skeleton-card"><div class="skeleton-shimmer"></div></div>
-        </div>
+        <div class="cards-masonry fade-container" id="exploitsContainer"></div>
       </div>
 
       <div class="tab-content" id="tab-keys">
@@ -1307,8 +1213,10 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           <h3 style="margin:0; font-family:var(--font-display);">Create New Ticket</h3>
           <input type="text" id="ticketTitleInput" class="auth-input" placeholder="Ticket title" />
           <textarea id="ticketDescInput" class="dev-textarea" placeholder="Describe your problem..."></textarea>
-          <input type="text" id="ticketHpInput" style="position:absolute; left:-9999px; opacity:0;" tabindex="-1" autocomplete="off" />
-          <div id="ticketCaptchaContainer"></div>
+          <div style="display:flex; align-items:center; gap:10px;">
+              <span id="ticketCaptchaLabel" style="font-weight:700; font-family:var(--font-mono); font-size:14px;">3 + 4 =</span>
+              <input type="number" id="ticketCaptchaInput" class="auth-input" style="width:80px; padding:8px;" placeholder="?" />
+          </div>
           <div style="display:flex; gap:10px;">
               <button class="copy-btn" style="background:var(--success); color:#fff;" onclick="window.createTicketSubmit()">Create Ticket</button>
               <button class="ui-btn" onclick="document.getElementById('ticketModal').classList.remove('show')">Cancel</button>
@@ -1345,10 +1253,11 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       tester: { icon: "flask-conical", cssClass: "badge-tester", title_en: "Beta Tester", title_ru: "Бета-тестер", desc_en: "Tests upcoming scripts before public release.", desc_ru: "Тестирует закрытые скрипты до релиза." }
   };
 
+  // Новые фоны для разных игр (можно дополнять)
   window.GAME_IMAGES = {
-      "blox fruits": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop",
-      "muscle legends": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop",
-      "universal": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop",
+      "blox fruits": "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=1000&auto=format&fit=crop", // Пиратская тематика
+      "muscle legends": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", // Спортзал
+      "universal": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop", // Киберспорт
       "any games": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop"
   };
   const DEFAULT_GAME_IMG = "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1000&auto=format&fit=crop";
@@ -1362,40 +1271,27 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       return window.GAME_IMAGES["universal"];
   }
 
-  // ================= SECURITY SYSTEMS =================
-  let pageLoadTime = Date.now();
-  let mouseMoved = false;
-  let keyPressed = false;
-  let lastChatMessageTime = 0;
+  let authCaptcha = { num1: 0, num2: 0, answer: 0 };
+  let ticketCaptcha = { num1: 0, num2: 0, answer: 0 };
 
-  document.addEventListener('mousemove', () => { mouseMoved = true; });
-  document.addEventListener('keydown', () => { keyPressed = true; });
+  function initAuthCaptcha() {
+      const n1 = Math.floor(Math.random() * 10) + 1;
+      const n2 = Math.floor(Math.random() * 10) + 1;
+      authCaptcha = { num1: n1, num2: n2, answer: n1 + n2 };
+      const el = document.getElementById('authCaptchaLabel');
+      if (el) el.textContent = `${n1} + ${n2} =`;
+      const input = document.getElementById('authCaptchaInput');
+      if (input) input.value = '';
+  }
 
-  const DEV_KEY_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // sha256('admin')
-
-  async function checkIpBan() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const devKey = urlParams.get('dev_key');
-
-      if (devKey && devKey === 'admin') {
-          console.log("Dev bypass active.");
-          return false;
-      }
-
-      try {
-          const res = await fetch('https://api.ipify.org?format=json');
-          const data = await res.json();
-          window.currentIp = data.ip;
-          if (window.FB) {
-              const ipDoc = await window.FB.getDoc(window.FB.doc(window.FB.db, "banned_ips", window.currentIp));
-              if (ipDoc.exists()) {
-                  document.body.innerHTML = `<div class="maintenance-overlay" style="display:flex;"><div class="maintenance-content"><div class="maintenance-icon"><i data-lucide="shield-x" style="width:56px;height:56px;color:var(--error);"></i></div><h1>IP BANNED</h1><p>Ваш IP-адрес заблокирован навсегда.</p></div></div>`;
-                  if (window.lucide) lucide.createIcons();
-                  return true;
-              }
-          }
-      } catch(e) { console.warn("IP check failed", e); }
-      return false;
+  function initTicketCaptcha() {
+      const n1 = Math.floor(Math.random() * 10) + 1;
+      const n2 = Math.floor(Math.random() * 10) + 1;
+      ticketCaptcha = { num1: n1, num2: n2, answer: n1 + n2 };
+      const el = document.getElementById('ticketCaptchaLabel');
+      if (el) el.textContent = `${n1} + ${n2} =`;
+      const input = document.getElementById('ticketCaptchaInput');
+      if (input) input.value = '';
   }
 
   async function checkLoginLock(email) {
@@ -1426,68 +1322,6 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       return localStorage.getItem(`voted_${kind}_${id}`);
   }
 
-  // ================= HOLD-TO-VERIFY CAPTCHA =================
-  window.captchaStates = {};
-
-  window.initCaptcha = function(containerId) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-
-      container.innerHTML = `
-          <div class="hold-captcha-btn" id="${containerId}_btn">
-              <div class="hold-progress" id="${containerId}_progress"></div>
-              <i data-lucide="shield-check" class="hold-text" style="width:16px;height:16px;"></i>
-              <span class="hold-text">Удерживайте 1.2 сек</span>
-          </div>
-      `;
-      window.updateIcons();
-
-      let holdTimer = null;
-      let holdStart = 0;
-      const btn = document.getElementById(`${containerId}_btn`);
-      const progress = document.getElementById(`${containerId}_progress`);
-      window.captchaStates[containerId] = false;
-
-      const startHold = (e) => {
-          e.preventDefault();
-          if (window.captchaStates[containerId]) return;
-          btn.classList.add('charging');
-          holdStart = Date.now();
-          progress.style.width = '0%';
-
-          const animate = () => {
-              const elapsed = Date.now() - holdStart;
-              const pct = Math.min(100, (elapsed / 1200) * 100);
-              progress.style.width = pct + '%';
-              if (elapsed >= 1200) {
-                  window.captchaStates[containerId] = true;
-                  btn.innerHTML = '<i data-lucide="check-circle" style="width:16px;height:16px;"></i> Проверено';
-                  window.updateIcons();
-                  btn.style.borderColor = 'var(--success)';
-                  btn.style.color = 'var(--success)';
-                  progress.style.width = '100%';
-                  return;
-              }
-              holdTimer = requestAnimationFrame(animate);
-          };
-          animate();
-      };
-
-      const stopHold = () => {
-          if (window.captchaStates[containerId]) return;
-          cancelAnimationFrame(holdTimer);
-          btn.classList.remove('charging');
-          progress.style.width = '0%';
-      };
-
-      btn.addEventListener('mousedown', startHold);
-      btn.addEventListener('touchstart', startHold, { passive: false });
-      btn.addEventListener('mouseup', stopHold);
-      btn.addEventListener('mouseleave', stopHold);
-      btn.addEventListener('touchend', stopHold);
-  };
-
-  // ================= MAIN VARIABLES =================
   let currentLang = 'en';
   let renderScriptsTimeout;
   let renderExploitsTimeout;
@@ -1506,170 +1340,461 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
   let userDocUnsub = null;
   let currentIp = '';
 
+  // ==================== MAINTENANCE / SITE CONTROL ====================
+  const SITE_OWNER_USERNAME = "Rob4ik02";
+  let maintenanceActive = false;
+  let maintenanceUnsub = null;
+
+  function isSiteOwner() {
+      if (!currentUser || !currentUser.username) return false;
+      if (SITE_OWNER_USERNAME === 'CHANGE_ME' || !SITE_OWNER_USERNAME) return false;
+      return currentUser.username.toLowerCase() === SITE_OWNER_USERNAME.toLowerCase();
+  }
+
+  function applyMaintenanceState() {
+      const overlay = document.getElementById('maintenanceOverlay');
+      if (!overlay) return;
+      const currentRoute = window.getCurrentRouteTarget ? window.getCurrentRouteTarget() : null;
+      const onLoginPage = currentRoute === 'login';
+      const owner = isSiteOwner();
+      const shouldBlock = maintenanceActive && !owner && !onLoginPage;
+      overlay.style.display = shouldBlock ? 'flex' : 'none';
+      document.body.style.overflow = shouldBlock ? 'hidden' : '';
+
+      const btnText = document.getElementById('maintenanceBtnText');
+      const btn = document.getElementById('maintenanceToggleBtn');
+      if (btnText) btnText.textContent = maintenanceActive ? 'Resume Site' : 'Pause Site';
+      if (btn) {
+          btn.style.background = maintenanceActive ? 'var(--success)' : '';
+          const icon = btn.querySelector('i[data-lucide]');
+          if (icon) icon.setAttribute('data-lucide', maintenanceActive ? 'play-circle' : 'pause-circle');
+      }
+      window.updateIcons();
+  }
+
+  async function checkMaintenanceState() {
+      if (!window.FB) return;
+      try {
+          const snap = await window.FB.getDoc(window.FB.doc(window.FB.db, "site_config", "maintenance"));
+          maintenanceActive = snap.exists() ? !!snap.data().enabled : false;
+          applyMaintenanceState();
+      } catch (e) {
+          console.warn('Maintenance check failed:', e);
+      }
+  }
+
+  function subscribeMaintenance() {
+      if (!window.FB || !window.FB.onSnapshot || maintenanceUnsub) return;
+      try {
+          maintenanceUnsub = window.FB.onSnapshot(
+              window.FB.doc(window.FB.db, "site_config", "maintenance"),
+              (snap) => {
+                  maintenanceActive = snap.exists() ? !!snap.data().enabled : false;
+                  applyMaintenanceState();
+              },
+              (err) => console.warn('Maintenance listener error:', err)
+          );
+      } catch (e) {}
+  }
+
+  window.toggleMaintenance = async function() {
+      if (!window.FB) return;
+      if (SITE_OWNER_USERNAME === 'CHANGE_ME' || !SITE_OWNER_USERNAME) {
+          window.showToast('Set SITE_OWNER_USERNAME in code first.');
+          return;
+      }
+      if (!isSiteOwner()) { window.showToast('Owner only.'); return; }
+      const newState = !maintenanceActive;
+      if (newState && !confirm('Pause the site? Every user except you will see the maintenance screen.')) return;
+      try {
+          await window.FB.setDoc(
+              window.FB.doc(window.FB.db, "site_config", "maintenance"),
+              { enabled: newState, updatedAt: window.FB.serverTimestamp(), by: currentUser.username },
+              { merge: true }
+          );
+          maintenanceActive = newState;
+          applyMaintenanceState();
+          window.showToast(newState ? 'Site paused. Only you can enter.' : 'Site resumed.');
+      } catch (e) {
+          window.showToast('Failed: ' + (e.message || 'error'));
+      }
+  };
+
   const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const isLowEnd = isMobileDevice || window.innerWidth <= 768 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
   if (isLowEnd) document.body.classList.add('low-perf');
 
-  // ================= CUSTOM CURSOR =================
-  function initCustomCursor() {
-      if (isMobileDevice || isLowEnd) return;
-      const cursor = document.getElementById('custom-cursor');
-      const ring = document.getElementById('custom-cursor-ring');
-
-      let mouseX = 0, mouseY = 0;
-      let ringX = 0, ringY = 0;
-
-      document.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-      });
-
-      function loop() {
-          ringX += (mouseX - ringX) * 0.15;
-          ringY += (mouseY - ringY) * 0.15;
-          ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-          requestAnimationFrame(loop);
+  // ==================== IP BAN SYSTEM ====================
+  async function checkIpBan() {
+      if (window.location.search.includes('bypass=true')) {
+          console.log("Dev bypass active. Skipping IP check.");
+          return false;
       }
-      loop();
 
-      document.addEventListener('mouseover', (e) => {
-          if (e.target.closest('button, a, .script-card, .nav-link, .ui-btn')) {
-              document.body.classList.add('hovering-interactive');
-          } else {
-              document.body.classList.remove('hovering-interactive');
+      try {
+          const res = await fetch('https://api.ipify.org?format=json');
+          const data = await res.json();
+          window.currentIp = data.ip;
+          if (window.FB) {
+              const ipDoc = await window.FB.getDoc(window.FB.doc(window.FB.db, "banned_ips", window.currentIp));
+              if (ipDoc.exists()) {
+                  document.body.innerHTML = `<div class="maintenance-overlay" style="display:flex;"><div class="maintenance-content"><div class="maintenance-icon"><i data-lucide="shield-x" style="width:56px;height:56px;color:var(--error);"></i></div><h1>IP BANNED</h1><p>Ваш IP-адрес заблокирован навсегда.</p></div></div>`;
+                  if (window.lucide) lucide.createIcons();
+                  return true;
+              }
           }
-      });
+      } catch(e) { console.warn("IP check failed", e); }
+      return false;
   }
 
-  // ================= SLIDING PILL =================
-  function updateNavPill() {
-      const activeBtn = document.querySelector('.desktop-nav .nav-link.active');
-      const pill = document.getElementById('navPill');
-      if (!activeBtn || !pill) return;
-
-      const containerRect = document.getElementById('desktopNavContainer').getBoundingClientRect();
-      const btnRect = activeBtn.getBoundingClientRect();
-
-      pill.style.opacity = '1';
-      pill.style.width = btnRect.width + 'px';
-      pill.style.left = (btnRect.left - containerRect.left) + 'px';
+  function showBanScreen(msg) {
+      if (userDocUnsub) userDocUnsub();
+      if (window.FB) window.FB.signOut(window.FB.auth);
+      document.body.innerHTML = `<div class="maintenance-overlay" style="display:flex;"><div class="maintenance-content"><div class="maintenance-icon"><i data-lucide="ban" style="width:56px;height:56px;color:var(--error);"></i></div><h1>BANNED</h1><p>${msg || 'Ваш аккаунт был заблокирован администратором.'}</p></div></div>`;
+      if (window.lucide) lucide.createIcons();
   }
 
-  // ================= TEXT SCRAMBLE =================
-  window.scrambleText = function(element, finalText) {
-      if (!element) return;
-      const chars = '!<>-_\\/[]{}—=+*^?#________';
-      let iteration = 0;
-      const interval = setInterval(() => {
-          element.innerText = finalText.split('')
-              .map((letter, index) => {
-                  if (index < iteration) return finalText[index];
-                  return chars[Math.floor(Math.random() * chars.length)];
-              })
-              .join('');
-
-          if (iteration >= finalText.length) {
-              clearInterval(interval);
-          }
-          iteration += 1 / 3;
-      }, 30);
-  };
-
-  // ================= 3D TILT =================
-  function applyTilt() {
-      if (isMobileDevice || isLowEnd) return;
-      const cards = document.querySelectorAll('.script-card');
-      cards.forEach(card => {
-          card.addEventListener('mousemove', (e) => {
-              const rect = card.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              const centerX = rect.width / 2;
-              const centerY = rect.height / 2;
-              const rotateX = ((y - centerY) / centerY) * -10;
-              const rotateY = ((x - centerX) / centerX) * 10;
-
-              card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-              card.style.zIndex = '10';
-          });
-
-          card.addEventListener('mouseleave', () => {
-              card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-              card.style.zIndex = '1';
-          });
-      });
-  }
-
-  // ================= NUMBER TICKER =================
-  function animateValue(obj, start, end, duration) {
-      let startTimestamp = null;
-      const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp;
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-          obj.innerHTML = Math.floor(progress * (end - start) + start);
-          if (progress < 1) {
-              window.requestAnimationFrame(step);
+  function initCursorGradientText() {
+      if (isLowEnd) return;
+      const elements = [];
+      const collect = () => {
+          elements.length = 0;
+          const list = document.querySelectorAll('.cursor-gradient-text');
+          for (let i = 0; i < list.length; i++) {
+              if (list[i].offsetParent !== null) elements.push({ el: list[i], rect: null });
           }
       };
-      window.requestAnimationFrame(step);
+      const refreshRects = () => {
+          for (let i = 0; i < elements.length; i++) {
+              elements[i].rect = elements[i].el.getBoundingClientRect();
+          }
+      };
+      let scheduled = false;
+      let lastX = -999, lastY = -999;
+      const update = (cx, cy) => {
+          scheduled = false;
+          if (Math.abs(cx - lastX) < 3 && Math.abs(cy - lastY) < 3) return;
+          lastX = cx; lastY = cy;
+          for (let i = 0; i < elements.length; i++) {
+              const r = elements[i].rect;
+              if (!r) continue;
+              elements[i].el.style.setProperty('--cursor-x', (cx - r.left).toFixed(1) + 'px');
+              elements[i].el.style.setProperty('--cursor-y', (cy - r.top).toFixed(1) + 'px');
+          }
+      };
+      const onMove = (cx, cy) => {
+          if (scheduled) return;
+          scheduled = true;
+          requestAnimationFrame(() => update(cx, cy));
+      };
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY), { passive: true });
+      window.addEventListener('touchmove', (e) => { if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => { collect(); refreshRects(); }, 150);
+      }, { passive: true });
+      window.addEventListener('scroll', () => {
+          clearTimeout(window.__cgScrollTimer);
+          window.__cgScrollTimer = setTimeout(refreshRects, 120);
+      }, { passive: true });
+      requestAnimationFrame(() => { collect(); refreshRects(); });
   }
 
-  // ================= SYNTAX HIGHLIGHTING =================
-  function highlightLua(code) {
-      let escaped = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-      escaped = escaped.replace(/(["'])(.*?)\1/g, '<span class="token-string">$1$2$1</span>');
-      const keywords = /\b(game|HttpGet|loadstring|wait|print|script|workspace|Players|LocalPlayer)\b/g;
-      escaped = escaped.replace(keywords, '<span class="token-keyword">$1</span>');
-      escaped = escaped.replace(/\b(\w+)(?=\()/g, '<span class="token-function">$1</span>');
-
-      return escaped;
-  }
-
-  // ================= UI ACTIONS =================
-  window.showToast = function(desc) {
-      document.getElementById('toastDesc').innerText = desc;
-      const toast = document.getElementById('toastNotification');
-      toast.classList.add('show');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  const InkEngine = {
+      canvas: null, ctx: null, mode: 'idle', progress: 0,
+      strands: [], blobs: [], droplets: [], animFrame: null,
+      init() { this.canvas = document.getElementById('planetInkCanvas'); if (this.canvas) this.ctx = this.canvas.getContext('2d'); },
+      spawnTendrils() {
+          this.strands = []; this.blobs = []; this.droplets = [];
+          const count = isLowEnd ? 10 : 28;
+          for (let i = 0; i < count; i++) {
+              const isMain = i < (isLowEnd ? 4 : 12);
+              const t = isMain ? (i / 12) : Math.random();
+              const yBase = 70 + t * 400;
+              const dyFromCenter = (yBase - 270) / 225;
+              const chordHalf = Math.sqrt(Math.max(0.08, 1 - dyFromCenter * dyFromCenter)) * 225;
+              const anchorSpread = Math.min(86, chordHalf * 0.48) + (Math.random() * 16);
+              this.strands.push({
+                  yLeft: yBase + (Math.random() - 0.5) * 32, yRight: yBase + (Math.random() - 0.5) * 32,
+                  spanX: anchorSpread,
+                  thickness: isMain ? (Math.random() * 8.5 + 7.5) : (Math.random() * 4.5 + 2.5),
+                  freq: Math.random() * 0.014 + 0.006, phase: Math.random() * Math.PI * 2,
+                  amp: (Math.random() - 0.5) * 38,
+                  veinLenL: Math.random() * 48 + 24, veinLenR: Math.random() * 48 + 24,
+                  veinAngleL: (Math.random() - 0.5) * 1.25, veinAngleR: (Math.random() - 0.5) * 1.25,
+                  beadsCount: isMain ? 5 : 3
+              });
+              if (isMain) this.blobs.push({ y: yBase, r: Math.random() * 13 + 11, phase: Math.random() * Math.PI * 2 });
+          }
+      },
+      startGrabbing() { if (!this.ctx) this.init(); if (!this.ctx) return; this.spawnTendrils(); this.mode = 'reaching'; this.progress = 0; if (!this.animFrame) this.loop(); },
+      startContracting() { this.mode = 'contracting'; this.progress = 0; },
+      triggerSplash() {
+          this.mode = 'splashing'; this.progress = 0; this.droplets = [];
+          const dropCount = isLowEnd ? 15 : 40;
+          for (let i = 0; i < dropCount; i++) {
+              const angle = (Math.random() - 0.5) * Math.PI * 1.9;
+              const speed = Math.random() * 7.5 + 2.5;
+              this.droplets.push({ x: 270 + (Math.random() - 0.5) * 14, y: 80 + Math.random() * 380, vx: Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1), vy: (Math.random() - 0.5) * 5, r: Math.random() * 8.5 + 3.2, alpha: 1 });
+          }
+      },
+      stopAndClear() { this.mode = 'idle'; if (this.ctx && this.canvas) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; } },
+      loop() {
+          if (this.mode === 'idle') { this.animFrame = null; return; }
+          const ctx = this.ctx; const w = this.canvas.width; const h = this.canvas.height;
+          ctx.clearRect(0, 0, w, h);
+          const now = performance.now(); const centerX = 270;
+          if (this.mode === 'reaching' || this.mode === 'contracting') {
+              if (this.mode === 'reaching') this.progress = Math.min(1, this.progress + 0.06);
+              else this.progress = Math.min(1, this.progress + 0.125);
+              const gapScale = this.mode === 'contracting' ? Math.max(0.01, 1 - Math.pow(this.progress, 1.75)) : 1;
+              const reachFactor = this.mode === 'reaching' ? (1 - Math.pow(1 - this.progress, 3)) : 1;
+              ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.fillStyle = '#030305'; ctx.strokeStyle = '#030305';
+              for (let i = 0; i < this.strands.length; i++) {
+                  const s = this.strands[i];
+                  const curSpan = s.spanX * gapScale;
+                  const leftX = centerX - curSpan, rightX = centerX + curSpan;
+                  const rootProgress = Math.min(1, reachFactor * 1.25);
+                  ctx.lineWidth = s.thickness * 0.72;
+                  const endLX = leftX - s.veinLenL * rootProgress;
+                  const endLY = s.yLeft + Math.sin(s.veinAngleL) * s.veinLenL * rootProgress;
+                  ctx.beginPath(); ctx.moveTo(leftX, s.yLeft);
+                  ctx.quadraticCurveTo(leftX - s.veinLenL * 0.5 * rootProgress, s.yLeft + Math.sin(now * 0.009 + s.phase) * 10, endLX, endLY);
+                  ctx.stroke();
+                  ctx.beginPath(); ctx.arc(endLX, endLY, s.thickness * 0.45, 0, Math.PI * 2); ctx.fill();
+                  const endRX = rightX + s.veinLenR * rootProgress;
+                  const endRY = s.yRight + Math.sin(s.veinAngleR) * s.veinLenR * rootProgress;
+                  ctx.beginPath(); ctx.moveTo(rightX, s.yRight);
+                  ctx.quadraticCurveTo(rightX + s.veinLenR * 0.5 * rootProgress, s.yRight + Math.cos(now * 0.009 + s.phase) * 10, endRX, endRY);
+                  ctx.stroke();
+                  ctx.beginPath(); ctx.arc(endRX, endRY, s.thickness * 0.45, 0, Math.PI * 2); ctx.fill();
+              }
+              for (let i = 0; i < this.blobs.length; i++) {
+                  const b = this.blobs[i];
+                  const pulseR = b.r * (0.85 + 0.25 * Math.sin(now * 0.012 + b.phase)) * reachFactor;
+                  const span = 82 * gapScale;
+                  ctx.beginPath(); ctx.arc(centerX - span, b.y, pulseR, 0, Math.PI * 2); ctx.arc(centerX + span, b.y, pulseR, 0, Math.PI * 2); ctx.fill();
+              }
+              for (let i = 0; i < this.strands.length; i++) {
+                  const s = this.strands[i];
+                  const curSpan = s.spanX * gapScale;
+                  const leftX = centerX - curSpan, rightX = centerX + curSpan;
+                  const curEndLeftX = leftX + (centerX - leftX) * reachFactor;
+                  const curEndRightX = rightX - (rightX - centerX) * reachFactor;
+                  const wave1 = Math.sin(now * s.freq + s.phase) * s.amp * gapScale;
+                  const wave2 = Math.cos(now * s.freq * 1.3 - s.phase) * s.amp * gapScale;
+                  const boostThick = this.mode === 'contracting' ? (1 + this.progress * 0.8) : 1;
+                  ctx.lineWidth = s.thickness * boostThick;
+                  ctx.beginPath();
+                  ctx.moveTo(leftX, s.yLeft);
+                  if (reachFactor < 0.96) {
+                      ctx.quadraticCurveTo((leftX + curEndLeftX) * 0.5, s.yLeft + wave1 * 0.5, curEndLeftX, (s.yLeft + s.yRight) * 0.5);
+                      ctx.moveTo(rightX, s.yRight);
+                      ctx.quadraticCurveTo((rightX + curEndRightX) * 0.5, s.yRight + wave2 * 0.5, curEndRightX, (s.yLeft + s.yRight) * 0.5);
+                      ctx.stroke();
+                  } else {
+                      ctx.bezierCurveTo(leftX + curSpan * 0.6, s.yLeft + wave1, rightX - curSpan * 0.6, s.yRight + wave2, rightX, s.yRight);
+                      ctx.stroke();
+                      for (let bIdx = 1; bIdx <= s.beadsCount; bIdx++) {
+                          const bt = (bIdx / (s.beadsCount + 1)) + Math.sin(now * 0.005 + s.phase + bIdx) * 0.08;
+                          const bx = leftX + (rightX - leftX) * bt;
+                          const by = s.yLeft + (s.yRight - s.yLeft) * bt + Math.sin(bt * Math.PI) * ((wave1 + wave2) * 0.45);
+                          const br = s.thickness * (0.62 + 0.25 * Math.sin(now * 0.015 + bIdx * 2)) * boostThick;
+                          ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI * 2); ctx.fill();
+                      }
+                  }
+              }
+          } else if (this.mode === 'splashing') {
+              let alive = false;
+              for (let i = 0; i < this.droplets.length; i++) {
+                  const d = this.droplets[i];
+                  d.x += d.vx; d.y += d.vy; d.vx *= 0.92; d.vy *= 0.92; d.r *= 0.95; d.alpha -= 0.032;
+                  if (d.alpha > 0.02 && d.r > 0.4) {
+                      alive = true;
+                      ctx.globalAlpha = Math.max(0, d.alpha); ctx.fillStyle = '#030305';
+                      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+                  }
+              }
+              ctx.globalAlpha = 1;
+              if (!alive) { this.stopAndClear(); return; }
+          }
+          this.animFrame = requestAnimationFrame(() => this.loop());
+      }
   };
 
-  window.updateIcons = function() { if (typeof lucide !== 'undefined') lucide.createIcons(); };
+  let isPlanetSliced = false;
+  let inkStageTimer = null, inkPullTimer = null, sliceResetTimer = null;
 
-  window.toggleMobileMenu = function() {
-      document.getElementById('mobileMenuOverlay').classList.toggle('show');
-  };
+  function initInteractivePlanetPhysics() {
+      if (isMobileDevice) return;
 
-  window.switchTab = function(targetId, pushHistory) {
-      const navBtns = document.querySelectorAll('.nav-btn');
-      const tabContents = document.querySelectorAll('.tab-content');
+      const planetContainer = document.getElementById('planetContainer');
+      const shakeWrapper = document.getElementById('planetShakeWrapper');
+      const realEarth = document.getElementById('realEarth');
+      const texLeft = document.getElementById('planetTexLeft');
+      const texRight = document.getElementById('planetTexRight');
+      const ringBack = document.getElementById('ringBack');
+      const ringFront = document.getElementById('ringFront');
+      const ringSvgBack = document.getElementById('ringSvgBack');
+      const ringSvgFront = document.getElementById('ringSvgFront');
+      const slashBeam = document.getElementById('planetSlashBeam');
+      const impactWave = document.getElementById('planetImpactWave');
+      if (!realEarth || !texLeft || !texRight) return;
+      InkEngine.init();
 
-      navBtns.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(t => t.classList.remove('active'));
+      let texPosX = 0, texPosY = 0;
+      const baseSpinSpeedX = -0.45;
+      let velX = baseSpinSpeedX, velY = 0;
+      let ringSpinDeg = 0, tiltX = 0, tiltY = 0, targetTiltX = 0, targetTiltY = 0;
+      let isDragging = false, startPointerX = 0, startPointerY = 0, lastPointerX = 0, lastPointerY = 0, totalMoveDistance = 0;
+      let isVisible = true;
+      let rafId = null;
+      let idleFrames = 0;
 
-      navBtns.forEach(b => { if (b.getAttribute('data-target') === targetId) b.classList.add('active'); });
+      const io = new IntersectionObserver((entries) => { isVisible = entries[0].isIntersecting; }, { threshold: 0 });
+      io.observe(planetContainer);
 
-      const tabEl = document.getElementById(targetId);
-      if (tabEl) {
-          tabEl.classList.add('active');
-          const title = tabEl.querySelector('h2');
-          if (title) {
-              const originalText = title.getAttribute('data-i18n') ? i18n[currentLang][title.getAttribute('data-i18n')] : title.innerText;
-              window.scrambleText(title, originalText);
+      function isInteractiveUIElement(target) {
+          if (!target || !target.closest) return false;
+          return Boolean(target.closest('button, input, textarea, select, a, label, .auth-card, .script-card, .dashboard-card, .feature-box, .top-bar, .mobile-menu-overlay, .download-item-card, .sg-pills-container, .ticket-modal, .ticket-item, .script-detail-overlay, .file-upload-wrapper'));
+      }
+
+      function getPlanetCenterAndRadius() {
+          const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+          const baseR = window.innerWidth <= 900 ? 130 : 225;
+          const scale = isInHub ? 0.82 : 1;
+          return { cx, cy, r: baseR * scale };
+      }
+
+      window.slicePlanetOpen = function() {
+          if (isPlanetSliced) return;
+          isPlanetSliced = true;
+          velX = 0; velY = 0; targetTiltX = 0; targetTiltY = 0; tiltX = 0; tiltY = 0;
+          if (inkStageTimer) clearTimeout(inkStageTimer);
+          if (inkPullTimer) clearTimeout(inkPullTimer);
+          if (sliceResetTimer) clearTimeout(sliceResetTimer);
+          InkEngine.stopAndClear();
+          realEarth.classList.remove('slamming-shut', 'ink-gripping');
+          if (slashBeam) { slashBeam.classList.remove('slash-anim'); void slashBeam.offsetWidth; slashBeam.classList.add('slash-anim'); }
+          if (shakeWrapper) { shakeWrapper.classList.remove('hammer-impact', 'ink-pulling-shake', 'splitting-shake'); void shakeWrapper.offsetWidth; shakeWrapper.classList.add('splitting-shake'); }
+          realEarth.classList.add('sliced');
+          if (planetContainer) planetContainer.classList.add('planet-sliced-active');
+          inkStageTimer = setTimeout(() => {
+              InkEngine.startGrabbing();
+              realEarth.classList.add('ink-gripping');
+              if (shakeWrapper) { shakeWrapper.classList.remove('splitting-shake'); shakeWrapper.classList.add('ink-pulling-shake'); }
+          }, 3800);
+          inkPullTimer = setTimeout(() => {
+              InkEngine.startContracting();
+              realEarth.classList.remove('ink-gripping');
+              realEarth.classList.add('slamming-shut');
+              realEarth.classList.remove('sliced');
+          }, 4700);
+          sliceResetTimer = setTimeout(() => {
+              InkEngine.triggerSplash();
+              if (shakeWrapper) { shakeWrapper.classList.remove('ink-pulling-shake', 'hammer-impact'); void shakeWrapper.offsetWidth; shakeWrapper.classList.add('hammer-impact'); }
+              if (impactWave) { impactWave.classList.remove('boom-anim'); void impactWave.offsetWidth; impactWave.classList.add('boom-anim'); }
+              setTimeout(() => {
+                  realEarth.classList.remove('slamming-shut');
+                  if (shakeWrapper) shakeWrapper.classList.remove('hammer-impact');
+                  if (planetContainer) planetContainer.classList.remove('planet-sliced-active');
+                  isPlanetSliced = false;
+                  velX = baseSpinSpeedX;
+              }, 700);
+          }, 4900);
+      };
+
+      function onPointerDown(e) {
+          if (e.button !== undefined && e.button !== 0) return;
+          if (isInteractiveUIElement(e.target)) return;
+          if (isPlanetSliced) return;
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          isDragging = true; startPointerX = clientX; startPointerY = clientY;
+          lastPointerX = clientX; lastPointerY = clientY; totalMoveDistance = 0;
+          document.body.classList.add('dragging-planet');
+          if (planetContainer) planetContainer.classList.add('planet-dragging-active');
+          idleFrames = 0;
+      }
+
+      function onPointerMove(e) {
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          if (!isDragging && !isInteractiveUIElement(e.target)) {
+              const p = getPlanetCenterAndRadius();
+              const dist = Math.hypot(clientX - p.cx, clientY - p.cy);
+              document.body.style.cursor = (dist <= p.r && !isPlanetSliced) ? 'grab' : '';
+          }
+          if (!isDragging || isPlanetSliced) return;
+          const dx = clientX - lastPointerX, dy = clientY - lastPointerY;
+          lastPointerX = clientX; lastPointerY = clientY;
+          totalMoveDistance += Math.hypot(dx, dy);
+          texPosX += dx * 1.15; texPosY += dy * 0.85;
+          velX = dx * 0.95; velY = dy * 0.7;
+          targetTiltY = Math.max(-28, Math.min(28, (clientX - window.innerWidth / 2) * 0.04));
+          targetTiltX = Math.max(-22, Math.min(22, -(clientY - window.innerHeight / 2) * 0.04));
+          idleFrames = 0;
+      }
+
+      function onPointerUp() {
+          if (!isDragging) return;
+          isDragging = false;
+          document.body.classList.remove('dragging-planet');
+          if (planetContainer) planetContainer.classList.remove('planet-dragging-active');
+          targetTiltX = 0; targetTiltY = 0;
+          if (totalMoveDistance < 8 && !isPlanetSliced) {
+              const p = getPlanetCenterAndRadius();
+              if (Math.hypot(startPointerX - p.cx, startPointerY - p.cy) <= p.r) window.slicePlanetOpen();
           }
       }
 
-      if (pushHistory) window.setRouteUrl(targetId, false);
-      if (targetId === 'tab-main') window.refreshUserProfileUI();
-      if (targetId === 'tab-scripts') window.renderScripts();
-      if (targetId === 'tab-exploits') window.renderExploits();
-      if (targetId === 'tab-faq') { window.renderSupportChat(); if (typeof window.loadTicketsFromFirestore === 'function') window.loadTicketsFromFirestore(); }
+      window.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', onPointerMove, { passive: true });
+      window.addEventListener('mouseup', onPointerUp);
+      window.addEventListener('touchstart', onPointerDown, { passive: true });
+      window.addEventListener('touchmove', onPointerMove, { passive: true });
+      window.addEventListener('touchend', onPointerUp);
 
-      applyMaintenanceState();
-      setTimeout(updateNavPill, 50);
-  };
+      function updatePlanetLoop() {
+          rafId = null;
+          if (document.hidden || !isVisible) { schedule(); return; }
+          const moved = Math.abs(velX - baseSpinSpeedX) > 0.01 || Math.abs(velY) > 0.01 || isDragging || isPlanetSliced;
+          if (!isPlanetSliced) {
+              if (!isDragging) {
+                  velX += (baseSpinSpeedX - velX) * 0.035;
+                  velY *= 0.93;
+                  if (Math.abs(velY) < 0.01) velY = 0;
+                  texPosX += velX; texPosY += velY;
+              }
+              if (texPosX <= -1800) texPosX += 1800;
+              if (texPosX >= 1800) texPosX -= 1800;
+              if (texPosY <= -900) texPosY += 900;
+              if (texPosY >= 900) texPosY -= 900;
+              const bgPosString = texPosX.toFixed(1) + 'px ' + texPosY.toFixed(1) + 'px';
+              texLeft.style.backgroundPosition = bgPosString;
+              texRight.style.backgroundPosition = bgPosString;
+              ringSpinDeg = (ringSpinDeg + 0.18 + velX * 0.35) % 360;
+              const ringTransform = 'rotate(' + ringSpinDeg.toFixed(2) + 'deg)';
+              if (ringSvgBack) ringSvgBack.style.transform = ringTransform;
+              if (ringSvgFront) ringSvgFront.style.transform = ringTransform;
+          }
+          tiltX += (targetTiltX - tiltX) * 0.12;
+          tiltY += (targetTiltY - tiltY) * 0.12;
+          const ringPlaneTransform = 'rotateX(' + (75 + tiltX * 0.5).toFixed(2) + 'deg) rotateY(' + (-10 + tiltY * 0.6).toFixed(2) + 'deg)';
+          if (ringBack) ringBack.style.transform = ringPlaneTransform;
+          if (ringFront) ringFront.style.transform = ringPlaneTransform;
+          realEarth.style.transform = 'rotateX(' + (tiltX * 0.35).toFixed(2) + 'deg) rotateY(' + (tiltY * 0.35).toFixed(2) + 'deg)';
+          if (!moved) idleFrames++; else idleFrames = 0;
+          schedule(idleFrames > 30 ? 66 : 0);
+      }
+      function schedule(delay) {
+          if (rafId !== null) return;
+          if (delay) rafId = setTimeout(() => { rafId = null; updatePlanetLoop(); }, delay);
+          else rafId = requestAnimationFrame(updatePlanetLoop);
+      }
+      schedule();
+  }
 
   window.handleEnterHubClick = function() {
       if (currentUser) window.enterAppFromLanding('tab-main', true);
@@ -1682,13 +1807,9 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       const landing = document.getElementById('landingWrapper');
       const authWrap = document.getElementById('authWrapper');
       const planetContainer = document.getElementById('planetContainer');
-
       landing.style.opacity = '0'; landing.style.transform = 'translateY(-15px)';
       if (planetContainer && !isMobileDevice) planetContainer.classList.add('hub-active');
       if (pushHistory) window.setRouteUrl('login', false);
-
-      window.initCaptcha('authCaptchaContainer');
-
       setTimeout(() => {
           landing.style.display = 'none';
           authWrap.style.display = 'flex';
@@ -1697,6 +1818,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
               authWrap.style.transform = 'translateY(0)';
               setTimeout(() => { isNavTransitioning = false; }, 450);
               applyMaintenanceState();
+              initAuthCaptcha();
           });
       }, 420);
   };
@@ -1707,90 +1829,14 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       const landing = document.getElementById('landingWrapper');
       const authWrap = document.getElementById('authWrapper');
       const planetContainer = document.getElementById('planetContainer');
-
       authWrap.style.opacity = '0'; authWrap.style.transform = 'translateY(15px)';
       if (planetContainer && !isMobileDevice) planetContainer.classList.remove('hub-active');
       window.setRouteUrl('start', false);
-
       setTimeout(() => {
           authWrap.style.display = 'none';
           landing.style.display = 'flex';
           requestAnimationFrame(() => {
               landing.style.opacity = '1'; landing.style.transform = 'translateY(0)';
-              setTimeout(() => { isNavTransitioning = false; }, 450);
-              applyMaintenanceState();
-          });
-      }, 420);
-  };
-
-  window.enterAppFromLanding = function(initialTab, pushHistory) {
-      if (isNavTransitioning) return;
-      isNavTransitioning = true;
-      isInHub = true;
-      const landing = document.getElementById('landingWrapper');
-      const authWrap = document.getElementById('authWrapper');
-      const navbar = document.getElementById('appNavbar');
-      const mainWrapper = document.getElementById('appMainWrapper');
-      const planetContainer = document.getElementById('planetContainer');
-
-      landing.style.opacity = '0'; landing.style.transform = 'translateY(-15px)';
-      authWrap.style.opacity = '0';
-      if (planetContainer && !isMobileDevice) planetContainer.classList.add('hub-active');
-
-      if (pushHistory) window.setRouteUrl(initialTab, false);
-
-      setTimeout(() => {
-          landing.style.display = 'none';
-          authWrap.style.display = 'none';
-          navbar.style.display = 'flex';
-          mainWrapper.style.display = 'flex';
-          document.getElementById('dashboardLayout').style.display = 'flex';
-          window.refreshUserProfileUI();
-          window.switchTab(initialTab, false);
-          window.renderScripts();
-          window.renderExploits();
-          window.renderSupportChat();
-          if (typeof window.loadTicketsFromFirestore === 'function') window.loadTicketsFromFirestore();
-          window.updateIcons();
-          requestAnimationFrame(() => {
-              navbar.style.opacity = '1';
-              mainWrapper.style.opacity = '1';
-              mainWrapper.style.transform = 'translateY(0)';
-              setTimeout(() => { isNavTransitioning = false; }, 450);
-              applyMaintenanceState();
-          });
-      }, 420);
-  };
-
-  window.returnToLanding = function(pushHistory) {
-      if (isNavTransitioning) return;
-      isNavTransitioning = true;
-      isInHub = false;
-      const landing = document.getElementById('landingWrapper');
-      const authWrap = document.getElementById('authWrapper');
-      const navbar = document.getElementById('appNavbar');
-      const mainWrapper = document.getElementById('appMainWrapper');
-      const planetContainer = document.getElementById('planetContainer');
-      const mobileMenu = document.getElementById('mobileMenuOverlay');
-
-      if (mobileMenu) mobileMenu.classList.remove('show');
-      navbar.style.opacity = '0'; mainWrapper.style.opacity = '0';
-      mainWrapper.style.transform = 'translateY(15px)'; authWrap.style.opacity = '0';
-      if (planetContainer && !isMobileDevice) planetContainer.classList.remove('hub-active');
-
-      if (pushHistory) window.setRouteUrl('start', false);
-
-      setTimeout(() => {
-          navbar.style.display = 'none';
-          mainWrapper.style.display = 'none';
-          authWrap.style.display = 'none';
-          landing.style.display = 'flex';
-          landing.style.opacity = '0';
-          landing.style.transform = 'translateY(15px)';
-          requestAnimationFrame(() => {
-              landing.style.opacity = '1';
-              landing.style.transform = 'translateY(0)';
-              window.scrollTo({ top: 0, behavior: 'smooth' });
               setTimeout(() => { isNavTransitioning = false; }, 450);
               applyMaintenanceState();
           });
@@ -1811,7 +1857,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           btnTextEl.textContent = i18n[currentLang].auth_btn || 'SIGN IN';
           switchTextEl.textContent = i18n[currentLang].auth_no_acc || "Don't have an account? Create one!";
       }
-      window.initCaptcha('authCaptchaContainer');
+      initAuthCaptcha();
   };
 
   function usernameToEmail(username) {
@@ -1821,28 +1867,14 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
   window.submitAuthForm = async function() {
       const loginInput = document.getElementById('authLoginInput').value.trim();
       const passInput = document.getElementById('authPassInput').value.trim();
-      const hpInput = document.getElementById('authHpInput').value;
+      const captchaVal = parseInt(document.getElementById('authCaptchaInput').value);
 
       if (!loginInput || !passInput) { window.showToast('Please enter both Login and Password!'); return; }
-
-      if (hpInput) {
-          window.showToast('Bot detected.');
-          if (window.currentIp && window.FB) {
-              window.FB.setDoc(window.FB.doc(window.FB.db, "banned_ips", window.currentIp), { bannedAt: window.FB.serverTimestamp() });
-          }
+      if (captchaVal !== authCaptcha.answer) {
+          window.showToast('Incorrect captcha!');
+          initAuthCaptcha();
           return;
       }
-
-      if (!mouseMoved || Date.now() - pageLoadTime < 1000) {
-          window.showToast('Suspicious activity detected. Please try again.');
-          return;
-      }
-
-      if (!window.captchaStates['authCaptchaContainer']) {
-          window.showToast('Please complete the verification.');
-          return;
-      }
-
       if (!window.FB) { window.showToast('Firebase is still loading, try again in a second.'); return; }
 
       const email = usernameToEmail(loginInput);
@@ -1871,6 +1903,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           } else {
               await window.FB.signInWithEmailAndPassword(window.FB.auth, email, passInput);
               window.showToast('Welcome back, ' + loginInput + '!');
+              // Clear attempts on success
               window.FB.setDoc(window.FB.doc(window.FB.db, "login_attempts", email), { count: 0, lockedUntil: null }, { merge: true }).catch(()=>{});
           }
       } catch (error) {
@@ -1897,7 +1930,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
               }
           }
           window.showToast(errorMsg);
-          window.initCaptcha('authCaptchaContainer');
+          initAuthCaptcha();
           btn.disabled = false;
           return;
       }
@@ -2075,7 +2108,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       }
   };
 
-  // ================= SILENCE HUB TEMPLATE =================
+  // ==================== SILENCE HUB TEMPLATE ====================
   window.loadSilenceHubTemplate = function() {
       const t = window.SILENCE_HUB_TEMPLATE;
       if (!t) return;
@@ -2341,6 +2374,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       if (ipContainer) ipContainer.innerHTML = '<div style="font-size:12px; color:var(--text-secondary); padding:10px;">Загрузка...</div>';
 
       try {
+          // Загрузка аккаунтов
           const snap = await window.FB.getDocs(window.FB.collection(window.FB.db, "users"));
           const accounts = [];
           snap.forEach(d => { const data = d.data(); data.uid = d.id; accounts.push(data); });
@@ -2361,6 +2395,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                       : '<button class="ui-btn" style="padding:4px 8px; font-size:11px; border-color:var(--error); color:var(--error);" onclick="window.toggleBan(\'' + acc.uid + '\', true)">Ban</button>';
 
                   const ipBanBtn = `<button class="btn-warning" style="padding:4px 8px; font-size:11px;" onclick="window.banIpFromUser('${acc.uid}', '${acc.lastIp || ''}')">Ban IP</button>`;
+
                   const ipDisplay = acc.lastIp ? `<span style="font-size:10px; color:var(--text-secondary); font-family:var(--font-mono); display:block;">IP: ${acc.lastIp}</span>` : `<span style="font-size:10px; color:var(--text-secondary); font-family:var(--font-mono); display:block;">IP: Unknown</span>`;
 
                   return `<div class="dev-acc-row" style="${isBanned?'opacity:0.5; border-color:var(--error);':''}">
@@ -2381,6 +2416,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
               }).join('');
           }
 
+          // Загрузка забаненных IP
           if (ipContainer) {
               const ipSnap = await window.FB.getDocs(window.FB.collection(window.FB.db, "banned_ips"));
               const bannedIps = [];
@@ -2510,16 +2546,9 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       if (!input) return;
       const text = input.value.trim();
       if (!text) return;
-
-      const now = Date.now();
-      if (now - lastChatMessageTime < 3500) {
-          window.showToast('Слишком быстро. Подождите немного.');
-          return;
-      }
-
-      lastChatMessageTime = now;
       const senderName = currentUser ? currentUser.username : 'Guest User';
-      const timeStr = new Date().toLocaleTimeString().slice(0, 5);
+      const now = new Date();
+      const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
       const msgs = getSupportMessages();
       msgs.push({ sender: senderName, text, time: timeStr });
       localStorage.setItem('gs_support_chat_v1', JSON.stringify(msgs));
@@ -2920,15 +2949,6 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       return { gamesList, cleanDesc, extraLink };
   }
 
-  function getGameImage(gameName) {
-      if (!gameName) return window.GAME_IMAGES["universal"];
-      const lower = gameName.toLowerCase();
-      for (const key in window.GAME_IMAGES) {
-          if (lower.includes(key)) return window.GAME_IMAGES[key];
-      }
-      return window.GAME_IMAGES["universal"];
-  }
-
   function escapeJsString(s) {
       return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   }
@@ -2947,7 +2967,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       return (window.STATIC_EXPLOITS || []).find(e => String(e.title).trim().toLowerCase() === decoded);
   }
 
-  window.openScriptDetail = async function(kind, index) {
+  window.openScriptDetail = function(kind, index) {
       const list = kind === 'exploit' ? window.STATIC_EXPLOITS : window.STATIC_SCRIPTS;
       const item = list[index];
       if (!item) return;
@@ -2970,20 +2990,16 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           actionBtns = '<button class="copy-btn" onclick="window.copyScriptCode(' + index + ', this)"><i data-lucide="copy" style="width:16px;height:16px;"></i> ' + i18n[currentLang].s_copy + '</button>';
       }
 
-      const rawCode = item.script_code || 'No code available.';
-      const highlightedCode = highlightLua(rawCode);
-      const lineCount = rawCode.split('\n').length;
-      let lineNumbersHtml = '';
-      for (let i = 1; i <= lineCount; i++) {
-          lineNumbersHtml += `<div>${i}</div>`;
-      }
-
+      const codePreview = item.script_code ? item.script_code.replace(/</g, '&lt;') : 'No code available.';
       const tagsHtml = (item.tags || []).map(t => '<span class="badge '+(t==='keyless'?'badge-green':'')+'">' + (i18n[currentLang]['f_' + t] || t) + '</span>').join('');
+
       const authorInitial = item.author ? item.author.charAt(0).toUpperCase() : 'U';
       const authorName = item.author || 'Unknown Author';
+
       const views = item.clicks || 0;
       const likes = item.likes || 0;
       const dislikes = item.dislikes || 0;
+
       const authorColor = item.author_color || 'inherit';
       const authorFont = item.author_font || 'inherit';
       const authorBadgesHtml = (item.author_badges || []).map(b => {
@@ -3004,22 +3020,8 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       const descHtml = item.description ? `<div style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-top:10px;">${item.description.replace(/</g, '&lt;')}</div>` : '';
       const infoHtml = item.executors_info ? `<div style="font-size:11px; color:var(--text-secondary); font-family:var(--font-mono); margin-top:10px; padding-top:10px; border-top:1px solid var(--card-border);">${item.executors_info.replace(/</g, '&lt;')}</div>` : '';
       const discordHtml = item.script_discord ? `<a href="${item.script_discord}" target="_blank" class="ui-btn" style="margin-top:10px; display:inline-flex; text-decoration:none; font-size:11px; padding:6px 10px;"><i data-lucide="message-square" style="width:14px;height:14px;"></i> Discord</a>` : '';
-      const gameBgImg = getGameImage(item.game || item.platform);
 
-      const voteStatus = await window.checkUserVoted(kind, item.id);
-      let voteBtnsHtml = '';
-      if (voteStatus) {
-          voteBtnsHtml = `
-              <div style="color:${voteStatus === 'yes' ? 'var(--success)' : 'var(--error)'}; font-weight:bold; text-align:center; padding:10px; border:1px dashed ${voteStatus === 'yes' ? 'var(--success)' : 'var(--error)'}; border-radius:8px;">
-                  You voted: ${voteStatus === 'yes' ? 'Working' : 'Not working'}
-              </div>
-          `;
-      } else {
-          voteBtnsHtml = `
-              <button class="sdm-vote-btn sdm-vote-yes" onclick="window.voteScript('${kind}', '${item.id}', 'yes', this)"><i data-lucide="thumbs-up" style="width:14px;height:14px;"></i> Working</button>
-              <button class="sdm-vote-btn sdm-vote-no" onclick="window.voteScript('${kind}', '${item.id}', 'no', this)"><i data-lucide="thumbs-down" style="width:14px;height:14px;"></i> Not working</button>
-          `;
-      }
+      const gameBgImg = getGameImage(item.game || item.platform);
 
       modal.innerHTML = `
           <div class="sdm-header">
@@ -3032,27 +3034,18 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           <div class="sdm-body">
               <div class="sdm-left">
                   <div class="sdm-banner" style="background-image:url('${item.banner_url || ''}');"></div>
-
                   <div class="sdm-code-box">
                       <div class="sdm-code-header">
-                          <div class="ide-dots">
-                              <div class="ide-dot red"></div>
-                              <div class="ide-dot yellow"></div>
-                              <div class="ide-dot green"></div>
-                          </div>
-                          <span class="ide-filename">script.luau</span>
+                          <span><i data-lucide="code" style="width:12px;height:12px;display:inline;vertical-align:middle;margin-right:4px;"></i> Script Code</span>
                           <button class="ui-btn" style="padding:4px 8px;font-size:11px;" onclick="window.copyScriptCode(${index}, this)">Copy</button>
                       </div>
-                      <div class="sdm-code-area">
-                          <div class="line-numbers">${lineNumbersHtml}</div>
-                          <div class="code-content">${highlightedCode}</div>
-                      </div>
+                      <div class="sdm-code-area">${codePreview}</div>
                   </div>
               </div>
-
               <div class="sdm-right">
                   <div class="sdm-tags-row">${tagsHtml}</div>
 
+                  <!-- ОБНОВЛЕННАЯ КНОПКА ИГРЫ -->
                   <div class="sdm-game-info" onclick="window.open('${item.script_discord || '#'}', '_blank')">
                       <div class="sdm-game-info-bg" style="background-image:url('${gameBgImg}');"></div>
                       <div class="sdm-game-info-content">
@@ -3084,21 +3077,21 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                       <div class="sdm-stat-box">
                           <div class="sdm-stat-box-content">
                               <span class="sdm-stat-label">Views</span>
-                              <span class="sdm-stat-val" id="view-val">0</span>
+                              <span class="sdm-stat-val">${views}</span>
                           </div>
                       </div>
                       <div class="sdm-stat-box">
                           <div class="stat-bubble-container" id="like-bubbles"></div>
                           <div class="sdm-stat-box-content">
                               <span class="sdm-stat-label">Likes</span>
-                              <span class="sdm-stat-val" style="color:#10b981;" id="like-val">0</span>
+                              <span class="sdm-stat-val" style="color:#10b981;" id="like-val">${likes}</span>
                           </div>
                       </div>
                       <div class="sdm-stat-box">
                           <div class="stat-bubble-container" id="dislike-bubbles"></div>
                           <div class="sdm-stat-box-content">
                               <span class="sdm-stat-label">Dislikes</span>
-                              <span class="sdm-stat-val" style="color:#ef4444;" id="dislike-val">0</span>
+                              <span class="sdm-stat-val" style="color:#ef4444;" id="dislike-val">${dislikes}</span>
                           </div>
                       </div>
                   </div>
@@ -3106,7 +3099,8 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                   <div class="sdm-vote-box">
                       <h4>Does it work?</h4>
                       <div class="sdm-vote-btns">
-                          ${voteBtnsHtml}
+                          <button class="sdm-vote-btn sdm-vote-yes" onclick="window.voteScript('${kind}', '${item.id}', 'yes', this)"><i data-lucide="thumbs-up" style="width:14px;height:14px;"></i> Working</button>
+                          <button class="sdm-vote-btn sdm-vote-no" onclick="window.voteScript('${kind}', '${item.id}', 'no', this)"><i data-lucide="thumbs-down" style="width:14px;height:14px;"></i> Not working</button>
                       </div>
                   </div>
               </div>
@@ -3116,9 +3110,21 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       overlay.classList.add('show');
       window.updateIcons();
 
-      animateValue(document.getElementById('view-val'), 0, views, 800);
-      animateValue(document.getElementById('like-val'), 0, likes, 800);
-      animateValue(document.getElementById('dislike-val'), 0, dislikes, 800);
+      if (item.id) {
+          checkUserVoted(kind, item.id).then(voteType => {
+              if (voteType) {
+                  const btnYes = modal.querySelector('.sdm-vote-yes');
+                  const btnNo = modal.querySelector('.sdm-vote-no');
+                  if (btnYes && btnNo) {
+                      btnYes.style.opacity = '0.5'; btnYes.style.pointerEvents = 'none';
+                      btnNo.style.opacity = '0.5'; btnNo.style.pointerEvents = 'none';
+                      if (voteType === 'yes') btnYes.innerHTML = '<i data-lucide="check"></i> Voted Working';
+                      if (voteType === 'no') btnNo.innerHTML = '<i data-lucide="x"></i> Voted Not Working';
+                      window.updateIcons();
+                  }
+              }
+          });
+      }
   };
 
   window.voteScript = async function(kind, id, type, btn) {
@@ -3131,6 +3137,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       const collectionName = kind === 'exploit' ? 'exploits' : 'scripts';
       const field = type === 'yes' ? 'likes' : 'dislikes';
 
+      // Пузырьки
       const targetId = type === 'yes' ? 'like-bubbles' : 'dislike-bubbles';
       const container = document.getElementById(targetId);
       const color = type === 'yes' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(239, 68, 68, 0.4)';
@@ -3147,6 +3154,13 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
               container.appendChild(bubble);
               setTimeout(() => bubble.remove(), 1500);
           }
+      }
+
+      // Оптимистичное обновление цифры
+      const valEl = document.getElementById(type === 'yes' ? 'like-val' : 'dislike-val');
+      if (valEl) {
+          let currentVal = parseInt(valEl.textContent) || 0;
+          valEl.textContent = currentVal + 1;
       }
 
       try {
@@ -3238,25 +3252,20 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                   }
                   let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
 
-                  let cardHtml = `<div class="script-card card-3d-wrap" style="cursor:pointer; animation: fadeUp 0.4s var(--smooth) forwards; animation-delay: ${idx * 0.05}s;" onclick="window.openScriptDetail('script', ${origIndex})">
-                      <div class="card-glare"></div>
-                      <div class="script-banner-wrapper">${devActionsHtml}<div class="badge-row">${badgeHtml}</div><div class="${bannerClass}" style="background-image: url('${item.banner_url || ''}');"></div></div>
-                      <div class="script-content">
-                          <div class="script-header"><h3>${displayTitle}${draftBadge}</h3><span class="game-tag">${displayGame}</span></div>
-                          ${displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : ''}
-                          <div style="display:flex; margin-top: auto; padding-top:10px;">${btnHtml}</div>
-                      </div>
-                  </div>`;
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'script\', ' + origIndex + ')">' +
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' +
+                      '<div class="script-content">' +
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayGame + '</span></div>' +
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') +
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' +
+                      '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
               container.innerHTML = cols.map(colCards => '<div class="cards-column">' + colCards.join(dividerHtml) + '</div>').join('');
           }
           window.updateIcons();
-          requestAnimationFrame(() => {
-              container.classList.add('show');
-              applyTilt();
-          });
+          requestAnimationFrame(() => container.classList.add('show'));
       }, 120);
   };
 
@@ -3303,25 +3312,20 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
                   }
                   let draftBadge = item.status === 'draft' ? '<span class="badge" style="background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b;margin-left:5px;">DRAFT</span>' : '';
 
-                  let cardHtml = `<div class="script-card card-3d-wrap" style="cursor:pointer; animation: fadeUp 0.4s var(--smooth) forwards; animation-delay: ${idx * 0.05}s;" onclick="window.openScriptDetail('exploit', ${origIndex})">
-                      <div class="card-glare"></div>
-                      <div class="script-banner-wrapper">${devActionsHtml}<div class="badge-row">${badgeHtml}</div><div class="${bannerClass}" style="background-image: url('${item.banner_url || ''}');"></div></div>
-                      <div class="script-content">
-                          <div class="script-header"><h3>${displayTitle}${draftBadge}</h3><span class="game-tag">${displayPlatform}</span></div>
-                          ${displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : ''}
-                          <div style="display:flex; margin-top: auto; padding-top:10px;">${btnHtml}</div>
-                      </div>
-                  </div>`;
+                  let cardHtml = '<div class="script-card" style="cursor:pointer;" onclick="window.openScriptDetail(\'exploit\', ' + origIndex + ')">' +
+                      '<div class="script-banner-wrapper">' + devActionsHtml + '<div class="badge-row">' + badgeHtml + '</div><div class="' + bannerClass + '" style="background-image: url(\'' + (item.banner_url || '') + '\');"></div></div>' +
+                      '<div class="script-content">' +
+                          '<div class="script-header"><h3>' + displayTitle + draftBadge + '</h3><span class="game-tag">' + displayPlatform + '</span></div>' +
+                          (displayDesc ? '<p class="script-desc">' + displayDesc.substring(0,80) + (displayDesc.length>80?'...':'') + '</p>' : '') +
+                          '<div style="display:flex; margin-top: auto; padding-top:10px;">' + btnHtml + '</div>' +
+                      '</div></div>';
                   cols[idx % numCols].push(cardHtml);
               });
               const dividerHtml = '<div class="section-separator"><div class="section-divider-line"></div></div>';
               container.innerHTML = cols.map(colCards => '<div class="cards-column">' + colCards.join(dividerHtml) + '</div>').join('');
           }
           window.updateIcons();
-          requestAnimationFrame(() => {
-              container.classList.add('show');
-              applyTilt();
-          });
+          requestAnimationFrame(() => container.classList.add('show'));
       }, 120);
   };
 
@@ -3459,12 +3463,10 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
     initSpaceBackground();
     initInteractivePlanetPhysics();
     initCursorGradientText();
-    initCustomCursor();
     window.refreshUserProfileUI();
     window.renderTagsEditor('scr');
     window.renderTagsEditor('exp');
-    window.initCaptcha('authCaptchaContainer');
-    window.initCaptcha('ticketCaptchaContainer');
+    initAuthCaptcha();
 
     const savedLang = localStorage.getItem('lang') || 'en';
     currentLang = savedLang;
@@ -3482,9 +3484,6 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
     else if (initialRoute && initialRoute !== 'start') { window.enterAppFromLanding(initialRoute, false); window.setRouteUrl(initialRoute, true); }
     else window.setRouteUrl('start', true);
 
-    setTimeout(updateNavPill, 500);
-    window.addEventListener('resize', updateNavPill);
-
     setTimeout(() => {
         const slug = getRouteSlug();
         if (!slug) return;
@@ -3499,7 +3498,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
 </script>
 
 <script>
-  // ==================== DATA ====================
+  // ==================== SILENCE HUB TEMPLATE DATA ====================
   window.SILENCE_HUB_TEMPLATE = {
       title: "Silence Hub", game: "Muscle Legends",
       tags: ["new", "popular", "stable"],
@@ -3715,8 +3714,7 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       if (!currentUser) { window.showToast('Sign in to create a ticket'); return; }
       document.getElementById('ticketTitleInput').value = '';
       document.getElementById('ticketDescInput').value = '';
-      document.getElementById('ticketHpInput').value = '';
-      window.initCaptcha('ticketCaptchaContainer');
+      initTicketCaptcha();
       document.getElementById('ticketModal').classList.add('show');
   };
 
@@ -3724,20 +3722,12 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
       if (!window.FB || !currentUser) return;
       const title = document.getElementById('ticketTitleInput').value.trim();
       const desc = document.getElementById('ticketDescInput').value.trim();
-      const hpInput = document.getElementById('ticketHpInput').value;
+      const captchaVal = parseInt(document.getElementById('ticketCaptchaInput').value);
 
       if (!title || !desc) { window.showToast('Enter title and description'); return; }
-
-      if (hpInput) {
-          window.showToast('Bot detected.');
-          if (window.currentIp && window.FB) {
-              window.FB.setDoc(window.FB.doc(window.FB.db, "banned_ips", window.currentIp), { bannedAt: window.FB.serverTimestamp() });
-          }
-          return;
-      }
-
-      if (!window.captchaStates['ticketCaptchaContainer']) {
-          window.showToast('Please complete the verification.');
+      if (captchaVal !== ticketCaptcha.answer) {
+          window.showToast('Incorrect captcha!');
+          initTicketCaptcha();
           return;
       }
 
@@ -3751,12 +3741,12 @@ body.hovering-interactive #custom-cursor-ring { width: 48px; height: 48px; borde
           if (!snap.empty) {
               const lastTicket = snap.docs[0].data();
               if (lastTicket.createdAt) {
-                  const lastTime = lastTicket.createdAt.toMillis();
-                  const now = Date.now();
+                  const lastTime = lastTicket.createdAt.toDate().getTime();
+                  const now = new Date().getTime();
                   const diffHours = (now - lastTime) / (1000 * 60 * 60);
                   if (diffHours < 3) {
                       const waitMins = Math.ceil((3 - diffHours) * 60);
-                      window.showToast(`Cooldown active. Wait ${waitMins} minutes before creating another ticket.`);
+                      window.showToast(`Cooldown active. Wait ${waitMins} minutes.`);
                       return;
                   }
               }
